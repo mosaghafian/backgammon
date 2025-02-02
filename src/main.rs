@@ -2322,20 +2322,49 @@ fn calc_stats_board(board: &Vec<(i32, i32)>, keep_count_of_1_stones: i32, keep_c
     println!("singles_2: {}", singles_2);
 }
 
-fn generate_possible_boards_dice(board: &Vec<(i32, i32)>, dice: (i32, i32), turn: i32){
-    let possible_boards: Vec<(Vec<(i32, i32)>, Vec<i32>)> = vec![];
-    for i in 0..=24{
+// fn generate_possible_boards_dice(board: &Vec<(i32, i32)>, dice: (i32, i32), turn: i32){
+//     let possible_boards: Vec<(Vec<(i32, i32)>, Vec<i32>)> = vec![];
+//     for i in 0..=24{
 
-    }
+//     }
 
-}
+// }
 
 // the order does matter, but the kinds that make the same board kinda don't matter?
 fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i32 , keep_count_of_2_stones: i32, hit_stones_1: i32, hit_stones_2: i32){
     let possible_boards: Vec<(Vec<(i32, i32)>, Vec<i32>)> = vec![];
-    for i in 1..=6{
-        for j in 1..=6{
+    let possible_dices: Vec<(i32, i32)> = vec![(1,1), (1,2), (1,3), (1,4), (1,5), (1,6), (2,2), (2,3), (2,4), (2,5), (2,6), (3,3), (3,4), (3,5), (3,6), (4,4), (4,5), (4,6), (5,5), (5,6), (6,6)];
+    for dice in possible_dices{
+        if dice.0 != dice.1{
+            if turn == 1{
+                if hit_stones_1 > 0{
 
+                }else{
+                    // Indices from the board
+                    let temporary_v: Vec<i32> = vec![];
+                    for i in 0..=23{
+                        if board[i].0 == 
+                    }
+                }
+            } else {
+                if hit_stones_2 > 0{
+
+                }else{
+
+                }
+            }
+        } else {
+            if turn == 1{
+                if hit_stones_1 > 0{
+
+                } else {
+
+                }
+            } else {
+                if hit_stones_2 > 0{
+
+                }
+            }
         }
     }
 }
