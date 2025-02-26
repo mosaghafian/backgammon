@@ -2923,19 +2923,17 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                     for mut s in set_board{
                         display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1, &mut s.keep_count_2);
                     }
-
                 }
             }
+
         // else for the dices not being the same
         } else {
             if turn == 1{
                 if hit_stones_1 > 0{
                     let mut board_clone_1: Vec<(i32, i32)> = board.clone();
                     let mut hit_stones_2_clone_1 = hit_stones_2;    
-                    if !(board[(24 - dice.0) as usize].0 == 2 && board[(24 - dice.0) as usize].1 >= 2) {
-                        // if(board[(24 - dice.0)]){
-
-                        // }
+                    if !(board[(24 - dice.0) as usize].0 == 1 && board[(24 - dice.0) as usize].1 >= 2) {
+                        // how can I fix the 
                     }
                 } else {
                     println!("Here in dice != dice");
@@ -2953,7 +2951,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                     // looping over the 
                     // I don't think we need these hashsets because we can
                     // just loop over stuff and be fine with stuff
-                    // 
+                    
                     for i in (0..=23).rev(){
                         if(board[i as usize].0 == 1){
                             let mut board_clone_i: Vec<(i32, i32)> = board.clone();
