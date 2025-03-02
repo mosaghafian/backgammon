@@ -2932,8 +2932,59 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                 if hit_stones_1 > 0{
                     let mut board_clone_1: Vec<(i32, i32)> = board.clone();
                     let mut hit_stones_2_clone_1 = hit_stones_2;    
-                    if !(board[(24 - dice.0) as usize].0 == 1 && board[(24 - dice.0) as usize].1 >= 2) {
+                    let mut hit_stones_1_clone = hit_stones_1;
+                    if !(board[(24 - dice.0) as usize].0 == 2 && board[(24 - dice.0) as usize].1 >= 2) {
                         // how can I fix the 
+                        // What are we doing ? we are basically
+                        let mut remaining_dice = 0;
+                        if(board_clone_1[(24 - dice.0) as usize].0 == 2 && board_clone_1[(24 - dice.0 ) as usize].1 == 1){
+                            hit_stones_2_clone_1 = hit_stones_2_clone_1 + board_clone_1[(24 - dice.0) as usize].1;
+                            board_clone_1[(24 - dice.0) as usize].0 = 1;
+                            board_clone_1[(24 - dice.0) as usize].1 = hit_stones_1_clone;
+                            if(hit_stones_1_clone > 4){
+                                hit_stones_1_clone = hit_stones_1_clone - 4;
+
+                            } else if hit_stones_1_clone == 0 {
+                                hit_stones_1_clone = 0;
+
+                            } else {
+                                remaining_dice = 4 - hit_stones_1_clone;
+                                hit_stones_1_clone = 0;
+
+                            }
+                        }
+                        let mut one_move_set: HashSet<board_state> = HashSet::new();
+                        let mut two_move_set: HashSet<board_state> = HashSet::new();
+                        let mut three_move_set: HashSet<board_state> = HashSet::new();
+                        if(remaining_dice > 0 ){
+                            for i in (0..=23).rev(){
+                                if(board[i as usize].0 == 1){
+                                    let mut board_clone_i: Vec<(i32, i32)> = board_clone_1.clone();
+                                    let mut hit_stones_2_clone_i = hit_stones_2;  
+
+                                    if(remaining_dice > 1){
+                                        for j in (0..=23).rev(){
+                                            if(board[j as usize].0 == 1){
+                                                let mut board_clone_j: Vec<(i32, i32)> = board_clone_i.clone();
+                                                let mut hit_stones_2_clone_j = hit_stones_2_clone_i;
+
+                                                if(remaining_dice > 2){
+                                                    for k in (0..=23).rev(){
+                                                        if(board[k as usize].0 == 1){
+
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    
+                                }
+                            }
+                        }
+
+
+                        
                     }
                 } else {
                     println!("Here in dice != dice");
@@ -3219,7 +3270,6 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                     read_input();
                     if four_move_set.len() != 0{
                         set_board = four_move_set.clone();
-                        
                         for mut s in set_board{
                             println!("Four");
                             display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1, &mut s.keep_count_2);
@@ -3249,7 +3299,6 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                             }
                         }
                     }
-
                 }
             } else {
                 if hit_stones_2 > 0{
