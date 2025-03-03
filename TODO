@@ -1,1 +1,6 @@
-# Double dice for being hit
+
+# Analyze what is wrong with the double dice being equal 
+# After analyzing it again, what I have found is that the branching doesn't happen if we have gone to a "if statement and moved something" we just move regardless
+# There is a stupid version which I thought. Or we can flag that we have gone into the statement and then go from there?
+# have to fix the hit version of dices being equal
+# implement dices being equal for turn two
