@@ -3516,7 +3516,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                             }
                         }
                     }
-
+                    println!("=======================");
                     println!("{}", four_move_set.len());
                     println!("{}", three_move_set.len());
                     println!("{}", two_move_set.len());
@@ -3618,7 +3618,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                             println!("REMAINING DICE: {}", remaining_dice);
                             read_input();
                             for i in (0..=23).rev(){
-                                if(board[i as usize].0 == 1){
+                                if(board[i as usize].0 == 2){
                                     let mut board_clone_i: Vec<(i32, i32)> = board_clone_2.clone();
                                     let mut hit_stones_1_clone_i = hit_stones_1;    
                                     let mut keep_count_2_clone_i = keep_count_of_2_stones;
@@ -3632,27 +3632,26 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                         }
                                     }
 
-                                    if i - dice.0 <= 23{
-                                        if !(board_clone_i[(i + dice.0) as usize].0 == 2 && board_clone_i[(i + dice.0) as usize].1 > 1){
-                                            if(board_clone_i[(i + dice.0) as usize].0 == 2 && board_clone_i[(i + dice.0) as usize].1 == 1){
+                                    if i + dice.0 <= 23{
+                                        if !(board_clone_i[(i + dice.0) as usize].0 == 1 && board_clone_i[(i + dice.0) as usize].1 > 1){
+                                            if(board_clone_i[(i + dice.0) as usize].0 == 1 && board_clone_i[(i + dice.0) as usize].1 == 1){
                                                 hit_stones_1_clone_i = hit_stones_1_clone_i + 1;
-                                                board_clone_i[(i - dice.0) as usize].0 = 0;
-                                                board_clone_i[(i - dice.0) as usize].1 = 0;
+                                                board_clone_i[(i + dice.0) as usize].0 = 0;
+                                                board_clone_i[(i + dice.0) as usize].1 = 0;
                                             }
                                             board_clone_i[i as usize].1 = board_clone_i[i as usize].1 - 1;
                                             if(board_clone_i[i as usize].1 == 0){
                                                 board_clone_i[i as usize].0 = 0;
                                             }
-                                            board_clone_i[(i - dice.0) as usize].0 = 1;
-                                            board_clone_i[(i - dice.0) as usize].1 = board_clone_i[(i - dice.0) as usize].1 + 1;
-    
+                                            board_clone_i[(i + dice.0) as usize].0 = 2;
+                                            board_clone_i[(i + dice.0) as usize].1 = board_clone_i[(i + dice.0) as usize].1 + 1;
                                             did_move_in_i = 1;
                                             one_move_set.insert(
                                                 board_state { board: board_clone_i.clone(), 
-                                                    keep_count_1: keep_count_1_clone_i, 
+                                                    keep_count_1: keep_count_of_1_stones, 
                                                     keep_count_2: keep_count_of_2_stones,
-                                                    hit_stones_1: hit_stones_1_clone, 
-                                                    hit_stones_2: hit_stones_2_clone_i,
+                                                    hit_stones_1: hit_stones_1_clone_i, 
+                                                    hit_stones_2: hit_stones_2_clone,
                                                     dice: dice.clone(),
                                                     parent_index: -1
                                                 }
@@ -3669,134 +3668,88 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                     
                                     if did_move_in_i == 1 && remaining_dice > 1{
                                         for j in (0..=i).rev(){
-                                            if(board_clone_i[j as usize].0 == 1){
+                                            if(board_clone_i[j as usize].0 == 2){
                                                 let mut board_clone_j: Vec<(i32, i32)> = board_clone_i.clone();
-                                                let mut hit_stones_2_clone_j = hit_stones_2_clone_i;    
-                                                let mut keep_count_1_clone_j = keep_count_1_clone_i;
+                                                let mut hit_stones_1_clone_j = hit_stones_1_clone_i;    
+                                                let mut keep_count_2_clone_j = keep_count_2_clone_i;
                                                 // Going out
                                                 // we need to check if everything is in zone of going out
                                                 let mut did_move_in_j = 0;
                                                 let mut all_in_zone = 1;
-                                                for r in 6..=23{
-                                                    if(board_clone_j[r].0 == 1){
-                                                        all_in_zone = 0;
+
+                                                if j + dice.0 <= 23{
+                                                    if !(board_clone_j[(j + dice.0) as usize].0 == 1 && board_clone_j[(j + dice.0) as usize].1 > 1){
+                                                        if(board_clone_j[(j + dice.0) as usize].0 == 1 && board_clone_j[(j + dice.0) as usize].1 == 1){
+                                                            hit_stones_1_clone_j = hit_stones_1_clone_j + 1;
+                                                            board_clone_j[(j + dice.0) as usize].0 = 0;
+                                                            board_clone_j[(j + dice.0) as usize].1 = 0;
+                                                        }
+                                                        board_clone_j[j as usize].1 = board_clone_j[j as usize].1 - 1;
+                                                        if(board_clone_j[j as usize].1 == 0){
+                                                            board_clone_j[j as usize].0 = 0;
+                                                        }
+                                                        board_clone_j[(j + dice.0) as usize].0 = 1;
+                                                        board_clone_j[(j + dice.0) as usize].1 = board_clone_j[(j + dice.0) as usize].1 + 1;
+                                                        did_move_in_j = 1;
+                                                        two_move_set.insert(
+                                                            board_state { board: board_clone_j.clone(), 
+                                                                keep_count_1: keep_count_2_clone_j, 
+                                                                keep_count_2: keep_count_of_2_stones,
+                                                                hit_stones_1: hit_stones_1_clone_j, 
+                                                                hit_stones_2: hit_stones_2_clone,
+                                                                dice: dice.clone(),
+                                                                parent_index: -1
+                                                            }
+                                                        );
+                                                        // println!("j: {}", j);
+                                                        // for mut s in &two_move_set{
+                                                        //     display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1.clone(), &mut s.keep_count_2.clone());
+                                                        // }
+                                                        //read_input();
                                                     }
                                                 }
-                                                if j - dice.0 < 0 && all_in_zone == 1{
-                                                    keep_count_1_clone_j = keep_count_1_clone_j - 1;
-                                                    board_clone_j[i as usize].1 = board_clone_j[i as usize].1 - 1;
-                                                    if board_clone_j[i as usize].1 == 0 {
-                                                        board_clone_j[i as usize].0 = 0
-                                                    }
-                                                    did_move_in_j = 1;
-                                                    two_move_set.insert(
-                                                        board_state { board: board_clone_j.clone(), 
-                                                            keep_count_1: keep_count_1_clone_j, 
-                                                            keep_count_2: keep_count_of_2_stones,
-                                                            hit_stones_1: hit_stones_1_clone, 
-                                                            hit_stones_2: hit_stones_2_clone_j,
-                                                            dice: dice.clone(),
-                                                            parent_index: -1
-                                                        }
-                                                    );
-                                                // Moving on the board
-                                                } else{
-                                                    if j - dice.0 >= 0{
-                                                        if !(board_clone_j[(j - dice.0) as usize].0 == 2 && board_clone_j[(j - dice.0) as usize].1 > 1){
-                                                            if(board_clone_j[(j- dice.0) as usize].0 == 2 && board_clone_j[(j - dice.0) as usize].1 == 1){
-                                                                hit_stones_2_clone_j = hit_stones_2_clone_j + 1;
-                                                                board_clone_j[(j - dice.0) as usize].0 = 0;
-                                                                board_clone_j[(j - dice.0) as usize].1 = 0;
-                                                            }
-                                                            board_clone_j[j as usize].1 = board_clone_j[j as usize].1 - 1;
-                                                            if(board_clone_j[j as usize].1 == 0){
-                                                                board_clone_j[j as usize].0 = 0;
-                                                            }
-                                                            board_clone_j[(j - dice.0) as usize].0 = 1;
-                                                            board_clone_j[(j - dice.0) as usize].1 = board_clone_j[(j - dice.0) as usize].1 + 1;
-                                                            did_move_in_j = 1;
-                                                            two_move_set.insert(
-                                                                board_state { board: board_clone_j.clone(), 
-                                                                    keep_count_1: keep_count_1_clone_j, 
-                                                                    keep_count_2: keep_count_of_2_stones,
-                                                                    hit_stones_1: hit_stones_1_clone, 
-                                                                    hit_stones_2: hit_stones_2_clone_j,
-                                                                    dice: dice.clone(),
-                                                                    parent_index: -1
-                                                                }
-                                                            );
-                                                            // println!("j: {}", j);
-                                                            // for mut s in &two_move_set{
-                                                            //     display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1.clone(), &mut s.keep_count_2.clone());
-                                                            // }
-                                                            //read_input();
-                                                        }
-                                                    }
-                                                }
+                                                
                                                 if did_move_in_j == 1 && remaining_dice > 2{
                                                     for k in (0..=j).rev(){
-                                                        if(board_clone_j[k as usize].0 ==1){
+                                                        if(board_clone_j[k as usize].0 ==2){
                                                             let mut board_clone_k = board_clone_j.clone();
-                                                            let mut hit_stones_2_clone_k = hit_stones_2_clone_j;    
-                                                            let mut keep_count_1_clone_k = keep_count_1_clone_j;
+                                                            let mut hit_stones_1_clone_k = hit_stones_2_clone;    
+                                                            let mut keep_count_2_clone_k = keep_count_2_clone_j;
                                                             // Going out
                                                             // we need to check if everything is in zone of going out
                                                             
-                                                            let mut all_in_zone = 1;
-                                                            for r in 6..=23{
-                                                                if(board_clone_j[r].0 == 1){
-                                                                    all_in_zone = 0;
+                                                           
+                                                            if k + dice.0 <= 23{
+                                                                if !(board_clone_k[(k + dice.0) as usize].0 == 1 && board_clone_k[(k + dice.0) as usize].1 > 1){
+                                                                    if(board_clone_k[(k + dice.0) as usize].0 == 1 && board_clone_k[(k + dice.0) as usize].1 == 1){
+                                                                        hit_stones_1_clone_k = hit_stones_1_clone_k + 1;
+                                                                        board_clone_k[(k + dice.0) as usize].0 = 0;
+                                                                        board_clone_k[(k + dice.0) as usize].1 = 0;
+                                                                    }
+                                                                    board_clone_k[k as usize].1 = board_clone_k[k as usize].1 - 1;
+                                                                    if(board_clone_k[k as usize].1 == 0){
+                                                                        board_clone_k[k as usize].0 = 0;
+                                                                    }
+                                                                    board_clone_k[(k + dice.0) as usize].0 = 2;
+                                                                    board_clone_k[(k + dice.0) as usize].1 = board_clone_k[(k - dice.0) as usize].1 + 1;
+                                                                    three_move_set.insert(
+                                                                        board_state { board: board_clone_k.clone(), 
+                                                                            keep_count_1: keep_count_of_1_stones, 
+                                                                            keep_count_2: keep_count_of_2_stones,
+                                                                            hit_stones_1: hit_stones_1_clone_k, 
+                                                                            hit_stones_2: hit_stones_2_clone,
+                                                                            dice: dice.clone(),
+                                                                            parent_index: -1
+                                                                        }
+                                                                    );
+                                                                    // println!("k: {}", k);
+                                                                    // for mut s in &three_move_set{
+                                                                    //     display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1.clone(), &mut s.keep_count_2.clone());
+                                                                    // }
+                                                                    //read_input();
                                                                 }
                                                             }
-                                                            if k - dice.0 < 0 && all_in_zone == 1{
-                                                                keep_count_1_clone_k = keep_count_1_clone_k - 1;
-                                                                board_clone_k[k as usize].1 = board_clone_k[k as usize].1 - 1;
-                                                                if board_clone_k[k as usize].1 == 0 {
-                                                                    board_clone_k[k as usize].0 = 0
-                                                                }
-                                                                three_move_set.insert(
-                                                                    board_state { board: board_clone_k.clone(), 
-                                                                        keep_count_1: keep_count_1_clone_k, 
-                                                                        keep_count_2: keep_count_of_2_stones,
-                                                                        hit_stones_1: hit_stones_1_clone, 
-                                                                        hit_stones_2: hit_stones_2_clone_k,
-                                                                        dice: dice.clone(),
-                                                                        parent_index: -1
-                                                                    }
-                                                                );
-                                                            // Moving on the board
-                                                            } else{
-                                                                if k - dice.0 >= 0{
-                                                                    if !(board_clone_k[(k - dice.0) as usize].0 == 2 && board_clone_k[(k - dice.0) as usize].1 > 1){
-                                                                        if(board_clone_k[(k - dice.0) as usize].0 == 2 && board_clone_k[(k - dice.0) as usize].1 == 1){
-                                                                            hit_stones_2_clone_k = hit_stones_2_clone_k + 1;
-                                                                            board_clone_k[(k - dice.0) as usize].0 = 0;
-                                                                            board_clone_k[(k - dice.0) as usize].1 = 0;
-                                                                        }
-                                                                        board_clone_k[k as usize].1 = board_clone_k[k as usize].1 - 1;
-                                                                        if(board_clone_k[k as usize].1 == 0){
-                                                                            board_clone_k[k as usize].0 = 0;
-                                                                        }
-                                                                        board_clone_k[(k - dice.0) as usize].0 = 1;
-                                                                        board_clone_k[(k - dice.0) as usize].1 = board_clone_k[(k - dice.0) as usize].1 + 1;
-                                                                        three_move_set.insert(
-                                                                            board_state { board: board_clone_k.clone(), 
-                                                                                keep_count_1: keep_count_1_clone_k, 
-                                                                                keep_count_2: keep_count_of_2_stones,
-                                                                                hit_stones_1: hit_stones_1_clone, 
-                                                                                hit_stones_2: hit_stones_2_clone_k,
-                                                                                dice: dice.clone(),
-                                                                                parent_index: -1
-                                                                            }
-                                                                        );
-                                                                        // println!("k: {}", k);
-                                                                        // for mut s in &three_move_set{
-                                                                        //     display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1.clone(), &mut s.keep_count_2.clone());
-                                                                        // }
-                                                                        //read_input();
-                                                                    }
-                                                                }
-                                                            }
+                                                            
                                                         }
                                                     }
                                                 }
@@ -3855,22 +3808,22 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                     // I don't think we need these hashsets because we can
                     // just loop over stuff and be fine with stuff
                     
-                    for i in (0..=23).rev(){
-                        if(board[i as usize].0 == 1){
+                    for i in 0..=23{
+                        if(board[i as usize].0 == 2){
                             let mut board_clone_i: Vec<(i32, i32)> = board.clone();
-                            let mut hit_stones_2_clone_i = hit_stones_2;    
-                            let mut keep_count_1_clone_i = keep_count_of_1_stones;
+                            let mut hit_stones_1_clone_i = hit_stones_1;    
+                            let mut keep_count_2_clone_i = keep_count_of_2_stones;
                             // Going out
                             // we need to check if everything is in zone of going out
                             let mut all_in_zone = 1;
                             let mut did_move_in_i = 0;
-                            for r in 6..=23{
-                                if(board_clone_i[r].0 == 1){
+                            for r in 0..=17{
+                                if(board_clone_i[r].0 == 2){
                                     all_in_zone = 0;
                                 }
                             }
-                            if i - dice.0 < 0 && all_in_zone == 1{
-                                keep_count_1_clone_i = keep_count_1_clone_i - 1;
+                            if i + dice.0 > 23 && all_in_zone == 1{
+                                keep_count_2_clone_i = keep_count_2_clone_i - 1;
                                 board_clone_i[i as usize].1 = board_clone_i[i as usize].1 - 1;
                                 if board_clone_i[i as usize].1 == 0 {
                                     board_clone_i[i as usize].0 = 0
@@ -3878,10 +3831,10 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                 did_move_in_i = 1;
                                 one_move_set.insert(
                                     board_state { board: board_clone_i.clone(), 
-                                        keep_count_1: keep_count_1_clone_i, 
-                                        keep_count_2: keep_count_of_2_stones,
-                                         hit_stones_1: hit_stones_1, 
-                                         hit_stones_2: hit_stones_2_clone_i,
+                                        keep_count_1: keep_count_of_1_stones, 
+                                        keep_count_2: keep_count_2_clone_i,
+                                         hit_stones_1: hit_stones_1_clone_i, 
+                                         hit_stones_2: hit_stones_2,
                                         dice: dice.clone(),
                                         parent_index: -1
                                     }
@@ -3889,27 +3842,27 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                             // Moving on the board
 
                             } else{
-                                if i - dice.0 >= 0{
-                                    if !(board_clone_i[(i - dice.0) as usize].0 == 2 && board_clone_i[(i - dice.0) as usize].1 > 1){
-                                        if(board_clone_i[(i- dice.0) as usize].0 == 2 && board_clone_i[(i - dice.0) as usize].1 == 1){
-                                            hit_stones_2_clone_i = hit_stones_2_clone_i + 1;
-                                            board_clone_i[(i - dice.0) as usize].0 = 0;
-                                            board_clone_i[(i - dice.0) as usize].1 = 0;
+                                if i + dice.0 <= 23{
+                                    if !(board_clone_i[(i + dice.0) as usize].0 == 1 && board_clone_i[(i + dice.0) as usize].1 > 1){
+                                        if(board_clone_i[(i + dice.0) as usize].0 == 1 && board_clone_i[(i + dice.0) as usize].1 == 1){
+                                            hit_stones_1_clone_i = hit_stones_1_clone_i + 1;
+                                            board_clone_i[(i + dice.0) as usize].0 = 0;
+                                            board_clone_i[(i + dice.0) as usize].1 = 0;
                                         }
                                         board_clone_i[i as usize].1 = board_clone_i[i as usize].1 - 1;
                                         if(board_clone_i[i as usize].1 == 0){
                                             board_clone_i[i as usize].0 = 0;
                                         }
-                                        board_clone_i[(i - dice.0) as usize].0 = 1;
-                                        board_clone_i[(i - dice.0) as usize].1 = board_clone_i[(i - dice.0) as usize].1 + 1;
+                                        board_clone_i[(i + dice.0) as usize].0 = 2;
+                                        board_clone_i[(i + dice.0) as usize].1 = board_clone_i[(i + dice.0) as usize].1 + 1;
 
                                         did_move_in_i = 1;
                                         one_move_set.insert(
                                             board_state { board: board_clone_i.clone(), 
-                                                keep_count_1: keep_count_1_clone_i, 
-                                                keep_count_2: keep_count_of_2_stones,
-                                                 hit_stones_1: hit_stones_1, 
-                                                 hit_stones_2: hit_stones_2_clone_i,
+                                                keep_count_1: keep_count_of_1_stones, 
+                                                keep_count_2: keep_count_2_clone_i,
+                                                 hit_stones_1: hit_stones_1_clone_i, 
+                                                 hit_stones_2: hit_stones_2,
                                                 dice: dice.clone(),
                                                 parent_index: -1
                                             }
@@ -3924,22 +3877,22 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                             // }
                             //read_input();
                             if did_move_in_i == 1{
-                                for j in (0..=i).rev(){
-                                    if(board_clone_i[j as usize].0 == 1){
+                                for j in 0..=i{
+                                    if(board_clone_i[j as usize].0 == 2){
                                         let mut board_clone_j: Vec<(i32, i32)> = board_clone_i.clone();
-                                        let mut hit_stones_2_clone_j = hit_stones_2_clone_i;    
-                                        let mut keep_count_1_clone_j = keep_count_1_clone_i;
+                                        let mut hit_stones_1_clone_j = hit_stones_1_clone_i;    
+                                        let mut keep_count_2_clone_j = keep_count_2_clone_i;
                                         // Going out
                                         // we need to check if everything is in zone of going out
                                         let mut did_move_in_j = 0;
                                         let mut all_in_zone = 1;
-                                        for r in 6..=23{
-                                            if(board_clone_j[r].0 == 1){
+                                        for r in 0..=17{
+                                            if(board_clone_j[r].0 == 2){
                                                 all_in_zone = 0;
                                             }
                                         }
-                                        if j - dice.0 < 0 && all_in_zone == 1{
-                                            keep_count_1_clone_j = keep_count_1_clone_j - 1;
+                                        if j + dice.0 > 23 && all_in_zone == 1{
+                                            keep_count_2_clone_j = keep_count_2_clone_j - 1;
                                             board_clone_j[i as usize].1 = board_clone_j[i as usize].1 - 1;
                                             if board_clone_j[i as usize].1 == 0 {
                                                 board_clone_j[i as usize].0 = 0
@@ -3947,36 +3900,36 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                             did_move_in_j = 1;
                                             two_move_set.insert(
                                                 board_state { board: board_clone_j.clone(), 
-                                                    keep_count_1: keep_count_1_clone_j, 
+                                                    keep_count_1: keep_count_of_1_stones, 
                                                     keep_count_2: keep_count_of_2_stones,
-                                                     hit_stones_1: hit_stones_1, 
-                                                     hit_stones_2: hit_stones_2_clone_j,
+                                                     hit_stones_1: hit_stones_1_clone_j, 
+                                                     hit_stones_2: hit_stones_2,
                                                     dice: dice.clone(),
                                                     parent_index: -1
                                                 }
                                             );
                                         // Moving on the board
                                         } else{
-                                            if j - dice.0 >= 0{
-                                                if !(board_clone_j[(j - dice.0) as usize].0 == 2 && board_clone_j[(j - dice.0) as usize].1 > 1){
-                                                    if(board_clone_j[(j- dice.0) as usize].0 == 2 && board_clone_j[(j - dice.0) as usize].1 == 1){
-                                                        hit_stones_2_clone_j = hit_stones_2_clone_j + 1;
-                                                        board_clone_j[(j - dice.0) as usize].0 = 0;
-                                                        board_clone_j[(j - dice.0) as usize].1 = 0;
+                                            if j + dice.0 <= 23{
+                                                if !(board_clone_j[(j + dice.0) as usize].0 == 2 && board_clone_j[(j + dice.0) as usize].1 > 1){
+                                                    if(board_clone_j[(j + dice.0) as usize].0 == 2 && board_clone_j[(j + dice.0) as usize].1 == 1){
+                                                        hit_stones_1_clone_j = hit_stones_1_clone_j + 1;
+                                                        board_clone_j[(j + dice.0) as usize].0 = 0;
+                                                        board_clone_j[(j + dice.0) as usize].1 = 0;
                                                     }
                                                     board_clone_j[j as usize].1 = board_clone_j[j as usize].1 - 1;
                                                     if(board_clone_j[j as usize].1 == 0){
                                                         board_clone_j[j as usize].0 = 0;
                                                     }
-                                                    board_clone_j[(j - dice.0) as usize].0 = 1;
-                                                    board_clone_j[(j - dice.0) as usize].1 = board_clone_j[(j - dice.0) as usize].1 + 1;
+                                                    board_clone_j[(j + dice.0) as usize].0 = 2;
+                                                    board_clone_j[(j + dice.0) as usize].1 = board_clone_j[(j + dice.0) as usize].1 + 1;
                                                     did_move_in_j = 1;
                                                     two_move_set.insert(
                                                         board_state { board: board_clone_j.clone(), 
-                                                            keep_count_1: keep_count_1_clone_j, 
-                                                            keep_count_2: keep_count_of_2_stones,
-                                                             hit_stones_1: hit_stones_1, 
-                                                             hit_stones_2: hit_stones_2_clone_j,
+                                                            keep_count_1: keep_count_of_2_stones, 
+                                                            keep_count_2: keep_count_2_clone_j,
+                                                             hit_stones_1: hit_stones_1_clone_j, 
+                                                             hit_stones_2: hit_stones_2,
                                                             dice: dice.clone(),
                                                             parent_index: -1
                                                         }
@@ -3993,19 +3946,19 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                             for k in (0..=j).rev(){
                                                 if(board_clone_j[k as usize].0 ==1){
                                                     let mut board_clone_k = board_clone_j.clone();
-                                                    let mut hit_stones_2_clone_k = hit_stones_2_clone_j;    
-                                                    let mut keep_count_1_clone_k = keep_count_1_clone_j;
+                                                    let mut hit_stones_1_clone_k = hit_stones_1_clone_j;    
+                                                    let mut keep_count_2_clone_k = keep_count_2_clone_j;
                                                     // Going out
                                                     // we need to check if everything is in zone of going out
                                                     let mut did_move_in_k = 0;
                                                     let mut all_in_zone = 1;
-                                                    for r in 6..=23{
-                                                        if(board_clone_j[r].0 == 1){
+                                                    for r in 0..=17{
+                                                        if(board_clone_j[r].0 == 2){
                                                             all_in_zone = 0;
                                                         }
                                                     }
-                                                    if k - dice.0 < 0 && all_in_zone == 1{
-                                                        keep_count_1_clone_k = keep_count_1_clone_k - 1;
+                                                    if k + dice.0 > 23  && all_in_zone == 1{
+                                                        keep_count_2_clone_k = keep_count_2_clone_k - 1;
                                                         board_clone_k[k as usize].1 = board_clone_k[k as usize].1 - 1;
                                                         if board_clone_k[k as usize].1 == 0 {
                                                             board_clone_k[k as usize].0 = 0
@@ -4013,36 +3966,36 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                                         did_move_in_k = 1;
                                                         three_move_set.insert(
                                                             board_state { board: board_clone_k.clone(), 
-                                                                keep_count_1: keep_count_1_clone_k, 
-                                                                keep_count_2: keep_count_of_2_stones,
-                                                                 hit_stones_1: hit_stones_1, 
-                                                                 hit_stones_2: hit_stones_2_clone_k,
+                                                                keep_count_1: keep_count_of_1_stones, 
+                                                                keep_count_2: keep_count_2_clone_k,
+                                                                 hit_stones_1: hit_stones_1_clone_k, 
+                                                                 hit_stones_2: hit_stones_2,
                                                                 dice: dice.clone(),
                                                                 parent_index: -1
                                                             }
                                                         );
                                                     // Moving on the board
                                                     } else{
-                                                        if k - dice.0 >= 0{
-                                                            if !(board_clone_k[(k - dice.0) as usize].0 == 2 && board_clone_k[(k - dice.0) as usize].1 > 1){
-                                                                if(board_clone_k[(k - dice.0) as usize].0 == 2 && board_clone_k[(k - dice.0) as usize].1 == 1){
-                                                                    hit_stones_2_clone_k = hit_stones_2_clone_k + 1;
-                                                                    board_clone_k[(k - dice.0) as usize].0 = 0;
-                                                                    board_clone_k[(k - dice.0) as usize].1 = 0;
+                                                        if k + dice.0 <= 23{
+                                                            if !(board_clone_k[(k + dice.0) as usize].0 == 1 && board_clone_k[(k + dice.0) as usize].1 > 1){
+                                                                if(board_clone_k[(k + dice.0) as usize].0 == 1 && board_clone_k[(k + dice.0) as usize].1 == 1){
+                                                                    hit_stones_1_clone_k = hit_stones_1_clone_k + 1;
+                                                                    board_clone_k[(k + dice.0) as usize].0 = 0;
+                                                                    board_clone_k[(k + dice.0) as usize].1 = 0;
                                                                 }
                                                                 board_clone_k[k as usize].1 = board_clone_k[k as usize].1 - 1;
                                                                 if(board_clone_k[k as usize].1 == 0){
                                                                     board_clone_k[k as usize].0 = 0;
                                                                 }
-                                                                board_clone_k[(k - dice.0) as usize].0 = 1;
-                                                                board_clone_k[(k - dice.0) as usize].1 = board_clone_k[(k - dice.0) as usize].1 + 1;
+                                                                board_clone_k[(k + dice.0) as usize].0 = 2;
+                                                                board_clone_k[(k + dice.0) as usize].1 = board_clone_k[(k + dice.0) as usize].1 + 1;
                                                                 did_move_in_k = 1;
                                                                 three_move_set.insert(
                                                                     board_state { board: board_clone_k.clone(), 
-                                                                        keep_count_1: keep_count_1_clone_k, 
-                                                                        keep_count_2: keep_count_of_2_stones,
-                                                                         hit_stones_1: hit_stones_1, 
-                                                                         hit_stones_2: hit_stones_2_clone_k,
+                                                                        keep_count_1: keep_count_of_1_stones, 
+                                                                        keep_count_2: keep_count_2_clone_k,
+                                                                         hit_stones_1: hit_stones_1_clone_k, 
+                                                                         hit_stones_2: hit_stones_2,
                                                                         dice: dice.clone(),
                                                                         parent_index: -1
                                                                     }
@@ -4056,55 +4009,55 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                                         }
                                                     }
                                                     if did_move_in_k == 1{
-                                                        for l in (0..=k).rev(){
-                                                            if(board_clone_k[l as usize].0 == 1){
+                                                        for l in 0..=k{
+                                                            if(board_clone_k[l as usize].0 == 2){
                                                                 let mut board_clone_l = board_clone_k.clone();
-                                                                let mut hit_stones_2_clone_l = hit_stones_2_clone_k;    
-                                                                let mut keep_count_1_clone_l = keep_count_1_clone_k;
+                                                                let mut hit_stones_1_clone_l = hit_stones_1_clone_k;    
+                                                                let mut keep_count_2_clone_l = keep_count_2_clone_k;
                                                                 // we need to check if everything is in zone of going out
                                                                 let mut all_in_zone = 1;
-                                                                for r in 6..=23{
-                                                                    if(board_clone_k[r].0 == 1){
+                                                                for r in 0..=17{
+                                                                    if(board_clone_k[r].0 == 2){
                                                                         all_in_zone = 0;
                                                                     }
                                                                 }
-                                                                if l - dice.0 < 0 && all_in_zone == 1{
-                                                                    keep_count_1_clone_l = keep_count_1_clone_l - 1;
+                                                                if l + dice.0 > 23 && all_in_zone == 1{
+                                                                    keep_count_2_clone_l = keep_count_2_clone_l - 1;
                                                                     board_clone_l[l as usize].1 = board_clone_l[l as usize].1 - 1;
                                                                     if board_clone_l[l as usize].1 == 0 {
                                                                         board_clone_l[l as usize].0 = 0
                                                                     }
                                                                     four_move_set.insert(
                                                                         board_state { board: board_clone_l.clone(), 
-                                                                            keep_count_1: keep_count_1_clone_l, 
-                                                                            keep_count_2: keep_count_of_2_stones,
-                                                                             hit_stones_1: hit_stones_1, 
-                                                                             hit_stones_2: hit_stones_2_clone_l,
+                                                                            keep_count_1: keep_count_of_1_stones, 
+                                                                            keep_count_2: keep_count_2_clone_l,
+                                                                             hit_stones_1: hit_stones_1_clone_l, 
+                                                                             hit_stones_2: hit_stones_2,
                                                                             dice: dice.clone(),
                                                                             parent_index: -1
                                                                         }
                                                                     );
                                                                 // Moving on the board
                                                                 } else{
-                                                                    if l - dice.0 >= 0{
-                                                                        if !(board_clone_l[(l - dice.0) as usize].0 == 2 && board_clone_l[(l - dice.0) as usize].1 > 1){
-                                                                            if(board_clone_l[(l - dice.0) as usize].0 == 2 && board_clone_l[(l - dice.0) as usize].1 == 1){
-                                                                                hit_stones_2_clone_l = hit_stones_2_clone_l + 1;
-                                                                                board_clone_l[(l - dice.0) as usize].0 = 0;
-                                                                                board_clone_l[(l - dice.0) as usize].1 = 0;
+                                                                    if l + dice.0 <= 23{
+                                                                        if !(board_clone_l[(l + dice.0) as usize].0 == 1 && board_clone_l[(l + dice.0) as usize].1 > 1){
+                                                                            if(board_clone_l[(l + dice.0) as usize].0 == 1 && board_clone_l[(l + dice.0) as usize].1 == 1){
+                                                                                hit_stones_1_clone_l = hit_stones_1_clone_l + 1;
+                                                                                board_clone_l[(l + dice.0) as usize].0 = 0;
+                                                                                board_clone_l[(l + dice.0) as usize].1 = 0;
                                                                             }
                                                                             board_clone_l[l as usize].1 = board_clone_l[l as usize].1 - 1;
                                                                             if(board_clone_l[l as usize].1 == 0){
                                                                                 board_clone_l[l as usize].0 = 0;
                                                                             }
-                                                                            board_clone_l[(l - dice.0) as usize].0 = 1;
-                                                                            board_clone_l[(l - dice.0) as usize].1 = board_clone_l[(l - dice.0) as usize].1 + 1;
+                                                                            board_clone_l[(l + dice.0) as usize].0 = 2;
+                                                                            board_clone_l[(l + dice.0) as usize].1 = board_clone_l[(l + dice.0) as usize].1 + 1;
                                                                             four_move_set.insert(
                                                                                 board_state { board: board_clone_l.clone(), 
-                                                                                    keep_count_1: keep_count_1_clone_l, 
-                                                                                    keep_count_2: keep_count_of_2_stones,
-                                                                                    hit_stones_1: hit_stones_1, 
-                                                                                    hit_stones_2: hit_stones_2_clone_l,
+                                                                                    keep_count_1: keep_count_of_1_stones, 
+                                                                                    keep_count_2: keep_count_2_clone_l,
+                                                                                    hit_stones_1: hit_stones_1_clone_l, 
+                                                                                    hit_stones_2: hit_stones_2,
                                                                                     dice: dice.clone(),
                                                                                     parent_index: -1
                                                                                 }
@@ -4130,7 +4083,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                             }
                         }
                     }
-
+                    println!("DICE ====== DICE TURN 2222222222222");
                     println!("{}", four_move_set.len());
                     println!("{}", three_move_set.len());
                     println!("{}", two_move_set.len());
@@ -4215,10 +4168,10 @@ fn main() {
     // =========================TEST================================
     // =============================================================
 
-    // let mut board: Vec<(i32, i32)> = vec![(2,2), (0,0), (0,0), (0,0), (0,0), (1,5), 
-    //                                     (0,0), (1,3), (0,0), (0,0), (0,0), (2,5), 
-    //                                     (1,5), (0,0), (0,0), (0,0), (2,3), (0,0), 
-    //                                     (2,5), (0,0), (0,0), (0,0), (0,0), (1,2)];
+    let mut board: Vec<(i32, i32)> = vec![(2,2), (0,0), (0,0), (0,0), (0,0), (1,5), 
+                                        (0,0), (1,3), (0,0), (0,0), (0,0), (2,5), 
+                                        (1,5), (0,0), (0,0), (0,0), (2,3), (0,0), 
+                                        (2,5), (0,0), (0,0), (0,0), (0,0), (1,2)];
 
     // let mut board2: Vec<(i32, i32)> = vec![(0,0), (2,1), (2,1), (0,0), (0,0), (1,5), 
     //                                     (0,0), (1,3), (0,0), (0,0), (0,0), (2,5), 
@@ -4226,23 +4179,23 @@ fn main() {
     //                                     (2,5), (0,0), (0,0), (0,0), (0,0), (1,2)];
 
     
-    // let mut hit_stones_1 : i32 = 0;
-    // let mut hit_stones_2 : i32 = 0;
-    // let mut keep_count_of_1_stones: i32 = 15;
-    // let mut keep_count_of_2_stones: i32 = 15;
-    // generate_boards(&board, 1, keep_count_of_1_stones, keep_count_of_2_stones, hit_stones_1, hit_stones_2);
+    let mut hit_stones_1 : i32 = 0;
+    let mut hit_stones_2 : i32 = 0;
+    let mut keep_count_of_1_stones: i32 = 15;
+    let mut keep_count_of_2_stones: i32 = 15;
+    generate_boards(&board, 1, keep_count_of_1_stones, keep_count_of_2_stones, hit_stones_1, hit_stones_2);
 
 
     // hit_stones test
-    let mut board_t: Vec<(i32, i32)> = vec![(2,2), (0,0), (0,0), (0,0), (0,0), (1,5), 
-    (0,0), (1,3), (0,0), (0,0), (0,0), (2,5), 
-    (1,5), (0,0), (0,0), (0,0), (2,3), (0,0), 
-    (2,3), (0,0), (2,1), (0,0), (2,1), (0,0)];
-    let mut hit_stones_1_t : i32 = 2;
-    let mut hit_stones_2_t : i32 = 0;
-    let mut keep_count_of_1_stones_t: i32 = 15;
-    let mut keep_count_of_2_stones_t: i32 = 15;
-    generate_boards(&board_t, 1, keep_count_of_1_stones_t, keep_count_of_2_stones_t, hit_stones_1_t, hit_stones_2_t);
+    // let mut board_t: Vec<(i32, i32)> = vec![(2,2), (0,0), (0,0), (0,0), (0,0), (1,5), 
+    // (0,0), (1,3), (0,0), (0,0), (0,0), (2,5), 
+    // (1,5), (0,0), (0,0), (0,0), (2,3), (0,0), 
+    // (2,3), (0,0), (2,1), (0,0), (2,1), (0,0)];
+    // let mut hit_stones_1_t : i32 = 2;
+    // let mut hit_stones_2_t : i32 = 0;
+    // let mut keep_count_of_1_stones_t: i32 = 15;
+    // let mut keep_count_of_2_stones_t: i32 = 15;
+    // generate_boards(&board_t, 1, keep_count_of_1_stones_t, keep_count_of_2_stones_t, hit_stones_1_t, hit_stones_2_t);
 
 
     // hit_stones test
@@ -4277,6 +4230,30 @@ fn main() {
     // let mut keep_count_of_1_stones_t: i32 = 15;
     // let mut keep_count_of_2_stones_t: i32 = 15;
     // generate_boards(&board_t, 2, keep_count_of_1_stones_t, keep_count_of_2_stones_t, hit_stones_1_t, hit_stones_2_t);
+
+
+    // going out tests
+    // Turn 1
+    // let mut board_going_out: Vec<(i32, i32)> = vec![(1,2), (1,4), (0,0), (1,1), (1,5), (1,3), 
+    // (0,0), (0,0), (0,0), (0,0), (0,0), (0,0), 
+    // (0,0), (0,0), (0,0), (0,0), (0,0), (0,0), 
+    // (2,5), (0,0), (2,3), (2,2), (2,5), (0,0)];
+    // let mut hit_stones_1_t : i32 = 0;
+    // let mut hit_stones_2_t : i32 = 0;
+    // let mut keep_count_of_1_stones_t: i32 = 15;
+    // let mut keep_count_of_2_stones_t: i32 = 15;
+    // generate_boards(&board_going_out, 1, keep_count_of_1_stones_t, keep_count_of_2_stones_t, hit_stones_1_t, hit_stones_2_t);
+
+    // Turn 2
+    // let mut board_going_out: Vec<(i32, i32)> = vec![(1,2), (1,4), (0,0), (1,1), (1,5), (1,3), 
+    // (0,0), (0,0), (0,0), (0,0), (0,0), (0,0), 
+    // (0,0), (0,0), (0,0), (0,0), (0,0), (0,0), 
+    // (2,5), (0,0), (2,3), (2,2), (2,5), (0,0)];
+    // let mut hit_stones_1_t : i32 = 0;
+    // let mut hit_stones_2_t : i32 = 0;
+    // let mut keep_count_of_1_stones_t: i32 = 15;
+    // let mut keep_count_of_2_stones_t: i32 = 15;
+    // generate_boards(&board_going_out, 2, keep_count_of_1_stones_t, keep_count_of_2_stones_t, hit_stones_1_t, hit_stones_2_t);
 
 
 
