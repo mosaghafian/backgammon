@@ -16,3 +16,50 @@
 
 
 # A through testing should happen
+
+# Need to put print statements in where we want to add to the set so we can see the outcomes
+
+
+# The possible scenarios to test: 
+turn 1 -> regular
+turn 1 -> regular hit
+turn 1 -> regulr going out 
+
+turn 1 -> double 
+turn 1 -> double hit
+turn 1 -> double going out
+
+Same thing for turn 2 for possible sceneraios to test
+
+# what do we need to check for is
+1. The generated number of possibilities is correcting
+2. Th outcomes doesn't have any possible errors the number of stones add up to 15
+3. There are no backward moves from turn 2 because the code is a copy of turn 1
+
+
+#########################################
+##############BUGS FOUND#################
+#########################################
+
+1. You can only go out when you can land on -1 or 24 for turn 1 and turn 2 respectively 
+So if there are stones on 1 and then there are stones on 4 you need to play 4, right? you can't play 1 and just becauese it's less than 0 we are scoring
+
+
+- a fix could be check behind in the house if there is anything that could be passed forward then it will be passed forward 
+- also when the spot is empty and there is nothing behind then we can only take off with the last spot in the house
+- 
+
+
+
+
+
+
+
+
+
+
+
+
+#########################################
+##############END BUGS FOUND#############
+#########################################
