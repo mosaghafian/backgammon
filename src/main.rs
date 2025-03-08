@@ -2347,13 +2347,11 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
     let possible_boards: Vec<(Vec<(i32, i32)>, Vec<i32>)> = vec![];
     let possible_dices: Vec<(i32, i32)> = vec![(1,1), (1,2), (1,3), (1,4), (1,5), (1,6), (2,1), (2,2), (2,3), (2,4), (2,5), (2,6), (3,1), (3,2), (3,3), (3,4), (3,5), (3,6), (4,1), (4,2), (4,3), (4,4), (4,5), (4,6), (5,1), (5,2), (5,3), (5,4), (5,5), (5,6), (6,1), (6,2), (6,3), (6,4), (6,5), (6,6)];
     // If we find the same exists we add the probablity?
-
     let mut all_set_board: HashSet<board_state> = HashSet::new();
     for dice in possible_dices{
         read_input();
         println!("Generate_boards dice: {}, {}", dice.0, dice.1);
-        if dice.0 != dice.1{
-            //
+        if dice.0 != dice.1{ 
             if turn == 1{
                 if hit_stones_1 > 0{
                     // For hit stones we need to settle hit_stones first
@@ -2363,7 +2361,6 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                     let mut hit_stones_1_clone = hit_stones_1;
                     let mut hit_stones_2_clone = hit_stones_2;
                     let mut board_clone = board.clone();
-
                     if hit_stones_1 == 1{
                         if !(board_clone[(24 - dice.0) as usize].0 == 2 && board_clone[(24 - dice.0) as usize].1 >= 2){
                             let mut board_clone_1 = board_clone.clone();
@@ -2381,7 +2378,6 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                     temporary_v.push((23 - i) as i32);
                                 }
                             }    
-
                             for i in temporary_v{
                                 let mut board_clone_r = board_clone_1.clone();
                                 let mut hit_stones_2_clone_r = hit_stones_2_clone_1;    
@@ -2538,12 +2534,26 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                         // ####################################################
                         // ###################Going Out 111####################
                         // ####################################################
-                        if i - dice.0 < 0 && all_in_zone == 1{
+                        // I need to add another variable that the slot is empty for that position and it's the biggest slot in the house
+                        // Is there two possible solutions here
+                        // slot full and go out from the slot
+                        // slot not full going out with the biggest
+                        // biggest is not going out 
+                        // so this is an or between all in zone and dice giving negative and slot being full?
+                        // of all in zone and dice negative and nothing behind?
+                        let mut is_i_the_biggest = 1;
+                        for b in (i+1)..=5{
+                            if(board_clone[b as usize].0 == 1){
+                                is_i_the_biggest = 0;
+                            }
+                        }
+                        if (i - dice.0 < 0 && all_in_zone == 1) && (board_clone[(dice.0 - 1) as usize].0 == 1 || is_i_the_biggest == 1){
                             keep_count_1_clone = keep_count_1_clone - 1;
                             board_clone[i as usize].1 = board_clone[i as usize].1 - 1;
                             if board_clone[i as usize].1 == 0 {
                                 board_clone[i as usize].0 = 0
                             }
+
                         // Moving on the board
                         } else{
                             if i - dice.0 >= 0{
@@ -2585,7 +2595,13 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                         // ####################################################
                                         // ###################Going Out 111####################
                                         // ####################################################
-                                        if r - dice.1 < 0 && all_in_zone_r == 1{
+                                        let mut is_i_the_biggest = 1;
+                                        for b in (r+1)..=5{
+                                            if(board_clone[b as usize].0 == 1){
+                                                is_i_the_biggest = 0;
+                                            }
+                                        }
+                                        if (r - dice.1 < 0 && all_in_zone_r == 1) && (board_clone[(dice.1 - 1) as usize].0 == 1 || is_i_the_biggest == 1){
                                             keep_count_1_clone_r = keep_count_1_clone_r - 1;
                                             board_clone_r[i as usize].1 = board_clone_r[i as usize].1 - 1;
                                             if board_clone_r[i as usize].1 == 0 {
@@ -2636,7 +2652,6 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                             }
                         }
                     }
-
                 }
             
             // Turn of 2
@@ -2832,9 +2847,16 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
 
                         // is this fine?
                         // ####################################################
-                        // ###################Going Out 111####################
+                        // ###################Going Out 222####################
                         // ####################################################
-                        if i + dice.0 > 23 && all_in_zone == 1{
+
+                        let mut is_i_the_biggest = 1;
+                        for b in 18..i{
+                            if(board_clone[b as usize].0 == 2){
+                                is_i_the_biggest = 0;
+                            }
+                        }
+                        if (i + dice.0 > 23 && all_in_zone == 1) && (board_clone[(24 - dice.0) as usize].0 == 2 || is_i_the_biggest == 1){
                             keep_count_2_clone = keep_count_2_clone - 1;
                             board_clone[i as usize].1 = board_clone[i as usize].1 - 1;
                             if board_clone[i as usize].1 == 0 {
@@ -2877,11 +2899,17 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                         // ####################################################
                                         // ###################Going Out 222####################
                                         // ####################################################
-                                        if r + dice.1 > 23 && all_in_zone_r == 1{
+                                        let mut is_i_the_biggest = 1;
+                                        for b in 18..r{
+                                            if(board_clone[b as usize].0 == 2){
+                                                is_i_the_biggest = 0;
+                                            }
+                                        }
+                                        if (r + dice.1 > 23 && all_in_zone_r == 1) && (board_clone[(24 - dice.1) as usize].0 == 2 || is_i_the_biggest == 1){
                                             keep_count_2_clone_r = keep_count_2_clone_r - 1;
-                                            board_clone_r[i as usize].1 = board_clone_r[i as usize].1 - 1;
-                                            if board_clone_r[i as usize].1 == 0 {
-                                                board_clone_r[i as usize].0 = 0
+                                            board_clone_r[r as usize].1 = board_clone_r[r as usize].1 - 1;
+                                            if board_clone_r[r as usize].1 == 0 {
+                                                board_clone_r[r as usize].0 = 0
                                             }
                                             set_board.insert(
                                                 board_state{
@@ -3013,7 +3041,13 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                     // ####################################################
                                     // ###################Going Out 111####################
                                     // ####################################################
-                                    if i - dice.0 < 0 && all_in_zone == 1{
+                                    let mut is_i_the_biggest = 1;
+                                    for b in (i+1)..=5{
+                                        if(board_clone_i[b as usize].0 == 1){
+                                            is_i_the_biggest = 0;
+                                        }
+                                    }
+                                    if (i - dice.0 < 0 && all_in_zone == 1) && (board_clone_i[(dice.0 - 1) as usize].0 == 1 || is_i_the_biggest == 1){
                                         keep_count_1_clone_i = keep_count_1_clone_i - 1;
                                         board_clone_i[i as usize].1 = board_clone_i[i as usize].1 - 1;
                                         if board_clone_i[i as usize].1 == 0 {
@@ -3085,7 +3119,13 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                                 // ####################################################
                                                 // ###################Going Out 111####################
                                                 // ####################################################
-                                                if j - dice.0 < 0 && all_in_zone == 1{
+                                                let mut is_i_the_biggest = 1;
+                                                for b in (j+1)..=5{
+                                                    if(board_clone_j[b as usize].0 == 1){
+                                                        is_i_the_biggest = 0;
+                                                    }
+                                                }
+                                                if (j - dice.0 < 0 && all_in_zone == 1) && (board_clone_j[(dice.0 - 1) as usize].0 == 1 || is_i_the_biggest == 1){
                                                     keep_count_1_clone_j = keep_count_1_clone_j - 1;
                                                     board_clone_j[i as usize].1 = board_clone_j[i as usize].1 - 1;
                                                     if board_clone_j[i as usize].1 == 0 {
@@ -3154,7 +3194,13 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                                             // ####################################################
                                                             // ###################Going Out 111####################
                                                             // ####################################################
-                                                            if k - dice.0 < 0 && all_in_zone == 1{
+                                                            let mut is_i_the_biggest = 1;
+                                                            for b in (k+1)..=5{
+                                                                if(board_clone_k[b as usize].0 == 1){
+                                                                    is_i_the_biggest = 0;
+                                                                }
+                                                            }
+                                                            if (k - dice.0 < 0 && all_in_zone == 1) && (board_clone_k[(dice.0 - 1) as usize].0 == 1 || is_i_the_biggest == 1){
                                                                 keep_count_1_clone_k = keep_count_1_clone_k - 1;
                                                                 board_clone_k[k as usize].1 = board_clone_k[k as usize].1 - 1;
                                                                 if board_clone_k[k as usize].1 == 0 {
@@ -3278,7 +3324,13 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                             // ####################################################
                             // ###################Going Out 111####################
                             // ####################################################
-                            if i - dice.0 < 0 && all_in_zone == 1{
+                            let mut is_i_the_biggest = 1;
+                            for b in (i+1)..=5{
+                                if(board_clone_i[b as usize].0 == 1){
+                                    is_i_the_biggest = 0;
+                                }
+                            }
+                            if (i - dice.0 < 0 && all_in_zone == 1) && (board_clone_i[(dice.0 - 1) as usize].0 == 1 || is_i_the_biggest == 1){
                                 keep_count_1_clone_i = keep_count_1_clone_i - 1;
                                 board_clone_i[i as usize].1 = board_clone_i[i as usize].1 - 1;
                                 if board_clone_i[i as usize].1 == 0 {
@@ -3325,7 +3377,6 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                     }
                                 }
                             }
-
                             // println!("i: {}", i);
                             // for mut s in &one_move_set{
                             //     display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1.clone(), &mut s.keep_count_2.clone());
@@ -3349,7 +3400,13 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                         // ####################################################
                                         // ###################Going Out 111####################
                                         // ####################################################
-                                        if j - dice.0 < 0 && all_in_zone == 1{
+                                        let mut is_j_the_biggest = 1;
+                                        for b in (j+1)..=5{
+                                            if(board_clone_j[b as usize].0 == 1){
+                                                is_j_the_biggest = 0;
+                                            }
+                                        }
+                                        if (j - dice.0 < 0 && all_in_zone == 1) && (board_clone_j[(dice.0 - 1) as usize].0 == 1 || is_j_the_biggest == 1){
                                             keep_count_1_clone_j = keep_count_1_clone_j - 1;
                                             board_clone_j[i as usize].1 = board_clone_j[i as usize].1 - 1;
                                             if board_clone_j[i as usize].1 == 0 {
@@ -3418,7 +3475,13 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                                     // ####################################################
                                                     // ###################Going Out 111####################
                                                     // ####################################################
-                                                    if k - dice.0 < 0 && all_in_zone == 1{
+                                                    let mut is_k_the_biggest = 1;
+                                                    for b in (k+1)..=5{
+                                                        if(board_clone_k[b as usize].0 == 1){
+                                                            is_k_the_biggest = 0;
+                                                        }
+                                                    }
+                                                    if (k - dice.0 < 0 && all_in_zone == 1) && (board_clone_k[(dice.0 - 1) as usize].0 == 1 || is_k_the_biggest == 1){
                                                         keep_count_1_clone_k = keep_count_1_clone_k - 1;
                                                         board_clone_k[k as usize].1 = board_clone_k[k as usize].1 - 1;
                                                         if board_clone_k[k as usize].1 == 0 {
@@ -3485,7 +3548,13 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                                                 // ####################################################
                                                                 // ###################Going Out 111####################
                                                                 // ####################################################
-                                                                if l - dice.0 < 0 && all_in_zone == 1{
+                                                                let mut is_l_the_biggest = 1;
+                                                                for b in (l+1)..=5{
+                                                                    if(board_clone_l[b as usize].0 == 1){
+                                                                        is_l_the_biggest = 0;
+                                                                    }
+                                                                }
+                                                                if (l - dice.0 < 0 && all_in_zone == 1) && (board_clone_l[(dice.0 - 1) as usize].0 == 1 || is_l_the_biggest == 1){
                                                                     keep_count_1_clone_l = keep_count_1_clone_l - 1;
                                                                     board_clone_l[l as usize].1 = board_clone_l[l as usize].1 - 1;
                                                                     if board_clone_l[l as usize].1 == 0 {
@@ -3502,7 +3571,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                                                         }
                                                                     );
                                                                 // Moving on the board
-                                                                } else{
+                                                                } else {
                                                                     if l - dice.0 >= 0{
                                                                         if !(board_clone_l[(l - dice.0) as usize].0 == 2 && board_clone_l[(l - dice.0) as usize].1 > 1){
                                                                             if(board_clone_l[(l - dice.0) as usize].0 == 2 && board_clone_l[(l - dice.0) as usize].1 == 1){
@@ -3591,8 +3660,8 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                 // ===================== DICES BEING EQUAL  =================
                 // ==========================================================
                 if hit_stones_2 > 0{
-                    println!("HIT_STONE_2 IN DICE.0 == DICE.1");
 
+                    println!("HIT_STONE_2 IN DICE.0 == DICE.1");
                     let mut board_clone_2: Vec<(i32, i32)> = board.clone();
                     let mut hit_stones_1_clone_2 = hit_stones_1;    
                     let mut hit_stones_2_clone = hit_stones_2;
@@ -3689,7 +3758,6 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                     //     display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1.clone(), &mut s.keep_count_2.clone());
                                     // }
                                     //read_input();
-                                    
                                     if did_move_in_i == 1 && remaining_dice > 1{
                                         for j in i..=23{
                                             if(board_clone_i[j as usize].0 == 2){
@@ -3780,7 +3848,6 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                     }
                                 }
                             }
-                            
                             println!("{}", three_move_set.len());
                             println!("{}", two_move_set.len());
                             println!("{}", one_move_set.len());
@@ -3848,7 +3915,14 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                             // ####################################################
                             // ###################Going Out 222####################
                             // ####################################################
-                            if i + dice.0 > 23 && all_in_zone == 1{
+
+                            let mut is_i_the_biggest = 1;
+                            for b in 18..i{
+                                if(board_clone_i[b as usize].0 == 2){
+                                    is_i_the_biggest = 0;
+                                }
+                            }
+                            if (i + dice.0 > 23 && all_in_zone == 1) && (board_clone_i[(24 - dice.0) as usize].0 == 2 || is_i_the_biggest == 1){
                                 keep_count_2_clone_i = keep_count_2_clone_i - 1;
                                 board_clone_i[i as usize].1 = board_clone_i[i as usize].1 - 1;
                                 if board_clone_i[i as usize].1 == 0 {
@@ -3866,7 +3940,6 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                     }
                                 );
                             // Moving on the board
-
                             } else{
                                 if i + dice.0 <= 23{
                                     if !(board_clone_i[(i + dice.0) as usize].0 == 1 && board_clone_i[(i + dice.0) as usize].1 > 1){
@@ -3896,12 +3969,12 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                     }
                                 }
                             }
-
                             // println!("i: {}", i);
                             // for mut s in &one_move_set{
                             //     display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1.clone(), &mut s.keep_count_2.clone());
                             // }
                             //read_input();
+
                             if did_move_in_i == 1{
                                 for j in i..=23{
                                     if(board_clone_i[j as usize].0 == 2){
@@ -3920,7 +3993,13 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                         // ####################################################
                                         // ###################Going Out 222####################
                                         // ####################################################
-                                        if j + dice.0 > 23 && all_in_zone == 1{
+                                        let mut is_j_the_biggest = 1;
+                                        for b in 18..j{
+                                            if(board_clone_j[b as usize].0 == 2){
+                                                is_j_the_biggest = 0;
+                                            }
+                                        }
+                                        if (j + dice.0 > 23 && all_in_zone == 1) && (board_clone_j[(24 - dice.0) as usize].0 == 2 || is_j_the_biggest == 1){
                                             keep_count_2_clone_j = keep_count_2_clone_j - 1;
                                             board_clone_j[i as usize].1 = board_clone_j[i as usize].1 - 1;
                                             if board_clone_j[i as usize].1 == 0 {
@@ -3989,7 +4068,13 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                                     // ####################################################
                                                     // ###################Going Out 222####################
                                                     // ####################################################
-                                                    if k + dice.0 > 23  && all_in_zone == 1{
+                                                    let mut is_k_the_biggest = 1;
+                                                    for b in 18..i{
+                                                        if(board_clone_k[b as usize].0 == 2){
+                                                            is_k_the_biggest = 0;
+                                                        }
+                                                    }
+                                                    if (k + dice.0 > 23  && all_in_zone == 1) && (board_clone_k[(24 - dice.0) as usize].0 == 2 || is_k_the_biggest == 1){
                                                         keep_count_2_clone_k = keep_count_2_clone_k - 1;
                                                         board_clone_k[k as usize].1 = board_clone_k[k as usize].1 - 1;
                                                         if board_clone_k[k as usize].1 == 0 {
@@ -4056,7 +4141,13 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                                                 // ####################################################
                                                                 // ###################Going Out 222####################
                                                                 // ####################################################
-                                                                if l + dice.0 > 23 && all_in_zone == 1{
+                                                                let mut is_l_the_biggest = 1;
+                                                                for b in 18..l{
+                                                                    if(board_clone_l[b as usize].0 == 2){
+                                                                        is_l_the_biggest = 0;
+                                                                    }
+                                                                }
+                                                                if (l + dice.0 > 23 && all_in_zone == 1) && (board_clone_l[(24 - dice.0) as usize].0 == 2 || is_l_the_biggest == 1){
                                                                     keep_count_2_clone_l = keep_count_2_clone_l - 1;
                                                                     board_clone_l[l as usize].1 = board_clone_l[l as usize].1 - 1;
                                                                     if board_clone_l[l as usize].1 == 0 {
@@ -4158,7 +4249,6 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                 }
             }
         }
-        
     }
 }
 
@@ -4324,7 +4414,18 @@ fn main() {
     let mut keep_count_of_2_stones_t: i32 = 15;
     generate_boards(&board_going_out, 1, keep_count_of_1_stones_t, keep_count_of_2_stones_t, hit_stones_1_t, hit_stones_2_t);
 
+    // Turn 1
+    let mut board_going_out: Vec<(i32, i32)> = vec![(0,0), (1,4), (0,0), (0,0), (0,0), (0,0), 
+    (0,0), (0,0), (0,0), (0,0), (0,0), (0,0), 
+    (0,0), (0,0), (0,0), (0,0), (0,0), (0,0), 
+    (2,5), (0,0), (2,3), (2,2), (2,5), (0,0)];
+    let mut hit_stones_1_t : i32 = 0;
+    let mut hit_stones_2_t : i32 = 0;
+    let mut keep_count_of_1_stones_t: i32 = 11;
+    let mut keep_count_of_2_stones_t: i32 = 15;
+    generate_boards(&board_going_out, 1, keep_count_of_1_stones_t, keep_count_of_2_stones_t, hit_stones_1_t, hit_stones_2_t);
 
+    //
 
     // =============================================================
     // =====================END TEST GENERATE BOARD=================
@@ -4449,9 +4550,6 @@ fn main() {
     //     (2,5), (0,0), (0,0), (0,0), (0,0), (1,2)];
     // }
 }
-
-
-
 // The things that need a hyperparameter to start with
 // how offensive you suold be, how defencive, how forwarding
 // learn how to parallalize this shit

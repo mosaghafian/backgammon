@@ -63,3 +63,30 @@ So if there are stones on 1 and then there are stones on 4 you need to play 4, r
 #########################################
 ##############END BUGS FOUND#############
 #########################################
+
+                        let mut is_i_the_biggest = 1;
+                        for b in (i+1)..=5{
+                            if(board_clone[b as usize].0 == 1){
+                                is_i_the_biggest = 0;
+                            }
+                        }
+                        if (i - dice.0 < 0 && all_in_zone == 1) && (board_clone[i as usize].0 == 1 || is_i_the_biggest == 1){
+                            keep_count_1_clone = keep_count_1_clone - 1;
+                            board_clone[i as usize].1 = board_clone[i as usize].1 - 1;
+                            if board_clone[i as usize].1 == 0 {
+                                board_clone[i as usize].0 = 0
+                            }
+
+
+                        let mut is_i_the_biggest = 1;
+                        for b in 18..i{
+                            if(board_clone[b as usize].0 == 2){
+                                is_i_the_biggest = 0;
+                            }
+                        }
+
+                         && (board_clone[i as usize].0 == 2 || is_i_the_biggest == 1)
+
+
+
+I have some suspicion about only using one order for the dices
