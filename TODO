@@ -1,4 +1,14 @@
 
+Changing the order of the TODO top to bottom
+I need to test one more time everything for both turns
+and then aggregate them so I have a full level,
+and after I have a full level and figured out the odds
+then I can go developiing and connecting levels components to each other
+use generate to generate the possible choices, 
+and then next level has 36 possibilities of linking to that possible choice
+
+
+
 # Analyze what is wrong with the double dice being equal 
 # After analyzing it again, what I have found is that the branching doesn't happen if we have gone to a "if statement and moved something" we just move regardless
 # There is a stupid version which I thought. Or we can flag that we have gone into the statement and then go from there?

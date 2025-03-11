@@ -2341,6 +2341,22 @@ struct board_state{
     dice: (i32, i32),
     parent_index: i32,
 }
+
+#[derive(Hash, Eq, PartialEq, Clone)]
+struct dice_segment{
+    board_state_vec: Vec<board_state>,
+    dice: (i32, i32),
+    parent_index: i32,
+}
+
+#[derive(Hash, Eq, PartialEq, Clone)]
+struct level{
+    dice_segment_vec: Vec<dice_segment>,
+    turn: i32,
+    level: i32,
+}
+
+
 use std::collections::HashSet;
 // the order does matter, but the kinds that make the same board kinda don't matter?
 fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i32 , keep_count_of_2_stones: i32, hit_stones_1: i32, hit_stones_2: i32){
@@ -2809,7 +2825,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                     for mut s in set_board{
                         display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1, &mut s.keep_count_2);
                     }
-
+                    
                 // End of hit 2
 
                 // Begining of turn 2, not alike dices
@@ -4273,6 +4289,27 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
     }
 }
 
+//
+fn  generate_level(board: &Vec<(i32, i32)>){
+
+}
+
+// in this root is initiated and calls to levels
+fn generate_root(board: &Vec<(i32, i32)>, turn: i32, dice: &(i32, i32), keep_count_of_1_stones: i32, keep_count_of_2_stones: i32, hit_stones_1: i32, hit_stones_2: i32) -> i32{
+    // generate root has the vector of stats
+    // do I need a way to hold the stats like a struct
+    return 0;
+}
+
+// In this function, the choice of ai is given 
+fn generate_ai(board: &Vec<(i32, i32)>, turn: i32, dice: &(i32, i32), keep_count_of_1_stones: i32, keep_count_of_2_stones: i32, hit_stones_1: i32, hit_stones_2: i32) -> i32 {
+    // Generate the possible choices
+    // go to generate root
+    // generate root has an array of stats maybe for that possible choices
+    // the one with the highest is given back
+    return 0;
+}
+
 mod test;
 // use tch::{Tensor, Device};
 // todo: figure out how to make the program in parallel with a mutex that keeps count of the file numbers
@@ -4415,12 +4452,13 @@ fn main() {
     let mut board_going_out: Vec<(i32, i32)> = vec![(1,2), (1,4), (0,0), (1,1), (1,5), (1,3), 
     (0,0), (0,0), (0,0), (0,0), (0,0), (0,0), 
     (0,0), (0,0), (0,0), (0,0), (0,0), (0,0), 
-    (2,5), (0,0), (0,0), (0,0), (0,0), (0,0)];
+    (2,5), (0,0), (0,0), (0,0), (0,0), (2,4)];
     let mut hit_stones_1_t : i32 = 0;
     let mut hit_stones_2_t : i32 = 0;
     let mut keep_count_of_1_stones_t: i32 = 15;
-    let mut keep_count_of_2_stones_t: i32 = 5;
+    let mut keep_count_of_2_stones_t: i32 = 9;
     generate_boards(&board_going_out, 2, keep_count_of_1_stones_t, keep_count_of_2_stones_t, hit_stones_1_t, hit_stones_2_t);
+
 
 
     // Turn 1
