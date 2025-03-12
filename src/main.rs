@@ -2385,9 +2385,9 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
 
     println!("All_set_board: {}", all_set_board.len());
     println!("================================");
-    read_input();
+    // read_input();
     for dice in possible_dices{
-        read_input();
+        // read_input();
         println!("Generate_boards dice: {}, {}", dice.0, dice.1);
         if dice.0 != dice.1{ 
             if turn == 1{
@@ -3179,7 +3179,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                             }
                         }
                     }
-                    read_input();
+                    // read_input();
                     println!("Size hashset: {}", set_board.len());
                     for mut s in set_board{
                         display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1, &mut s.keep_count_2);
@@ -3287,7 +3287,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                             let mut two_move_set: HashSet<board_state> = HashSet::new();
                             let mut three_move_set: HashSet<board_state> = HashSet::new();
                             println!("REMAINING DICE: {}", remaining_dice);
-                            read_input();
+                            // read_input();
                             for i in (0..=23).rev(){
                                 if(board[i as usize].0 == 1){
                                     let mut board_clone_i: Vec<(i32, i32)> = board_clone_1.clone();
@@ -3525,7 +3525,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                             println!("{}", three_move_set.len());
                             println!("{}", two_move_set.len());
                             println!("{}", one_move_set.len());
-                            read_input();
+                            // read_input();
                             if three_move_set.len() != 0{
                                 println!("Three");
                                 for mut s in set_board{
@@ -3553,7 +3553,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                     println!("Two");
                                     set_board = two_move_set.clone();
                                     for mut s in &set_board{
-                                        display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1, &mut s.keep_count_2);
+                                        display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1.clone(), &mut s.keep_count_2.clone());
                                     }
                                     if let Some(segment) = all_set_board.get_mut(&dice) {
                                         println!("Found a segment!");
@@ -3575,7 +3575,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                         println!("One");
                                         set_board = one_move_set.clone();
                                         for mut s in &set_board{
-                                            display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1, &mut s.keep_count_2);
+                                            display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1.clone(), &mut s.keep_count_2.clone());
                                         }
                                         if let Some(segment) = all_set_board.get_mut(&dice) {
                                             println!("Found a segment!");
@@ -3599,7 +3599,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                     }
                 } else {
                     println!("Here in dice.0 == dice.1");
-                    read_input();
+                    // read_input();
                     let mut set_board: HashSet<board_state> = HashSet::new();
                     // Find an anchor 
                     // This is supposed to figure out the 4 possible moves
@@ -3933,7 +3933,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                                                                 display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1.clone(), &mut s.keep_count_2.clone());
                                                                             }
                                                                             println!("LINE 3253");
-                                                                            read_input();
+                                                                            // read_input();
                                                             }
                                                         }
                                                     }
@@ -3950,12 +3950,12 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                     println!("{}", three_move_set.len());
                     println!("{}", two_move_set.len());
                     println!("{}", one_move_set.len());
-                    read_input();
+                    // read_input();
                     if four_move_set.len() != 0{
                         set_board = four_move_set.clone();
-                        for mut s in set_board{
+                        for mut s in &set_board{
                             println!("Four");
-                            display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1, &mut s.keep_count_2);
+                            display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1.clone(), &mut s.keep_count_2.clone());
                         }
                         if let Some(segment) = all_set_board.get_mut(&dice) {
                             println!("Found a segment!");
@@ -4140,7 +4140,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                             let mut two_move_set: HashSet<board_state> = HashSet::new();
                             let mut three_move_set: HashSet<board_state> = HashSet::new();
                             println!("REMAINING DICE: {}", remaining_dice);
-                            read_input();
+                            // read_input();
                             for i in (0..=23).rev(){
                                 if(board[i as usize].0 == 2){
                                     let mut board_clone_i: Vec<(i32, i32)> = board_clone_2.clone();
@@ -4277,12 +4277,12 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                             println!("{}", three_move_set.len());
                             println!("{}", two_move_set.len());
                             println!("{}", one_move_set.len());
-                            read_input();
+                            // read_input();
                             if three_move_set.len() != 0{
                                 println!("Three");
                                 set_board = three_move_set.clone();
-                                for mut s in set_board{
-                                    display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1, &mut s.keep_count_2);
+                                for mut s in &set_board{
+                                    display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1.clone(), &mut s.keep_count_2.clone());
                                 }
                                 if let Some(segment) = all_set_board.get_mut(&dice) {
                                     println!("Found a segment!");
@@ -4304,8 +4304,8 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                 if two_move_set.len() != 0{
                                     println!("Two");
                                     set_board = two_move_set.clone();
-                                    for mut s in set_board{
-                                        display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1, &mut s.keep_count_2);
+                                    for mut s in &set_board{
+                                        display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1.clone(), &mut s.keep_count_2.clone());
                                     }
                                     if let Some(segment) = all_set_board.get_mut(&dice) {
                                         println!("Found a segment!");
@@ -4326,8 +4326,8 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                     if one_move_set.len() != 0{
                                         println!("One");
                                         set_board = one_move_set.clone();
-                                        for mut s in set_board{
-                                            display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1, &mut s.keep_count_2);
+                                        for mut s in &set_board{
+                                            display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1.clone(), &mut s.keep_count_2.clone());
                                         }
                                         if let Some(segment) = all_set_board.get_mut(&dice) {
                                             println!("Found a segment!");
@@ -4351,7 +4351,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                     }
                 } else {
                     println!("22222222 Here in dice.0 == dice.1");
-                    read_input();
+                    // read_input();
                     let mut set_board: HashSet<board_state> = HashSet::new();
                     // Find an anchor 
                     // This is supposed to figure out the 4 possible moves
@@ -4681,12 +4681,12 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                     println!("{}", three_move_set.len());
                     println!("{}", two_move_set.len());
                     println!("{}", one_move_set.len());
-                    read_input();
+                    // read_input();
                     if four_move_set.len() != 0{
                         set_board = four_move_set.clone();
-                        for mut s in set_board{
+                        for mut s in &set_board{
                             println!("Four");
-                            display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1, &mut s.keep_count_2);
+                            display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1.clone(), &mut s.keep_count_2.clone());
                         }
                         if let Some(segment) = all_set_board.get_mut(&dice) {
                             println!("Found a segment!");
@@ -4773,6 +4773,12 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
             }
         }
     }
+    let mut sum_state_board = 0;
+    for (dice, seg) in &all_set_board{
+        sum_state_board = sum_state_board + seg.board_state_vec.len();
+    }
+    println!("sum_state_board: {}", sum_state_board);
+    read_input();
     return all_set_board;
 }
 
@@ -4819,7 +4825,7 @@ fn main() {
     //     println!("CUDA is not available.");
     // }
     
-    read_input();
+    // read_input();
     // user::clear_terminal();
     // let mut game_mode: i32 = 0;
     // game_mode = user::user_menu();
@@ -4857,10 +4863,10 @@ fn main() {
     // =========================TEST================================
     // =============================================================
 
-    // let mut board: Vec<(i32, i32)> = vec![(2,2), (0,0), (0,0), (0,0), (0,0), (1,5), 
-    //                                     (0,0), (1,3), (0,0), (0,0), (0,0), (2,5), 
-    //                                     (1,5), (0,0), (0,0), (0,0), (2,3), (0,0), 
-    //                                     (2,5), (0,0), (0,0), (0,0), (0,0), (1,2)];
+    let mut board: Vec<(i32, i32)> = vec![(2,2), (0,0), (0,0), (0,0), (0,0), (1,5), 
+                                        (0,0), (1,3), (0,0), (0,0), (0,0), (2,5), 
+                                        (1,5), (0,0), (0,0), (0,0), (2,3), (0,0), 
+                                        (2,5), (0,0), (0,0), (0,0), (0,0), (1,2)];
 
     // let mut board2: Vec<(i32, i32)> = vec![(0,0), (2,1), (2,1), (0,0), (0,0), (1,5), 
     //                                     (0,0), (1,3), (0,0), (0,0), (0,0), (2,5), 
@@ -4868,11 +4874,11 @@ fn main() {
     //                                     (2,5), (0,0), (0,0), (0,0), (0,0), (1,2)];
 
     
-    // let mut hit_stones_1 : i32 = 0;
-    // let mut hit_stones_2 : i32 = 0;
-    // let mut keep_count_of_1_stones: i32 = 15;
-    // let mut keep_count_of_2_stones: i32 = 15;
-    // generate_boards(&board, 2, keep_count_of_1_stones, keep_count_of_2_stones, hit_stones_1, hit_stones_2);
+    let mut hit_stones_1 : i32 = 0;
+    let mut hit_stones_2 : i32 = 0;
+    let mut keep_count_of_1_stones: i32 = 15;
+    let mut keep_count_of_2_stones: i32 = 15;
+    generate_boards(&board, 2, keep_count_of_1_stones, keep_count_of_2_stones, hit_stones_1, hit_stones_2);
 
 
     // hit_stones test
