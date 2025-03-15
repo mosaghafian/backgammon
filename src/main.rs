@@ -2,6 +2,7 @@ use rand::Rng;
 use core::num;
 use std::fmt::format;
 use std::hash::Hash;
+use std::ops::Not;
 use std::{fs::read};
 use std::fs::OpenOptions;
 use std::io::Write;
@@ -13,6 +14,7 @@ use std::path::Path;
 use lazy_static::lazy_static;
 use std::sync::Mutex;
 mod user;
+use ordered_float::NotNan;
 
 lazy_static! {
     static ref COUNTER: Mutex<i32> = Mutex::new(100000);
@@ -2347,6 +2349,7 @@ struct dice_segment{
     board_state_vec: Vec<board_state>,
     dice: (i32, i32),
     parent_index: i32,
+    //odds: NotNan<f64>,
 }
 
 #[derive(Hash, Eq, PartialEq, Clone, Debug)]
@@ -2386,7 +2389,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
     println!("All_set_board: {}", all_set_board.len());
     println!("================================");
     // read_input();
-    for dice in possible_dices{
+    for dice in &possible_dices{
         // read_input();
         println!("Generate_boards dice: {}, {}", dice.0, dice.1);
         if dice.0 != dice.1{ 
@@ -4779,28 +4782,78 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
     }
     println!("sum_state_board: {}", sum_state_board);
     read_input();
+    for dice in &possible_dices {
+        if let Some(ds) = all_set_board.get_mut(dice) {
+            if dice.0 != dice.1 {
+                if let Some(segment) = all_set_board.get_mut(&(dice.1, dice.0)) { // Changed to get
+                    for bs in &segment.board_state_vec { // No need for extra parentheses
+                        if !ds.board_state_vec.contains(bs) {
+                            ds.board_state_vec.push(bs.clone());
+                        }
+                    }
+                }
+            }
+        } else {
+            println!("EEERRRROOOORRRRR");
+        }
+    }
+    let mut asb = all_set_board.clone();
+    read_input();
+    for dice in &possible_dices {
+        if let Some(ds) = all_set_board.get_mut(dice) {
+            if dice.0 != dice.1 {
+                if let Some(segment) = all_set_board.get_mut(&(dice.1, dice.0)) { // Changed to get
+                    for bs in &segment.board_state_vec { // No need for extra parentheses
+                        if !ds.board_state_vec.contains(bs) {
+                            ds.board_state_vec.push(bs.clone());
+                        }
+                    }
+                }
+            }
+        } else {
+            println!("Error");
+        }
+    }
     return all_set_board;
+
+
+
 }
 
-//
-fn  generate_level(board: &Vec<(i32, i32)>){
+// We need to link the levels between each other
+// We need to generate a whole segement and then take of r
+
+fn  generate_level(level: level){
 
 }
 
 // in this root is initiated and calls to levels
-fn generate_root(board: &Vec<(i32, i32)>, turn: i32, dice: &(i32, i32), keep_count_of_1_stones: i32, keep_count_of_2_stones: i32, hit_stones_1: i32, hit_stones_2: i32) -> i32{
+fn generate_root(possible_boards: &Vec<(i32, i32)>) {
     // generate root has the vector of stats
     // do I need a way to hold the stats like a struct
-    return 0;
+    
 }
 
 // In this function, the choice of ai is given 
-fn generate_ai(board: &Vec<(i32, i32)>, turn: i32, dice: &(i32, i32), keep_count_of_1_stones: i32, keep_count_of_2_stones: i32, hit_stones_1: i32, hit_stones_2: i32) -> i32 {
+fn generate_ai(board: &Vec<(i32, i32)>, turn: i32, dice: &(i32, i32), keep_count_of_1_stones: i32, keep_count_of_2_stones: i32, hit_stones_1: i32, hit_stones_2: i32) {
     // Generate the possible choices
     // go to generate root
     // generate root has an array of stats maybe for that possible choices
     // the one with the highest is given back
-    return 0;
+    let possible_boards = generate_boards(board, turn, keep_count_of_1_stones, keep_count_of_2_stones, hit_stones_1, hit_stones_2);
+
+    if let Some(ds) = possible_boards.get(dice) {
+        if ds.board_state_vec.len() > 0 {
+            for boards in &ds.board_state_vec{
+
+            }
+        } else {
+            println!("No possible moves");
+        }
+    } else {
+        println!("Key does not exist");
+
+    }
 }
 
 mod test;
@@ -4951,8 +5004,6 @@ fn main() {
     let mut keep_count_of_1_stones_t: i32 = 15;
     let mut keep_count_of_2_stones_t: i32 = 9;
     generate_boards(&board_going_out, 2, keep_count_of_1_stones_t, keep_count_of_2_stones_t, hit_stones_1_t, hit_stones_2_t);
-
-
 
     // Turn 1
     // let mut board_going_out: Vec<(i32, i32)> = vec![(1,2), (1,4), (0,0), (1,1), (0,0), (0,0), 
