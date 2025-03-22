@@ -4782,30 +4782,34 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
     }
     println!("sum_state_board: {}", sum_state_board);
     read_input();
-    for dice in &possible_dices {
-        if let Some(ds) = all_set_board.get_mut(dice) {
-            if dice.0 != dice.1 {
-                if let Some(segment) = all_set_board.get_mut(&(dice.1, dice.0)) { // Changed to get
-                    for bs in &segment.board_state_vec { // No need for extra parentheses
-                        if !ds.board_state_vec.contains(bs) {
-                            ds.board_state_vec.push(bs.clone());
-                        }
-                    }
-                }
-            }
-        } else {
-            println!("EEERRRROOOORRRRR");
-        }
-    }
+    // for dice in &possible_dices {
+    //     if let Some(ds) = all_set_board.get_mut(dice) {
+    //         if dice.0 != dice.1 {
+    //             if let Some(segment) = all_set_board.get_mut(&(dice.1, dice.0)) { // Changed to get
+    //                 for bs in &segment.board_state_vec { // No need for extra parentheses
+    //                     if !ds.board_state_vec.contains(bs) {
+    //                         ds.board_state_vec.push(bs.clone());
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     } else {
+    //         println!("EEERRRROOOORRRRR");
+    //     }
+    // }
     let mut asb = all_set_board.clone();
     read_input();
     for dice in &possible_dices {
-        if let Some(ds) = all_set_board.get_mut(dice) {
+        let mut bs_vec: Vec<board_state> = vec![];
+        if let Some(ds) = all_set_board.get(dice) {
             if dice.0 != dice.1 {
-                if let Some(segment) = all_set_board.get_mut(&(dice.1, dice.0)) { // Changed to get
+                if let Some(segment) = all_set_board.get(&(dice.1, dice.0)) { // Changed to get
                     for bs in &segment.board_state_vec { // No need for extra parentheses
                         if !ds.board_state_vec.contains(bs) {
-                            ds.board_state_vec.push(bs.clone());
+                            // let mut b = ds.clone();
+                            // b.board_state_vec.push(bs.clone());
+                            // all_set_board.insert((dice.0, dice.1), b);
+                            bs_vec.push(bs.clone());
                         }
                     }
                 }
@@ -4813,7 +4817,15 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
         } else {
             println!("Error");
         }
+        if let Some(ds) = all_set_board.get_mut(dice) {
+            for bs in &bs_vec {
+                ds.board_state_vec.push(bs.clone());
+            }
+            
+            // all_set_board.insert((dic1.1, dice.0), )
+        }
     }
+
     return all_set_board;
 
 
