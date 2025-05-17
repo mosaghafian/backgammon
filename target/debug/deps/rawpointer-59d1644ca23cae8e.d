@@ -1,0 +1,5 @@
+/Users/msghfi/Documents/GitHub/backgammon/backgammon/target/debug/deps/librawpointer-59d1644ca23cae8e.rmeta: /Users/msghfi/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rawpointer-0.2.1/src/lib.rs
+
+/Users/msghfi/Documents/GitHub/backgammon/backgammon/target/debug/deps/rawpointer-59d1644ca23cae8e.d: /Users/msghfi/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rawpointer-0.2.1/src/lib.rs
+
+/Users/msghfi/.cargo/registry/src/index.crates.io-6f17d22bba15001f/rawpointer-0.2.1/src/lib.rs:
