@@ -226,7 +226,7 @@ fn write_to_file_board(board: &Vec<(i32, i32)>, hit_stones_1: &i32, hit_stones_2
     file.write_all(data.as_bytes()).expect("Unable to write data");
 }
 // Display of the board
-pub fn display_board(board: &Vec<(i32, i32)>, hit_stones_1: &i32, hit_stones_2: &i32, keep_count_of_1_stones: &mut i32, keep_count_of_2_stones: &mut i32) {
+pub fn display_board(board: &Vec<(i32, i32)>, hit_stones_1: &i32, hit_stones_2: &i32, keep_count_of_1_stones: & i32, keep_count_of_2_stones: &i32) {
     const lower_nums: &str = "11 10 9  8  7  6  | 5  4  3  2  1  0";
     const upper_nums: &str = "12 13 14 15 16 17 | 18 19 20 21 22 23";
     let mut highest_lower: i32 = 0;
@@ -320,11 +320,11 @@ pub fn display_board(board: &Vec<(i32, i32)>, hit_stones_1: &i32, hit_stones_2: 
     println!("out_stones_2: {}", 15 - *keep_count_of_2_stones);
     if 15 - *keep_count_of_1_stones > 15 {
         println!("SSSSSS 111111 > 15");
-        read_input();
+         
     }
     if 15 - *keep_count_of_2_stones > 15 {
         println!("SSSSSS 2222222 > 15");
-        read_input();
+         
     }
     let mut s1 = 0;
     let mut s2 = 0;
@@ -419,7 +419,7 @@ fn update_board(board: &mut Vec<(i32, i32)>, game_move: &(i32, i32, i32), hit_st
     // if *hit_stones_2 < 0 {
     //     *hit_stones_1 = 0;
     // }
-    // read_input();
+     
 }
 
 
@@ -462,1830 +462,6 @@ fn read_input() -> i32 {
 // // I will have this function and then will have another that goes over the graph search and caluclate everything for the stat
 // // Then when i can I will  parralalize when the tree grows, and have a set to keep track if a postion is being repeated
 
-// pub fn possible_moves_generator(board: &Vec<(i32, i32)>, dice: &(i32, i32), turn: i32, d1_used: bool, d2_used: bool, how_many_double_used, keep_count_of_1_stones: i32,  keep_count_of_2_stones: i32, hit_stones_1: i32, hit_stones_2: i32){
-//     let mut possible_moves: Vec<(i32, i32, i32)> = Vec::new();
-
-
-//     let mut i = 0;
-    
-//     let mut rng = rand::thread_rng();
-//     let mut win_1 = 0;
-//     let mut win_2 = 0;
-//     // Generate a random number in the range [0, 10)    
-//     while(i < number_of_games){        
-//         let mut number_of_steps: i32 = 0;
-//         while keep_count_of_1_stones > 0 && keep_count_of_2_stones > 0  {
-//             number_of_steps += 1;
-//             let dice1: i32 = rng.gen_range(1..=6);
-//             let dice2: i32 = rng.gen_range(1..=6);
-//             //write_to_file_dice(&(dice1, dice2));
-//             history_of_dice.push((dice1, dice2));
-            
-//             // Find the stones with possiblitiy of the move
-//             if dice1 != dice2 {
-//                 // two moves maximum to play
-//                 // check whose turn it is first
-
-//                 // START: PLAYER 11111 WITH TWO DICES NOT ALIKE
-//                 if (history_of_dice.len() % 2) == 1 {
-//                     // println!("PPPPPPPPP 11111111111111");
-//                     // println!("keep_count_1: {},keep_count_2 {}", keep_count_of_1_stones, keep_count_of_2_stones);
-//                     // display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                     let mut d1_used: bool = false;
-//                     let mut d2_used: bool = false;
-//                     for i in 0..2{
-//                         match history_of_dice.last() {
-//                             Some(last_roll ) => {
-//                                 // START: Check hit stones for player 11111
-//                                 if hit_stones_1 > 0{
-//                                     // See if we have any possible moves to make and then randomly choose between them
-                                    
-//                                     if !(board[24 - (last_roll.0 as usize) ].0 == 2 && board[24 - (last_roll.0 as usize) ].1 >= 2){
-//                                         possible_moves.push((1, 24 - last_roll.0, -1));
-//                                     }
-//                                     if !(board[24 - (last_roll.1 as usize) ].0 == 2 && board[24 - (last_roll.1 as usize) ].1 >= 2){
-//                                         possible_moves.push((1, 24 - last_roll.1, -1));
-                                    
-//                                     }
-//                                     if possible_moves.len() as i32 >= hit_stones_1{
-//                                         // choose randomly a move from the 
-//                                         for i in 0..hit_stones_1{
-//                                             // This rand_num will be updated with calculated algorithms
-//                                             display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                             let rand_num = handle_game(game_mode, &possible_moves, &board, last_roll, 1, d1_used, d2_used, false, -1);
-//                                             history_of_a_game.push(possible_moves[rand_num].clone());
-//                                             update_board(&mut board,  &possible_moves[rand_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                             display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                             if 24 - possible_moves[rand_num].1 == last_roll.0 {
-//                                                 d1_used = true;
-//                                             }else{
-//                                                 d2_used = true;
-//                                             }
-//                                             possible_moves.remove(rand_num);
-                                            
-//                                         }
-                                        
-//                                         possible_moves.clear();
-                                    
-//                                     } else {
-//                                         // Play the moves but there is still going to be hit_stones
-                                        
-//                                         history_of_a_game.extend(possible_moves.clone());
-//                                         d1_used = true;
-//                                         d2_used = true;
-//                                         for i in 0..possible_moves.len(){
-//                                             update_board(&mut board, &possible_moves[i], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                             display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                         }
-//                                         possible_moves.clear();
-
-//                                     }
-//                                 // END: CHECKING THE IF PLAYER 11111 has any hit stones
-//                                 // checking if any of the dices are used
-//                                 } else if !d1_used || !d2_used {
-//                                     // START: THERE IS NO HIT STONES AND PLAYER 11111 CAN MOVE FREELY BOTH DICES AVAILABLE
-//                                     if !d1_used && !d2_used{
-
-//                                         // randomly deciding which dice we use 
-//                                         display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                         let rand_num = handle_game(game_mode, &possible_moves, &board, last_roll, 1, d1_used, d2_used, true, -1);
-//                                         // START: USING THE FIRST DICE WHEN WE HAVE BOTH DICES AVAILABLE
-//                                         if rand_num == 1{
-//                                             // check if stones of player 1 can go out
-//                                             let mut can_player1_go_out = true;
-//                                             for i in 6..=23{
-//                                                 if board[i].0 == 1 {
-//                                                     can_player1_go_out = false;
-//                                                     break;
-//                                                 }
-//                                             }
-//                                             // if the stone can go then we need to only check the player 11111 house
-//                                             if can_player1_go_out {
-//                                                 for i in 0..=5{
-//                                                     if(board[i].0 == 1){
-                                                        
-//                                                         if i as i32 - (last_roll.0 ) < 0{
-//                                                             // going out
-//                                                             possible_moves.push((1, -2, i as i32));
-//                                                         }else{
-//                                                             // moving inside the house
-//                                                             if !(board[i - (last_roll.0 as usize)].0 == 2 && board[i - (last_roll.0 as usize)].1 >= 2) {
-//                                                                 possible_moves.push((1,  (i - (last_roll.0 as usize)) as i32, i as i32))
-//                                                             }
-//                                                         }
-                                                        
-//                                                     }
-//                                                 }
-//                                                 // going to choose a random possible move and play it
-//                                                 if possible_moves.len() > 0{
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     let ran_num =  handle_game(game_mode, &possible_moves, &board, last_roll, 1, d1_used, d2_used, false, -1);
-//                                                     history_of_a_game.push(possible_moves[ran_num].clone());
-//                                                     update_board(&mut board, &possible_moves[ran_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     possible_moves.clear();
-//                                                 }
-
-//                                             // Player 11111 can't go out, finding the right move
-//                                             } else{
-//                                                 for i in 0..=23{
-//                                                     if(board[i].0 == 1){
-//                                                         // println!("DDDDD: LINE 313 {}", (last_roll.0 as usize ));
-//                                                         if ((i as i32) - last_roll.0 ) >= 0 {
-//                                                             if (!(board[((i as i32) - (last_roll.0 )) as usize].0 == 2 && board[((i as i32) - (last_roll.0 )) as usize].1 >= 2))  {
-//                                                                 possible_moves.push((1,  (i - (last_roll.0 as usize)) as i32, i as i32));
-//                                                             }
-//                                                         }
-//                                                     }
-//                                                 }
-//                                                 if possible_moves.len() > 0{
-//                                                     //println!("1111111111");
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     let ran_num = handle_game(game_mode, &possible_moves, &board, last_roll, 1, d1_used, d2_used, false, -1);
-//                                                     history_of_a_game.push(possible_moves[ran_num].clone());
-//                                                     //println!("{}, {}, {}", possible_moves[ran_num].0, possible_moves[ran_num].1, possible_moves[ran_num].2);
-//                                                     update_board(&mut board, &possible_moves[ran_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     possible_moves.clear();
-//                                                     // println!("{}, {}", last_roll.0, last_roll.1);
-//                                                     // read_input();
-//                                                 }
-//                                             }
-
-//                                             d1_used = true;
-//                                         // END: USING THE FIRST DICE WHEN WE HAVE BOTH DICES AVAILABLE 
-//                                         // START: USING THE SECOND DICE WHEN WE HAVE BOTH DICES AVAILABLE
-//                                         } else {
-
-//                                             let mut can_player1_go_out = true;
-//                                             for i in 6..=23{
-//                                                 if(board[i].0 == 1){
-//                                                     can_player1_go_out = false;
-//                                                     break;
-//                                                 }
-//                                             }
-//                                             if can_player1_go_out {
-//                                                 // when the player go out so all the stones should be in the house hence the 0..=5 
-//                                                 for i in 0..=5{
-//                                                     if(board[i].0 == 1){
-//                                                         if i as i32 - (last_roll.1 ) < 0{
-//                                                             // going out
-//                                                             possible_moves.push((1, -2, i as i32));
-//                                                         }else{
-//                                                             // moving inside the hourse
-//                                                                 if !(board[i - (last_roll.1 as usize)].0 == 2 && board[i - (last_roll.1 as usize)].1 >= 2) {
-//                                                                     possible_moves.push((1,  (i - (last_roll.1 as usize)) as i32, i as i32))
-//                                                                 }
-//                                                         }
-                                                        
-//                                                     }
-//                                                 }
-//                                                 // going to choose a random possible move and play it
-//                                                 if possible_moves.len() > 0{
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     let ran_num = handle_game(game_mode, &possible_moves, &board, last_roll, 1, d1_used, d2_used, false, -1);
-//                                                     history_of_a_game.push(possible_moves[ran_num].clone());
-//                                                     update_board(&mut board, &possible_moves[ran_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     possible_moves.clear();
-//                                                 }
-
-//                                             // player 11111 can't go out so we have to choose a move from the board
-//                                             } else{
-//                                                 for i in 0..=23{
-//                                                     if(board[i].0 == 1){
-//                                                         // println!("DDDDD LINE 378: {}", (last_roll.1 as usize));
-//                                                         if ((i as i32) - last_roll.1 ) >= 0 {
-//                                                             if !(board[((i as i32) - (last_roll.1 )) as usize].0 == 2 && board[((i as i32) - (last_roll.1 )) as usize].1 >= 2) {
-//                                                                 possible_moves.push((1, ((i as i32) - last_roll.1 ) as i32, i as i32));
-//                                                             }
-//                                                         }
-//                                                     }
-//                                                 }
-//                                                 if possible_moves.len() > 0{
-//                                                 // println!("222222222");
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     let ran_num = handle_game(game_mode, &possible_moves, &board, last_roll, 1, d1_used, d2_used, false, -1);
-//                                                     history_of_a_game.push(possible_moves[ran_num].clone());
-//                                                     // println!("-------");
-//                                                     // println!("{}, {}, {}", possible_moves[ran_num].0, possible_moves[ran_num].1, possible_moves[ran_num].2);
-//                                                     update_board(&mut board, &possible_moves[ran_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     possible_moves.clear();
-//                                                     // println!("WE SHOULD BE HERE");
-//                                                     // println!("{}, {}", last_roll.0, last_roll.1);
-//                                                     // read_input();
-//                                                 }
-//                                             }
-//                                             d2_used = true;
-//                                         }
-//                                     // END: THERE IS NO HIT STONES AND PLAYER 11111 CAN MOVE FREELY BOTH DICES AVAILABLE 
-//                                     // START: NO HIT STONES AND PLAYER 11111 CAN MOVE WITH ONE OF THE DICES, ONE OF THE DICES HAS BEEN USED
-//                                     } else if (!d1_used && d2_used) || (d1_used && !d2_used){
-//                                         // START: FIRST DICE IS NOT USED
-//                                         if !d1_used {
-//                                             let mut can_player1_go_out = true;
-//                                             for i in 6..=23{
-//                                                 if(board[i].0 == 1){
-//                                                     can_player1_go_out = false;
-//                                                     break;
-//                                                 }
-//                                             }
-//                                             if can_player1_go_out {
-//                                                 for i in 0..=5{
-//                                                     if(board[i].0 == 1){
-//                                                         //going out
-//                                                         if (i as i32) - last_roll.0 < 0{
-//                                                             possible_moves.push((1, -2, i as i32));
-//                                                         }else{
-//                                                             if !(board[i - (last_roll.0 as usize)].0 == 2 && board[i - (last_roll.0 as usize)].1 >= 2) {
-//                                                                 possible_moves.push((1,  (i - (last_roll.0 as usize)) as i32, i as i32));
-//                                                             }
-//                                                         }
-                                                        
-//                                                     }
-//                                                 }
-//                                                 // going to choose a random possible move and play it
-//                                                 if possible_moves.len() > 0 {
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     let ran_num = handle_game(game_mode, &possible_moves, &board, last_roll, 1, d1_used, d2_used, false, -1);
-//                                                     history_of_a_game.push(possible_moves[ran_num].clone());
-//                                                     update_board(&mut board, &possible_moves[ran_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     possible_moves.clear();
-//                                                 }
-//                                             } else{
-//                                                 for i in 0..=23{
-//                                                     if(board[i].0 == 1){
-//                                                         if ((i as i32) - last_roll.0 ) >= 0 {
-//                                                             // println!("DDDDD: {}", (last_roll.0 as usize));
-//                                                             if !(board[i - (last_roll.0 as usize)].0 == 2 && board[i - (last_roll.0 as usize)].1 >= 2) {
-//                                                                 possible_moves.push((1,  (i as i32) - (last_roll.0) as i32, i as i32));
-//                                                             }
-//                                                         }
-//                                                     }
-//                                                 }
-//                                                 if possible_moves.len() > 0{
-//                                                 // println!("33333333");
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     let ran_num  = handle_game(game_mode, &possible_moves, &board, last_roll, 1, d1_used, d2_used, false, -1);
-//                                                     history_of_a_game.push(possible_moves[ran_num].clone());
-//                                                     // println!("{}, {}, {}", possible_moves[ran_num].0, possible_moves[ran_num].1, possible_moves[ran_num].2);
-//                                                     update_board(&mut board, &possible_moves[ran_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     possible_moves.clear();
-//                                                     // println!("WE SHOULD BE HERE");
-//                                                     // println!("{}, {}", last_roll.0, last_roll.1);
-//                                                     // read_input();
-//                                                 }
-//                                             }
-//                                             d1_used = true
-//                                         // END: FIRST DICE IS NOT USED
-//                                         }
-//                                         // START: SECOND DICE IS NOT USED
-//                                         if !d2_used {
-//                                             let mut can_player1_go_out = true;
-//                                             for i in 6..=23{
-//                                                 if(board[i].0 == 1){
-//                                                     can_player1_go_out = false;
-//                                                     break;
-//                                                 }
-//                                             }
-//                                             if can_player1_go_out {
-//                                                 for i in 0..=5{
-//                                                     if(board[i].0 == 1){
-//                                                         //going out
-//                                                         if (i as i32)- last_roll.1 < 0{
-//                                                             possible_moves.push((1, -2, i as i32));
-//                                                         }else{
-//                                                             if !(board[i - (last_roll.1 as usize)].0 == 2 && board[i - (last_roll.1 as usize)].1 >= 2) {
-//                                                                 possible_moves.push((1,  (i - (last_roll.1 as usize)) as i32, i as i32))
-//                                                             }
-//                                                         }
-                                                        
-//                                                     }
-//                                                 }
-//                                                 // going to choose a random possible move and play it
-//                                                 if possible_moves.len() > 0{
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     let ran_num  = handle_game(game_mode, &possible_moves, &board, last_roll, 1, d1_used, d2_used, false, -1);
-//                                                     history_of_a_game.push(possible_moves[ran_num].clone());
-//                                                     update_board(&mut board, &possible_moves[ran_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     possible_moves.clear();
-//                                                 }
-//                                             } else{
-//                                                 for i in 0..=23{
-//                                                     if(board[i].0 == 1){
-//                                                         // println!("DDDDD: {}", (last_roll.1 as usize));
-//                                                         if ((i as i32) - last_roll.1 ) >= 0 {
-//                                                             if !(board[(i as i32 - (last_roll.1 )) as usize].0 == 2 && board[(i as i32 - (last_roll.1 )) as usize].1 >= 2) {
-//                                                                 possible_moves.push((1,  (i - (last_roll.1 as usize)) as i32, i as i32));
-//                                                             }
-//                                                         }
-//                                                     }
-//                                                 }
-//                                                 // println!("444444444");
-//                                                 if(possible_moves.len() > 0){
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     let ran_num = handle_game(game_mode, &possible_moves, &board, last_roll, 1, d1_used, d2_used, false, -1);
-//                                                     history_of_a_game.push(possible_moves[ran_num].clone());
-//                                                     // println!("-------");
-//                                                     // println!("{}, {}, {}", possible_moves[ran_num].0, possible_moves[ran_num].1, possible_moves[ran_num].2);
-//                                                     update_board(&mut board, &possible_moves[ran_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     possible_moves.clear();
-//                                                     // println!("WE SHOULD BE HERE");
-//                                                     // println!("{}, {}", last_roll.0, last_roll.1);
-//                                                     // read_input();
-//                                                 }
-//                                             }
-
-                                    
-//                                             d2_used = true;
-//                                         }
-//                                         // END: SECOND DICE IS NOT USED
-//                                     // END: NO HIT STONES AND PLAYER 11111 CAN MOVE WITH ONE OF THE DICES, ONE OF THE DICES HAS BEEN USED
-//                                     } else {
-//                                         // It's possible to be here 
-//                                     }
-//                                 }
-
-//                             },None =>{
-//                                 // There should be a roll definitely, we'll see if there is going to be anything here
-//                             }
-//                         }
-                        
-//                     }
-//                 // END: PLAYER 11111 WITH TWO DICES NOT ALIKE
-
-//                 // START: PLAYER 22222 TURN WITH DICES NOT ALIKE
-//                 } else {
-//                     // println!("PPPPPPPPP 2222222222222");
-//                     // println!("keep_count_1: {},keep_count_2 {}", keep_count_of_1_stones, keep_count_of_2_stones);
-//                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                     let mut d1_used: bool = false;
-//                     let mut d2_used: bool = false;
-//                     for i in 0..2{
-                        
-//                         match history_of_dice.last() {
-//                             Some(last_roll ) => {
-
-//                                 // START: Check hit stones for player 22222
-//                                 if hit_stones_2 > 0{
-
-//                                     // See if we have any possible moves to make and then randomly choose between them
-//                                     if !(board[(last_roll.0 as usize) - 1 ].0 == 1 && board[(last_roll.0 as usize) - 1 ].1 >= 2){
-//                                         // so basically the -1 is for showing the move is form a hit position
-//                                         // -2 is for going out to score
-//                                         possible_moves.push((2, ((last_roll.0 as usize) - 1) as i32, -1));
-                                        
-//                                     }
-//                                     if !(board[(last_roll.1 as usize) - 1 ].0 == 1 && board[(last_roll.1 as usize) - 1 ].1 >= 2){
-//                                         possible_moves.push((2,  ((last_roll.1 as usize) - 1) as i32, -1));
-                                        
-
-//                                     }
-//                                     if possible_moves.len() as i32 >= hit_stones_2{
-//                                         // choose randomly a move from the 
-//                                         for i in 0..hit_stones_2{
-//                                             // This rand_num will be updated with calculated algorithms
-//                                             display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                             let rand_num = handle_game(game_mode, &possible_moves, &board, last_roll, 2, d1_used, d2_used, false, -1);
-//                                             history_of_a_game.push(possible_moves[rand_num].clone());
-//                                             update_board(&mut board,  &possible_moves[rand_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                             display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                             if(possible_moves[rand_num].1 + 1 == last_roll.0){
-//                                                 d1_used = true;
-//                                             }else{
-//                                                 d2_used = true;
-//                                             }
-//                                             possible_moves.remove(rand_num);
-                                            
-//                                         }
-                                        
-//                                         possible_moves.clear();
-
-//                                     } else {
-//                                         // Play the moves but there is still going to be hit_stones
-                                        
-//                                         history_of_a_game.extend(possible_moves.clone());
-//                                         d1_used = true;
-//                                         d2_used = true;
-//                                         for i in 0..possible_moves.len(){
-//                                             update_board(&mut board, &possible_moves[i], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                             display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                         }
-//                                         possible_moves.clear()
-
-//                                     }
-//                                 // END: Check hit stones for player 22222
-//                                 } else if !d1_used || !d2_used {
-//                                     if !d1_used && !d2_used{
-//                                         // randomly deciding which rand_num to use
-//                                         display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                         let rand_num= handle_game(game_mode, &possible_moves, &board, last_roll, 2, d1_used, d2_used, true, -1);
-//                                         if(rand_num == 1){
-//                                             // check if stones of player 1 can go out
-//                                             let mut can_player2_go_out = true;
-//                                             for i in 0..=17{
-//                                                 if(board[i].0 == 2){
-//                                                     can_player2_go_out = false;
-//                                                     break;
-//                                                 }
-//                                             }
-//                                             if can_player2_go_out {
-//                                                 for i in 18..=23{
-//                                                     if(board[i].0 == 2){
-//                                                         //going out
-//                                                         if i + (last_roll.0 as usize) > 23{
-//                                                             possible_moves.push((2, -2, i as i32));
-//                                                         }else{
-//                                                             if !(board[i + (last_roll.0 as usize)].0 == 1 && board[i + (last_roll.0 as usize)].1 >= 2) {
-//                                                                 possible_moves.push((2, (i + (last_roll.0 as usize)) as i32, i as i32));
-//                                                             }
-//                                                         }
-//                                                     }
-//                                                 }
-//                                                 // going to choose a random possible move and play it
-//                                                 if possible_moves.len() > 0{
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     let ran_num =  handle_game(game_mode, &possible_moves, &board, last_roll, 2, d1_used, d2_used, false, -1);
-//                                                     history_of_a_game.push(possible_moves[ran_num].clone());
-//                                                     update_board(&mut board, &possible_moves[ran_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     possible_moves.clear();
-//                                                 }
-//                                             } else{
-//                                                 for i in 0..=23{
-//                                                     if board[i].0 == 2 {
-//                                                         // println!("DDDDD: {}", (last_roll.0 as usize));
-//                                                         if (i + (last_roll.0 as usize)) <= 23{
-//                                                             if !(board[i + (last_roll.0 as usize)].0 == 1 && board[i + (last_roll.0 as usize)].1 >= 2)  {
-//                                                                 possible_moves.push((2, (i + (last_roll.0 as usize)) as i32, i as i32))
-//                                                             }
-//                                                         }
-//                                                     }
-//                                                 }
-//                                                 if possible_moves.len() > 0{
-//                                                     // println!("2: 111111111");
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     let ran_num = handle_game(game_mode, &possible_moves, &board, last_roll, 2, d1_used, d2_used, false, -1);
-//                                                     history_of_a_game.push(possible_moves[ran_num].clone());
-//                                                     // println!("-------");
-//                                                     // println!("{}, {}, {}", possible_moves[ran_num].0, possible_moves[ran_num].1, possible_moves[ran_num].2);
-//                                                     update_board(&mut board, &possible_moves[ran_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     possible_moves.clear();
-//                                                     // println!("WE SHOULD BE HERE");
-//                                                     //println!("{}, {}", last_roll.0, last_roll.1);
-//                                                     // read_input();
-//                                                 }
-//                                             }
-//                                             d1_used = true;
-//                                         } else {
-//                                             let mut can_player2_go_out = true;
-//                                             for i in 0..=17{
-//                                                 if(board[i].0 == 2){
-//                                                     can_player2_go_out = false;
-//                                                     break;
-//                                                 }
-//                                             }
-//                                             if can_player2_go_out {
-//                                                 for i in 18..=23{
-//                                                     if(board[i].0 == 2){
-//                                                         //going out
-//                                                         if i + (last_roll.1 as usize) > 23{
-//                                                             possible_moves.push((2, -2, i as i32));
-//                                                         }else{
-//                                                             if !(board[((i as i32) + last_roll.1 ) as usize].0 == 1 && board[((i as i32) + last_roll.1 )as usize].1 >= 2) {
-//                                                                 possible_moves.push((2,  (i + (last_roll.1 as usize)) as i32, i as i32))
-//                                                             }
-//                                                         }
-                                                        
-//                                                     }
-//                                                 }
-//                                                 // going to choose a random possible move and play it
-//                                                 if possible_moves.len() > 0{
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     let ran_num = handle_game(game_mode, &possible_moves, &board, last_roll, 2, d1_used, d2_used, false, -1);
-//                                                     history_of_a_game.push(possible_moves[ran_num].clone());
-//                                                     update_board(&mut board, &possible_moves[ran_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     possible_moves.clear();
-//                                                 }
-//                                             } else{
-//                                                 for i in 0..=23{
-//                                                     if(board[i].0 == 2){
-//                                                         if ((i as i32) + (last_roll.1)) <= 23{
-//                                                             if !(board[((i as i32) +(last_roll.1)) as usize].0 == 1 && board[i + (last_roll.1 as usize)].1 >= 2)  {
-//                                                                 possible_moves.push((2,  (i + (last_roll.1 as usize)) as i32, i as i32))
-//                                                             }
-//                                                         }
-//                                                     }
-//                                                 }
-//                                                 if possible_moves.len() > 0{
-//                                                     // println!("2: 2222222222");
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     let ran_num = handle_game(game_mode, &possible_moves, &board, last_roll, 2, d1_used, d2_used, false, -1);
-//                                                     // println!("-------");
-//                                                     history_of_a_game.push(possible_moves[ran_num].clone());
-//                                                     update_board(&mut board, &possible_moves[ran_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     possible_moves.clear();
-//                                                     // println!("WE SHOULD BE HERE");
-//                                                     // println!("{}, {}", last_roll.0, last_roll.1);
-//                                                     // read_input();
-//                                                 }
-//                                             }
-//                                             d2_used = true;
-//                                         }
-
-                                        
-                                        
-//                                     } else if (!d1_used && d2_used) || (d1_used && !d2_used){
-//                                         if !d1_used {
-//                                             let mut can_player2_go_out = true;
-//                                             for i in 0..=17{
-//                                                 if(board[i].0 == 2){
-//                                                     can_player2_go_out = false;
-//                                                     break;
-//                                                 }
-//                                             }
-//                                             if can_player2_go_out {
-//                                                 for i in 18..=23{
-//                                                     if(board[i].0 == 2){
-//                                                         //going out
-//                                                         if i + (last_roll.0 as usize) > 23{
-//                                                             possible_moves.push((2,  -2, i as i32));
-//                                                         }else{
-//                                                             if !(board[i + (last_roll.0 as usize)].0 == 1 && board[i + (last_roll.0 as usize)].1 >= 2) {
-//                                                                 possible_moves.push((2,  (i + (last_roll.0 as usize)) as i32, i as i32));
-//                                                             }
-//                                                         }
-                                                        
-//                                                     }
-//                                                 }
-//                                                 // going to choose a random possible move and play it
-//                                                 if possible_moves.len() > 0 {
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     let ran_num =  handle_game(game_mode, &possible_moves, &board, last_roll, 2, d1_used, d2_used, false, -1);
-//                                                     history_of_a_game.push(possible_moves[ran_num].clone());
-//                                                     update_board(&mut board, &possible_moves[ran_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     possible_moves.clear();
-//                                                 }
-//                                             } else{
-//                                                 for i in 0..=23{
-//                                                     if(board[i].0 == 2){
-//                                                         // println!("DDDDD: {}", (last_roll.0 as usize));
-//                                                         if ((i as i32) + (last_roll.0)) <= 23{
-//                                                             if !(board[i + (last_roll.0 as usize)].0 == 1 && board[i + (last_roll.0 as usize)].1 >= 2) {
-//                                                                 possible_moves.push((2,  (i + (last_roll.0 as usize)) as i32, i as i32));
-//                                                             }
-//                                                         }
-//                                                     }
-//                                                 }
-//                                                 if possible_moves.len() > 0{
-//                                                     // println!("2: 333333333333");
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     let ran_num =  handle_game(game_mode, &possible_moves, &board, last_roll, 2, d1_used, d2_used, false, -1);
-//                                                     history_of_a_game.push(possible_moves[ran_num].clone());
-//                                                     // println!("-------");
-//                                                     // println!("{}, {}, {}", possible_moves[ran_num].0, possible_moves[ran_num].1, possible_moves[ran_num].2);
-//                                                     update_board(&mut board, &possible_moves[ran_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     possible_moves.clear();
-//                                                     // println!("WE SHOULD BE HERE");
-//                                                     // println!("{}, {}", last_roll.0, last_roll.1);
-//                                                     // read_input();
-//                                                 }
-//                                             }
-//                                             d1_used = true
-//                                         }
-//                                         if !d2_used {
-//                                             let mut can_player2_go_out = true;
-//                                             for i in 0..=17{
-//                                                 if(board[i].0 == 1){
-//                                                     can_player2_go_out = false;
-//                                                     break;
-//                                                 }
-//                                             }
-//                                             if can_player2_go_out {
-//                                                 for i in 18..=23{
-//                                                     if(board[i].0 == 2){
-//                                                         //going out
-//                                                         if (i + (last_roll.1 as usize)) > 23{
-//                                                             possible_moves.push((2, -2, i as i32));
-//                                                         }else{
-//                                                             if !(board[i + (last_roll.1 as usize)].0 == 1 && board[i + (last_roll.1 as usize)].1 >= 2) {
-//                                                                 possible_moves.push((2,  (i + (last_roll.1 as usize)) as i32, i as i32))
-//                                                             }
-//                                                         }
-                                                        
-//                                                     }
-//                                                 }
-//                                                 // going to choose a random possible move and play it
-//                                                 if possible_moves.len() > 0{
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     let ran_num = handle_game(game_mode, &possible_moves, &board, last_roll, 2, d1_used, d2_used, false, -1);
-//                                                     history_of_a_game.push(possible_moves[ran_num].clone());
-//                                                     update_board(&mut board, &possible_moves[ran_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     possible_moves.clear();
-//                                                 }
-//                                             } else{
-//                                                 for i in 0..=23{
-//                                                     if(board[i].0 == 2){
-//                                                         if ((i as i32) + (last_roll.1)) <= 23{
-//                                                             if !(board[i + (last_roll.1 as usize)].0 == 1 && board[i + (last_roll.1 as usize)].1 >= 2) {
-                                                                
-//                                                                 possible_moves.push((2,  (i + (last_roll.1 as usize)) as i32, i as i32))
-//                                                             }
-//                                                         }
-//                                                     }
-//                                                 }
-//                                                 if possible_moves.len() > 0{
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     let ran_num =  handle_game(game_mode, &possible_moves, &board, last_roll, 2, d1_used, d2_used, false, -1);
-//                                                     history_of_a_game.push(possible_moves[ran_num].clone());
-//                                                     update_board(&mut board, &possible_moves[ran_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     possible_moves.clear();
-//                                                 }
-//                                             }
-//                                             d2_used = true;
-//                                         }
-
-//                                     } else {
-//                                         // It's possible to be here 
-//                                     }
-//                                 }
-
-//                             },None =>{
-//                                 // There should be a roll definitely, we'll see if there is going to be anything here
-//                             }
-//                         }
-                        
-//                     }
-//                 }
-//                 // END: PLAYER 22222 TURN WITH DICES NOT ALIKE
-            
-//             } 
-//             // This else statement is for double dices like (1,1),(2,2),(4,4)...
-//             else {
-//                 // println!("DOUBLE DOUBLE DOUBLE DOUBLE");
-//                 if history_of_dice.len() % 2 == 1 {
-//                     // println!("PPPPPPPPP 11111111111111");
-//                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                     for i in 0..4{
-//                         match history_of_dice.last() {
-//                             Some(last_roll ) => {
-//                                 if hit_stones_1 > 0 {
-//                                     if !(board[24 - (last_roll.0 as usize) ].0 == 2 && board[24 - (last_roll.0 as usize) ].1 >= 2){
-                                        
-//                                         let game_move = (1,  (24 - (last_roll.0 as usize)) as i32, -1);
-//                                         history_of_a_game.push(game_move);
-//                                         update_board(&mut board, &game_move, &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                         display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones)
-//                                     }
-//                                 } else {
-//                                     let mut can_player_1_go_out = true;
-//                                     for i in 6..=23{
-//                                         if board[i].0 == 1{
-//                                             can_player_1_go_out = false;
-//                                             break;
-//                                         }
-//                                     }
-//                                     if can_player_1_go_out {
-//                                         for i in 0..=5{
-//                                             if(board[i].0 == 1){
-//                                                 // going out
-//                                                 if((i as i32) - last_roll.0 <= -1){
-//                                                     let game_move = (1, -2, i as i32);
-//                                                     possible_moves.push(game_move);
-                                                    
-//                                                 } else {
-//                                                     if !(board[i  - (last_roll.0 as usize)].0 == 2  && board[i - (last_roll.0 as usize)].1 >= 2) {
-//                                                         possible_moves.push((1, (i as i32) - last_roll.0, i as i32));
-//                                                     }
-//                                                 }
-//                                             }
-//                                         }
-//                                         if possible_moves.len() > 0{
-//                                             display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                             let ran_num = handle_game(game_mode, &possible_moves, &board, last_roll, 1, false, false, false, i + 1);
-//                                             history_of_a_game.push(possible_moves[ran_num].clone());
-//                                             update_board(&mut board, &possible_moves[ran_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                             display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                             possible_moves.clear();
-//                                         }
-//                                     } else {
-//                                         for i in 0..=23{
-//                                             if board[i].0 == 1 {
-//                                                 if ((i as i32)  - (last_roll.0)) > 0 {
-//                                                     if !(board[((i as i32)  - (last_roll.0)) as usize].0 == 2  && board[((i as i32)  - (last_roll.0)) as usize].1 >= 2) {
-//                                                         possible_moves.push((1, (i as i32) - last_roll.0, i as i32));
-//                                                     }
-//                                                 }
-//                                             }
-//                                         }
-//                                         if possible_moves.len() > 0{
-//                                             display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                             let ran_num = handle_game(game_mode, &possible_moves, &board, last_roll, 1, false, false, false, i + 1);
-//                                             history_of_a_game.push(possible_moves[ran_num].clone());
-//                                             update_board(&mut board, &possible_moves[ran_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                             display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                             possible_moves.clear();
-//                                         }
-//                                     }
-//                                 }
-//                             },None=>{
-
-//                             }
-//                         }
-//                     }
-//                 } else {
-//                     //println!("PPPPPPPPP 2222222222222222");
-//                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                     for i in 0..4{
-//                         match history_of_dice.last() {
-//                             Some(last_roll) => {
-//                                 if hit_stones_2 > 0 {
-//                                     if !(board[(last_roll.0 as usize) - 1 ].0 == 1 && board[(last_roll.0 as usize) - 1 ].1 >= 2){
-                                        
-//                                         let game_move = ( 2,   ((last_roll.0 as usize) - 1) as i32, -1);
-//                                         history_of_a_game.push(game_move);
-//                                         update_board(&mut board, &game_move, &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                         display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                     }
-//                                 } else {
-//                                     let mut can_player_2_go_out = true;
-//                                     for i in 0..=17{
-//                                         if board[i].0 == 2 {
-//                                             can_player_2_go_out = false;
-//                                             break;
-//                                         }
-//                                     }
-//                                     if can_player_2_go_out {
-//                                         for i in 18..=23{
-//                                             if board[i].0 == 2 {
-//                                                 // going out
-//                                                 if((i as i32) + last_roll.0 > 23){
-//                                                     let game_move = (2, -2, i as i32);
-//                                                     possible_moves.push(game_move);
-                                                    
-//                                                 } else {
-//                                                     if !(board[i  + (last_roll.0 as usize)].0 == 1  && board[i + (last_roll.0 as usize)].1 >= 2) {
-//                                                         possible_moves.push((2,  (i as i32) + last_roll.0, i as i32));
-//                                                     }
-//                                                 }
-//                                             }
-//                                         }
-//                                         if possible_moves.len() > 0{
-//                                             display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                             let ran_num = handle_game(game_mode, &possible_moves, &board, last_roll, 2, false, false, false, i + 1);
-//                                             history_of_a_game.push(possible_moves[ran_num].clone());
-//                                             update_board(&mut board, &possible_moves[ran_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                             display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                             possible_moves.clear();
-//                                         }
-//                                     } else {
-//                                         for i in 0..=23{
-//                                             if board[i].0 == 2 {
-//                                                 // println!("DDDDD: {}", (last_roll.0 as usize));
-//                                                 if i + (last_roll.0 as usize) <= 23{
-//                                                     if !(board[i  + (last_roll.0 as usize)].0 == 1  && board[i + (last_roll.0 as usize)].1 >= 2) {
-//                                                         possible_moves.push((2,  (i as i32) + last_roll.0, i as i32));
-//                                                     }                                                    
-//                                                 }
-
-//                                             }
-//                                         }
-//                                         if possible_moves.len() > 0{
-//                                             display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                             let ran_num = handle_game(game_mode, &possible_moves, &board, last_roll, 2, false, false, false, i + 1);
-//                                             history_of_a_game.push(possible_moves[ran_num].clone());
-//                                             update_board(&mut board, &possible_moves[ran_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                             display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                             possible_moves.clear();
-//                                         }
-//                                     }
-//                                 }
-//                             }, None => {
-//                             }
-//                         }
-//                     }
-//                 }
-//             }
-//             // println!("number of steps: {}", number_of_steps);      
-//             if keep_count_of_1_stones > 15 {
-//                 read_input();
-//             }
-//             if keep_count_of_2_stones > 15 {
-//                 read_input();
-//             }
-//             if keep_count_of_1_stones <= 0{
-//                 win_1 += 1;
-//             }
-//             if keep_count_of_2_stones <= 0{
-//                 win_2 += 1;
-//             }
-//         }
-
-//         //read_input();
-//         i += 1;
-//         write_to_file(&(0, 0, 0));
-//         write_to_file_dice(&(0, 0));
-//         // println!("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-        
-//     }
-//     println!("win rate: {}, {}", win_1, win_2);
-// }
-// make one ai better than the other one, and then cycle through that
-// generate the possible moves outside of the play 
-// pub fn ai_v_ai(board: &Vec<(i32, i32)>, possible_moves: &Vec<(i32, i32, i32)>, dice: &(i32,i32), turn: i32, d1_used: bool, d2_used: bool, how_many_double_used: i32) -> usize {
-//     // Hyperparameters for pure 
-//     return 0;
-// }
-// // write the graph first
-// // then we decide to do what the fuck we can do
-// pub fn user_v_ai(board: &Vec<(i32, i32)>, possible_moves: &Vec<(i32, i32, i32)>, dice: &(i32,i32), turn: i32, d1_used: bool, d2_used: bool, how_many_double_used: i32) -> usize{
-//     // parent node index, the node is the move itself, have vector to the children, stats,  weight for those stats, updated parent, dices, d1_used, d2_used, how_many_double_used
-//     // Opponent stat, opponent weight, whosemovethisis (me or the opponent)
-//     // Use a replicate of play(...) to generate the children
-//     // we start with accumulating the stat
-//     // Have a weight vec so the importance of those stats can be determined
-//     // we have the issue for decide dice that 
-//     //let mut graph_search: Vec<(i32, (i32, i32, i32), Vec<i32>, Vec<i32>, Vec<f32>, i32, (i32, i32), bool, bool, i32, Vec<i32, Vec<f32>, i32)> = vec![];
-//     if dice.0 != dice.1{
-//         if turn == 1{
-//             println!("AI 1 turn")
-//             if decide_dice{
-//                 // Have a loop here  so it alternates between the possiblities
-//                 // The heavy math of indexing will go here probably
-                
-
-//             } else {
-//                 // 
-
-//             }
-//         } else {
-//             println!("User turn");
-//             if decide_dice{
-//                 println!("Decide which dice to use");
-//                 println!("DICES: 1. {}, 2. {}", dice.0, dice.1);
-//                 let decision: usize = read_input() as usize;
-//                 return decision;
-//             }else{
-//                 println!("Decide a move:");
-//                 for i in 0..possible_moves.len(){
-//                     println!("{}. ( {}, {}, {} )", i, possible_moves[i].0, possible_moves[i].1, possible_moves[i].2);
-//                 }
-//                 let decision: usize = read_input() as usize;
-//                 return decision; 
-//             }
-//         }
-//     } else {
-//         if turn == 1{
-//             println!("AI 1 turn");
-
-
-//         } else {
-//             println!("User turn");
-//             println!("User player 1 decide a move:");
-//             for i in 0..possible_moves.len(){
-//                 println!("{}. ( {}, {}, {} )", i, possible_moves[i].0, possible_moves[i].1, possible_moves[i].2);
-//             }
-//             let decision: usize = read_input() as usize;
-//             return decision;
-//         }
-//     }
-//     return 0;
-// }
-
-// // Are we going for three same things
-// // maybe we return -1 
-// pub fn user_v_user(board: &Vec<(i32, i32)>, possible_moves: &Vec<(i32, i32, i32)>, dice: &(i32,i32), turn: i32, d1_used: bool, d2_used: bool, decide_dice: bool, how_many_double_used: i32) -> usize{
-//     if dice.0 != dice.1 {
-//         if turn == 1{
-//             println!("User Player 1 Turn");
-//             if decide_dice{
-//                 println!("Decide which dice to use");
-//                 println!("DICES: 1. {}, 2. {}", dice.0, dice.1);
-//                 let decision: usize = read_input() as usize;
-//                 return decision;
-//             } else {
-//                 println!("Decide a move:");
-//                 for i in 0..possible_moves.len() {
-//                     println!("{}. ( {}, {}, {} )", i, possible_moves[i].0, possible_moves[i].1, possible_moves[i].2);
-//                 } 
-//                 let decision: usize = read_input() as usize;
-//                 return decision;
-//             }
-
-//         } else {
-//             println!("User Player 2 Turn");
-//             if decide_dice{
-//                 println!("Decide which dice to use");
-//                 println!("DICES: 1. {}, 2. {}", dice.0, dice.1);
-//                 let decision: usize = read_input() as usize;
-//                 return decision;
-
-//             } else {
-//                 println!("Decide a move:");
-//                 for i in 0..possible_moves.len(){
-//                     println!("{}. ( {}, {}, {} )", i, possible_moves[i].0, possible_moves[i].1, possible_moves[i].2);
-//                 }
-//                 let decision: usize = read_input() as usize;
-//                 return decision;
-//             }
-//         }
-//     } else {
-//         if turn == 1{
-//             println!("User player 1 decide a move:");
-//             for i in 0..possible_moves.len(){
-//                 println!("{}. ( {}, {}, {} )", i, possible_moves[i].0, possible_moves[i].1, possible_moves[i].2);
-//             }
-//             let decision: usize = read_input() as usize;
-//             return decision;
-
-//         } else {
-//             println!("User player 2 decide a move:");
-//             for i in 0..possible_moves.len(){
-//                 println!("{}. ( {}, {}, {} )", i, possible_moves[i].0, possible_moves[i].1, possible_moves[i].2);
-//             }
-//             let decision: usize = read_input() as usize;
-//             return decision;
-
-//         }
-//     }
-//     return 0;
-// }
-
-
-/* 
-    play 
-    backgammon game simulation
-*/
-// pub fn play(number_of_games: i32, history_of_games: &mut Vec<( Vec<(i32, i32, i32)>, Vec<(i32, i32)>)>, game_mode: i32){
-//     let mut i = 0;
-    
-//     let mut rng = rand::thread_rng();
-//     let mut win_1 = 0;
-//     let mut win_2 = 0;
-//     // Generate a random number in the range [0, 10)    
-//     while(i < number_of_games){
-//         // I need to know the number of positions available,
-//         // Get the legal moves and choose between them
-//         let mut board: Vec<(i32, i32)> = vec![(2,2), (0,0), (0,0), (0,0), (0,0), (1,5), 
-//                                           (0,0), (1,3), (0,0), (0,0), (0,0), (2,5), 
-//                                           (1,5), (0,0), (0,0), (0,0), (2,3), (0,0), 
-//                                           (2,5), (0,0), (0,0), (0,0), (0,0), (1,2)];
-        
-//         let mut history_of_a_game: Vec<(i32, i32, i32)> = vec![];
-//         let mut history_of_dice: Vec<(i32, i32)> = vec![];
-//         let mut keep_count_of_1_stones: i32 = 15;
-//         let mut keep_count_of_2_stones: i32 = 15;
-//         let mut hit_stones_1: i32 = 0;
-//         let mut hit_stones_2: i32 = 0;
-//         let mut number_of_steps: i32 = 0;
-//         while keep_count_of_1_stones > 0 && keep_count_of_2_stones > 0  {
-//             number_of_steps += 1;
-//             let dice1: i32 = rng.gen_range(1..=6);
-//             let dice2: i32 = rng.gen_range(1..=6);
-//             //write_to_file_dice(&(dice1, dice2));
-//             history_of_dice.push((dice1, dice2));
-//             let mut possible_moves: Vec<(i32, i32, i32)> = Vec::new();
-//             // Find the stones with possiblitiy of the move
-//             if dice1 != dice2 {
-//                 // two moves maximum to play
-//                 // check whose turn it is first
-
-//                 // START: PLAYER 11111 WITH TWO DICES NOT ALIKE
-//                 if (history_of_dice.len() % 2) == 1 {
-//                     // println!("PPPPPPPPP 11111111111111");
-//                     // println!("keep_count_1: {},keep_count_2 {}", keep_count_of_1_stones, keep_count_of_2_stones);
-//                     // display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                     let mut d1_used: bool = false;
-//                     let mut d2_used: bool = false;
-//                     for i in 0..2{
-//                         match history_of_dice.last() {
-//                             Some(last_roll ) => {
-//                                 // START: Check hit stones for player 11111
-//                                 if hit_stones_1 > 0{
-//                                     // See if we have any possible moves to make and then randomly choose between them
-                                    
-//                                     if !(board[24 - (last_roll.0 as usize) ].0 == 2 && board[24 - (last_roll.0 as usize) ].1 >= 2){
-//                                         possible_moves.push((1, 24 - last_roll.0, -1));
-//                                     }
-//                                     if !(board[24 - (last_roll.1 as usize) ].0 == 2 && board[24 - (last_roll.1 as usize) ].1 >= 2){
-//                                         possible_moves.push((1, 24 - last_roll.1, -1));
-                                    
-//                                     }
-//                                     if possible_moves.len() as i32 >= hit_stones_1{
-//                                         // choose randomly a move from the 
-//                                         for i in 0..hit_stones_1{
-//                                             // This rand_num will be updated with calculated algorithms
-//                                             display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                             let rand_num = handle_game(game_mode, &possible_moves, &board, last_roll, 1, d1_used, d2_used, false, -1,  keep_count_of_1_stones: i32,  keep_count_of_2_stones: i32, hit_stones_1: i32, hit_stones_2: i32);
-//                                             history_of_a_game.push(possible_moves[rand_num].clone());
-//                                             update_board(&mut board,  &possible_moves[rand_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                             display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                             if 24 - possible_moves[rand_num].1 == last_roll.0 {
-//                                                 d1_used = true;
-//                                             }else{
-//                                                 d2_used = true;
-//                                             }
-//                                             possible_moves.remove(rand_num);
-                                            
-//                                         }
-                                        
-//                                         possible_moves.clear();
-                                    
-//                                     } else {
-//                                         // Play the moves but there is still going to be hit_stones
-                                        
-//                                         history_of_a_game.extend(possible_moves.clone());
-//                                         d1_used = true;
-//                                         d2_used = true;
-//                                         for i in 0..possible_moves.len(){
-//                                             update_board(&mut board, &possible_moves[i], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                             display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                         }
-//                                         possible_moves.clear();
-
-//                                     }
-//                                 // END: CHECKING THE IF PLAYER 11111 has any hit stones
-//                                 // checking if any of the dices are used
-//                                 } else if !d1_used || !d2_used {
-//                                     // START: THERE IS NO HIT STONES AND PLAYER 11111 CAN MOVE FREELY BOTH DICES AVAILABLE
-//                                     if !d1_used && !d2_used{
-
-//                                         // randomly deciding which dice we use 
-//                                         display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                         let rand_num = handle_game(game_mode, &possible_moves, &board, last_roll, 1, d1_used, d2_used, true, -1,  keep_count_of_1_stones: i32,  keep_count_of_2_stones: i32, hit_stones_1: i32, hit_stones_2: i32);
-//                                         // START: USING THE FIRST DICE WHEN WE HAVE BOTH DICES AVAILABLE
-//                                         if rand_num == 1{
-//                                             // check if stones of player 1 can go out
-//                                             let mut can_player1_go_out = true;
-//                                             for i in 6..=23{
-//                                                 if board[i].0 == 1 {
-//                                                     can_player1_go_out = false;
-//                                                     break;
-//                                                 }
-//                                             }
-//                                             // if the stone can go then we need to only check the player 11111 house
-//                                             if can_player1_go_out {
-//                                                 for i in 0..=5{
-//                                                     if(board[i].0 == 1){
-                                                        
-//                                                         if i as i32 - (last_roll.0 ) < 0{
-//                                                             // going out
-//                                                             possible_moves.push((1, -2, i as i32));
-//                                                         }else{
-//                                                             // moving inside the house
-//                                                             if !(board[i - (last_roll.0 as usize)].0 == 2 && board[i - (last_roll.0 as usize)].1 >= 2) {
-//                                                                 possible_moves.push((1,  (i - (last_roll.0 as usize)) as i32, i as i32))
-//                                                             }
-//                                                         }
-                                                        
-//                                                     }
-//                                                 }
-//                                                 // going to choose a random possible move and play it
-//                                                 if possible_moves.len() > 0{
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     let ran_num =  handle_game(game_mode, &possible_moves, &board, last_roll, 1, d1_used, d2_used, false, -1,  keep_count_of_1_stones: i32,  keep_count_of_2_stones: i32, hit_stones_1: i32, hit_stones_2: i32);
-//                                                     history_of_a_game.push(possible_moves[ran_num].clone());
-//                                                     update_board(&mut board, &possible_moves[ran_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     possible_moves.clear();
-//                                                 }
-
-//                                             // Player 11111 can't go out, finding the right move
-//                                             } else{
-//                                                 for i in 0..=23{
-//                                                     if(board[i].0 == 1){
-//                                                         // println!("DDDDD: LINE 313 {}", (last_roll.0 as usize ));
-//                                                         if ((i as i32) - last_roll.0 ) >= 0 {
-//                                                             if (!(board[((i as i32) - (last_roll.0 )) as usize].0 == 2 && board[((i as i32) - (last_roll.0 )) as usize].1 >= 2))  {
-//                                                                 possible_moves.push((1,  (i - (last_roll.0 as usize)) as i32, i as i32));
-//                                                             }
-//                                                         }
-//                                                     }
-//                                                 }
-//                                                 if possible_moves.len() > 0{
-//                                                     //println!("1111111111");
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     let ran_num = handle_game(game_mode, &possible_moves, &board, last_roll, 1, d1_used, d2_used, false, -1,  keep_count_of_1_stones: i32,  keep_count_of_2_stones: i32, hit_stones_1: i32, hit_stones_2: i32);
-//                                                     history_of_a_game.push(possible_moves[ran_num].clone());
-//                                                     //println!("{}, {}, {}", possible_moves[ran_num].0, possible_moves[ran_num].1, possible_moves[ran_num].2);
-//                                                     update_board(&mut board, &possible_moves[ran_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     possible_moves.clear();
-//                                                     // println!("{}, {}", last_roll.0, last_roll.1);
-//                                                     // read_input();
-//                                                 }
-//                                             }
-
-//                                             d1_used = true;
-//                                         // END: USING THE FIRST DICE WHEN WE HAVE BOTH DICES AVAILABLE 
-//                                         // START: USING THE SECOND DICE WHEN WE HAVE BOTH DICES AVAILABLE
-//                                         } else {
-
-//                                             let mut can_player1_go_out = true;
-//                                             for i in 6..=23{
-//                                                 if(board[i].0 == 1){
-//                                                     can_player1_go_out = false;
-//                                                     break;
-//                                                 }
-//                                             }
-//                                             if can_player1_go_out {
-//                                                 // when the player go out so all the stones should be in the house hence the 0..=5 
-//                                                 for i in 0..=5{
-//                                                     if(board[i].0 == 1){
-//                                                         if i as i32 - (last_roll.1 ) < 0{
-//                                                             // going out
-//                                                             possible_moves.push((1, -2, i as i32));
-//                                                         }else{
-//                                                             // moving inside the hourse
-//                                                                 if !(board[i - (last_roll.1 as usize)].0 == 2 && board[i - (last_roll.1 as usize)].1 >= 2) {
-//                                                                     possible_moves.push((1,  (i - (last_roll.1 as usize)) as i32, i as i32))
-//                                                                 }
-//                                                         }
-                                                        
-//                                                     }
-//                                                 }
-//                                                 // going to choose a random possible move and play it
-//                                                 if possible_moves.len() > 0{
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     let ran_num = handle_game(game_mode, &possible_moves, &board, last_roll, 1, d1_used, d2_used, false, -1,  keep_count_of_1_stones: i32,  keep_count_of_2_stones: i32, hit_stones_1: i32, hit_stones_2: i32);
-//                                                     history_of_a_game.push(possible_moves[ran_num].clone());
-//                                                     update_board(&mut board, &possible_moves[ran_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     possible_moves.clear();
-//                                                 }
-
-//                                             // player 11111 can't go out so we have to choose a move from the board
-//                                             } else{
-//                                                 for i in 0..=23{
-//                                                     if(board[i].0 == 1){
-//                                                         // println!("DDDDD LINE 378: {}", (last_roll.1 as usize));
-//                                                         if ((i as i32) - last_roll.1 ) >= 0 {
-//                                                             if !(board[((i as i32) - (last_roll.1 )) as usize].0 == 2 && board[((i as i32) - (last_roll.1 )) as usize].1 >= 2) {
-//                                                                 possible_moves.push((1, ((i as i32) - last_roll.1 ) as i32, i as i32));
-//                                                             }
-//                                                         }
-//                                                     }
-//                                                 }
-//                                                 if possible_moves.len() > 0{
-//                                                 // println!("222222222");
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     let ran_num = handle_game(game_mode, &possible_moves, &board, last_roll, 1, d1_used, d2_used, false, -1,  keep_count_of_1_stones: i32,  keep_count_of_2_stones: i32, hit_stones_1: i32, hit_stones_2: i32);
-//                                                     history_of_a_game.push(possible_moves[ran_num].clone());
-//                                                     // println!("-------");
-//                                                     // println!("{}, {}, {}", possible_moves[ran_num].0, possible_moves[ran_num].1, possible_moves[ran_num].2);
-//                                                     update_board(&mut board, &possible_moves[ran_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     possible_moves.clear();
-//                                                     // println!("WE SHOULD BE HERE");
-//                                                     // println!("{}, {}", last_roll.0, last_roll.1);
-//                                                     // read_input();
-//                                                 }
-//                                             }
-//                                             d2_used = true;
-//                                         }
-//                                     // END: THERE IS NO HIT STONES AND PLAYER 11111 CAN MOVE FREELY BOTH DICES AVAILABLE 
-//                                     // START: NO HIT STONES AND PLAYER 11111 CAN MOVE WITH ONE OF THE DICES, ONE OF THE DICES HAS BEEN USED
-//                                     } else if (!d1_used && d2_used) || (d1_used && !d2_used){
-//                                         // START: FIRST DICE IS NOT USED
-//                                         if !d1_used {
-//                                             let mut can_player1_go_out = true;
-//                                             for i in 6..=23{
-//                                                 if(board[i].0 == 1){
-//                                                     can_player1_go_out = false;
-//                                                     break;
-//                                                 }
-//                                             }
-//                                             if can_player1_go_out {
-//                                                 for i in 0..=5{
-//                                                     if(board[i].0 == 1){
-//                                                         //going out
-//                                                         if (i as i32) - last_roll.0 < 0{
-//                                                             possible_moves.push((1, -2, i as i32));
-//                                                         }else{
-//                                                             if !(board[i - (last_roll.0 as usize)].0 == 2 && board[i - (last_roll.0 as usize)].1 >= 2) {
-//                                                                 possible_moves.push((1,  (i - (last_roll.0 as usize)) as i32, i as i32));
-//                                                             }
-//                                                         }
-                                                        
-//                                                     }
-//                                                 }
-//                                                 // going to choose a random possible move and play it
-//                                                 if possible_moves.len() > 0 {
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     let ran_num = handle_game(game_mode, &possible_moves, &board, last_roll, 1, d1_used, d2_used, false, -1,  keep_count_of_1_stones: i32,  keep_count_of_2_stones: i32, hit_stones_1: i32, hit_stones_2: i32);
-//                                                     history_of_a_game.push(possible_moves[ran_num].clone());
-//                                                     update_board(&mut board, &possible_moves[ran_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     possible_moves.clear();
-//                                                 }
-//                                             } else{
-//                                                 for i in 0..=23{
-//                                                     if(board[i].0 == 1){
-//                                                         if ((i as i32) - last_roll.0 ) >= 0 {
-//                                                             // println!("DDDDD: {}", (last_roll.0 as usize));
-//                                                             if !(board[i - (last_roll.0 as usize)].0 == 2 && board[i - (last_roll.0 as usize)].1 >= 2) {
-//                                                                 possible_moves.push((1,  (i as i32) - (last_roll.0) as i32, i as i32));
-//                                                             }
-//                                                         }
-//                                                     }
-//                                                 }
-//                                                 if possible_moves.len() > 0{
-//                                                 // println!("33333333");
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     let ran_num  = handle_game(game_mode, &possible_moves, &board, last_roll, 1, d1_used, d2_used, false, -1,  keep_count_of_1_stones: i32,  keep_count_of_2_stones: i32, hit_stones_1: i32, hit_stones_2: i32);
-//                                                     history_of_a_game.push(possible_moves[ran_num].clone());
-//                                                     // println!("{}, {}, {}", possible_moves[ran_num].0, possible_moves[ran_num].1, possible_moves[ran_num].2);
-//                                                     update_board(&mut board, &possible_moves[ran_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     possible_moves.clear();
-//                                                     // println!("WE SHOULD BE HERE");
-//                                                     // println!("{}, {}", last_roll.0, last_roll.1);
-//                                                     // read_input();
-//                                                 }
-//                                             }
-//                                             d1_used = true
-//                                         // END: FIRST DICE IS NOT USED
-//                                         }
-//                                         // START: SECOND DICE IS NOT USED
-//                                         if !d2_used {
-//                                             let mut can_player1_go_out = true;
-//                                             for i in 6..=23{
-//                                                 if(board[i].0 == 1){
-//                                                     can_player1_go_out = false;
-//                                                     break;
-//                                                 }
-//                                             }
-//                                             if can_player1_go_out {
-//                                                 for i in 0..=5{
-//                                                     if(board[i].0 == 1){
-//                                                         //going out
-//                                                         if (i as i32)- last_roll.1 < 0{
-//                                                             possible_moves.push((1, -2, i as i32));
-//                                                         }else{
-//                                                             if !(board[i - (last_roll.1 as usize)].0 == 2 && board[i - (last_roll.1 as usize)].1 >= 2) {
-//                                                                 possible_moves.push((1,  (i - (last_roll.1 as usize)) as i32, i as i32))
-//                                                             }
-//                                                         }
-                                                        
-//                                                     }
-//                                                 }
-//                                                 // going to choose a random possible move and play it
-//                                                 if possible_moves.len() > 0{
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     let ran_num  = handle_game(game_mode, &possible_moves, &board, last_roll, 1, d1_used, d2_used, false, -1,  keep_count_of_1_stones: i32,  keep_count_of_2_stones: i32, hit_stones_1: i32, hit_stones_2: i32);
-//                                                     history_of_a_game.push(possible_moves[ran_num].clone());
-//                                                     update_board(&mut board, &possible_moves[ran_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     possible_moves.clear();
-//                                                 }
-//                                             } else{
-//                                                 for i in 0..=23{
-//                                                     if(board[i].0 == 1){
-//                                                         // println!("DDDDD: {}", (last_roll.1 as usize));
-//                                                         if ((i as i32) - last_roll.1 ) >= 0 {
-//                                                             if !(board[(i as i32 - (last_roll.1 )) as usize].0 == 2 && board[(i as i32 - (last_roll.1 )) as usize].1 >= 2) {
-//                                                                 possible_moves.push((1,  (i - (last_roll.1 as usize)) as i32, i as i32));
-//                                                             }
-//                                                         }
-//                                                     }
-//                                                 }
-//                                                 // println!("444444444");
-//                                                 if(possible_moves.len() > 0){
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     let ran_num = handle_game(game_mode, &possible_moves, &board, last_roll, 1, d1_used, d2_used, false, -1,  keep_count_of_1_stones: i32,  keep_count_of_2_stones: i32, hit_stones_1: i32, hit_stones_2: i32);
-//                                                     history_of_a_game.push(possible_moves[ran_num].clone());
-//                                                     // println!("-------");
-//                                                     // println!("{}, {}, {}", possible_moves[ran_num].0, possible_moves[ran_num].1, possible_moves[ran_num].2);
-//                                                     update_board(&mut board, &possible_moves[ran_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     possible_moves.clear();
-//                                                     // println!("WE SHOULD BE HERE");
-//                                                     // println!("{}, {}", last_roll.0, last_roll.1);
-//                                                     // read_input();
-//                                                 }
-//                                             }
-
-                                    
-//                                             d2_used = true;
-//                                         }
-//                                         // END: SECOND DICE IS NOT USED
-//                                     // END: NO HIT STONES AND PLAYER 11111 CAN MOVE WITH ONE OF THE DICES, ONE OF THE DICES HAS BEEN USED
-//                                     } else {
-//                                         // It's possible to be here 
-//                                     }
-//                                 }
-
-//                             },None =>{
-//                                 // There should be a roll definitely, we'll see if there is going to be anything here
-//                             }
-//                         }
-                        
-//                     }
-//                 // END: PLAYER 11111 WITH TWO DICES NOT ALIKE
-
-//                 // START: PLAYER 22222 TURN WITH DICES NOT ALIKE
-//                 } else {
-//                     // println!("PPPPPPPPP 2222222222222");
-//                     // println!("keep_count_1: {},keep_count_2 {}", keep_count_of_1_stones, keep_count_of_2_stones);
-//                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                     let mut d1_used: bool = false;
-//                     let mut d2_used: bool = false;
-//                     for i in 0..2{
-                        
-//                         match history_of_dice.last() {
-//                             Some(last_roll ) => {
-
-//                                 // START: Check hit stones for player 22222
-//                                 if hit_stones_2 > 0{
-
-//                                     // See if we have any possible moves to make and then randomly choose between them
-//                                     if !(board[(last_roll.0 as usize) - 1 ].0 == 1 && board[(last_roll.0 as usize) - 1 ].1 >= 2){
-//                                         // so basically the -1 is for showing the move is form a hit position
-//                                         // -2 is for going out to score
-//                                         possible_moves.push((2, ((last_roll.0 as usize) - 1) as i32, -1));
-                                        
-//                                     }
-//                                     if !(board[(last_roll.1 as usize) - 1 ].0 == 1 && board[(last_roll.1 as usize) - 1 ].1 >= 2){
-//                                         possible_moves.push((2,  ((last_roll.1 as usize) - 1) as i32, -1));
-                                        
-
-//                                     }
-//                                     if possible_moves.len() as i32 >= hit_stones_2{
-//                                         // choose randomly a move from the 
-//                                         for i in 0..hit_stones_2{
-//                                             // This rand_num will be updated with calculated algorithms
-//                                             display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                             let rand_num = handle_game(game_mode, &possible_moves, &board, last_roll, 2, d1_used, d2_used, false, -1,  keep_count_of_1_stones: i32,  keep_count_of_2_stones: i32, hit_stones_1: i32, hit_stones_2: i32);
-//                                             history_of_a_game.push(possible_moves[rand_num].clone());
-//                                             update_board(&mut board,  &possible_moves[rand_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                             display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                             if(possible_moves[rand_num].1 + 1 == last_roll.0){
-//                                                 d1_used = true;
-//                                             }else{
-//                                                 d2_used = true;
-//                                             }
-//                                             possible_moves.remove(rand_num);
-                                            
-//                                         }
-                                        
-//                                         possible_moves.clear();
-
-//                                     } else {
-//                                         // Play the moves but there is still going to be hit_stones
-                                        
-//                                         history_of_a_game.extend(possible_moves.clone());
-//                                         d1_used = true;
-//                                         d2_used = true;
-//                                         for i in 0..possible_moves.len(){
-//                                             update_board(&mut board, &possible_moves[i], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                             display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                         }
-//                                         possible_moves.clear()
-
-//                                     }
-//                                 // END: Check hit stones for player 22222
-//                                 } else if !d1_used || !d2_used {
-//                                     if !d1_used && !d2_used{
-//                                         // randomly deciding which rand_num to use
-//                                         display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                         let rand_num= handle_game(game_mode, &possible_moves, &board, last_roll, 2, d1_used, d2_used, true, -1,  keep_count_of_1_stones: i32,  keep_count_of_2_stones: i32, hit_stones_1: i32, hit_stones_2: i32);
-//                                         if(rand_num == 1){
-//                                             // check if stones of player 1 can go out
-//                                             let mut can_player2_go_out = true;
-//                                             for i in 0..=17{
-//                                                 if(board[i].0 == 2){
-//                                                     can_player2_go_out = false;
-//                                                     break;
-//                                                 }
-//                                             }
-//                                             if can_player2_go_out {
-//                                                 for i in 18..=23{
-//                                                     if(board[i].0 == 2){
-//                                                         //going out
-//                                                         if i + (last_roll.0 as usize) > 23{
-//                                                             possible_moves.push((2, -2, i as i32));
-//                                                         }else{
-//                                                             if !(board[i + (last_roll.0 as usize)].0 == 1 && board[i + (last_roll.0 as usize)].1 >= 2) {
-//                                                                 possible_moves.push((2, (i + (last_roll.0 as usize)) as i32, i as i32));
-//                                                             }
-//                                                         }
-//                                                     }
-//                                                 }
-//                                                 // going to choose a random possible move and play it
-//                                                 if possible_moves.len() > 0{
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     let ran_num =  handle_game(game_mode, &possible_moves, &board, last_roll, 2, d1_used, d2_used, false, -1,  keep_count_of_1_stones: i32,  keep_count_of_2_stones: i32, hit_stones_1: i32, hit_stones_2: i32);
-//                                                     history_of_a_game.push(possible_moves[ran_num].clone());
-//                                                     update_board(&mut board, &possible_moves[ran_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     possible_moves.clear();
-//                                                 }
-//                                             } else{
-//                                                 for i in 0..=23{
-//                                                     if board[i].0 == 2 {
-//                                                         // println!("DDDDD: {}", (last_roll.0 as usize));
-//                                                         if (i + (last_roll.0 as usize)) <= 23{
-//                                                             if !(board[i + (last_roll.0 as usize)].0 == 1 && board[i + (last_roll.0 as usize)].1 >= 2)  {
-//                                                                 possible_moves.push((2, (i + (last_roll.0 as usize)) as i32, i as i32))
-//                                                             }
-//                                                         }
-//                                                     }
-//                                                 }
-//                                                 if possible_moves.len() > 0{
-//                                                     // println!("2: 111111111");
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     let ran_num = handle_game(game_mode, &possible_moves, &board, last_roll, 2, d1_used, d2_used, false, -1,  keep_count_of_1_stones: i32,  keep_count_of_2_stones: i32, hit_stones_1: i32, hit_stones_2: i32);
-//                                                     history_of_a_game.push(possible_moves[ran_num].clone());
-//                                                     // println!("-------");
-//                                                     // println!("{}, {}, {}", possible_moves[ran_num].0, possible_moves[ran_num].1, possible_moves[ran_num].2);
-//                                                     update_board(&mut board, &possible_moves[ran_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     possible_moves.clear();
-//                                                     // println!("WE SHOULD BE HERE");
-//                                                     //println!("{}, {}", last_roll.0, last_roll.1);
-//                                                     // read_input();
-//                                                 }
-//                                             }
-//                                             d1_used = true;
-//                                         } else {
-//                                             let mut can_player2_go_out = true;
-//                                             for i in 0..=17{
-//                                                 if(board[i].0 == 2){
-//                                                     can_player2_go_out = false;
-//                                                     break;
-//                                                 }
-//                                             }
-//                                             if can_player2_go_out {
-//                                                 for i in 18..=23{
-//                                                     if(board[i].0 == 2){
-//                                                         //going out
-//                                                         if i + (last_roll.1 as usize) > 23{
-//                                                             possible_moves.push((2, -2, i as i32));
-//                                                         }else{
-//                                                             if !(board[((i as i32) + last_roll.1 ) as usize].0 == 1 && board[((i as i32) + last_roll.1 )as usize].1 >= 2) {
-//                                                                 possible_moves.push((2,  (i + (last_roll.1 as usize)) as i32, i as i32))
-//                                                             }
-//                                                         }
-                                                        
-//                                                     }
-//                                                 }
-//                                                 // going to choose a random possible move and play it
-//                                                 if possible_moves.len() > 0{
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     let ran_num = handle_game(game_mode, &possible_moves, &board, last_roll, 2, d1_used, d2_used, false, -1,  keep_count_of_1_stones: i32,  keep_count_of_2_stones: i32, hit_stones_1: i32, hit_stones_2: i32);
-//                                                     history_of_a_game.push(possible_moves[ran_num].clone());
-//                                                     update_board(&mut board, &possible_moves[ran_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     possible_moves.clear();
-//                                                 }
-//                                             } else{
-//                                                 for i in 0..=23{
-//                                                     if(board[i].0 == 2){
-//                                                         if ((i as i32) + (last_roll.1)) <= 23{
-//                                                             if !(board[((i as i32) +(last_roll.1)) as usize].0 == 1 && board[i + (last_roll.1 as usize)].1 >= 2)  {
-//                                                                 possible_moves.push((2,  (i + (last_roll.1 as usize)) as i32, i as i32))
-//                                                             }
-//                                                         }
-//                                                     }
-//                                                 }
-//                                                 if possible_moves.len() > 0{
-//                                                     // println!("2: 2222222222");
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     let ran_num = handle_game(game_mode, &possible_moves, &board, last_roll, 2, d1_used, d2_used, false, -1,  keep_count_of_1_stones: i32,  keep_count_of_2_stones: i32, hit_stones_1: i32, hit_stones_2: i32);
-//                                                     // println!("-------");
-//                                                     history_of_a_game.push(possible_moves[ran_num].clone());
-//                                                     update_board(&mut board, &possible_moves[ran_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     possible_moves.clear();
-//                                                     // println!("WE SHOULD BE HERE");
-//                                                     // println!("{}, {}", last_roll.0, last_roll.1);
-//                                                     // read_input();
-//                                                 }
-//                                             }
-//                                             d2_used = true;
-//                                         }
-
-                                        
-                                        
-//                                     } else if (!d1_used && d2_used) || (d1_used && !d2_used){
-//                                         if !d1_used {
-//                                             let mut can_player2_go_out = true;
-//                                             for i in 0..=17{
-//                                                 if(board[i].0 == 2){
-//                                                     can_player2_go_out = false;
-//                                                     break;
-//                                                 }
-//                                             }
-//                                             if can_player2_go_out {
-//                                                 for i in 18..=23{
-//                                                     if(board[i].0 == 2){
-//                                                         //going out
-//                                                         if i + (last_roll.0 as usize) > 23{
-//                                                             possible_moves.push((2,  -2, i as i32));
-//                                                         }else{
-//                                                             if !(board[i + (last_roll.0 as usize)].0 == 1 && board[i + (last_roll.0 as usize)].1 >= 2) {
-//                                                                 possible_moves.push((2,  (i + (last_roll.0 as usize)) as i32, i as i32));
-//                                                             }
-//                                                         }
-                                                        
-//                                                     }
-//                                                 }
-//                                                 // going to choose a random possible move and play it
-//                                                 if possible_moves.len() > 0 {
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     let ran_num =  handle_game(game_mode, &possible_moves, &board, last_roll, 2, d1_used, d2_used, false, -1,  keep_count_of_1_stones: i32,  keep_count_of_2_stones: i32, hit_stones_1: i32, hit_stones_2: i32);
-//                                                     history_of_a_game.push(possible_moves[ran_num].clone());
-//                                                     update_board(&mut board, &possible_moves[ran_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     possible_moves.clear();
-//                                                 }
-//                                             } else{
-//                                                 for i in 0..=23{
-//                                                     if(board[i].0 == 2){
-//                                                         // println!("DDDDD: {}", (last_roll.0 as usize));
-//                                                         if ((i as i32) + (last_roll.0)) <= 23{
-//                                                             if !(board[i + (last_roll.0 as usize)].0 == 1 && board[i + (last_roll.0 as usize)].1 >= 2) {
-//                                                                 possible_moves.push((2,  (i + (last_roll.0 as usize)) as i32, i as i32));
-//                                                             }
-//                                                         }
-//                                                     }
-//                                                 }
-//                                                 if possible_moves.len() > 0{
-//                                                     // println!("2: 333333333333");
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     let ran_num =  handle_game(game_mode, &possible_moves, &board, last_roll, 2, d1_used, d2_used, false, -1,  keep_count_of_1_stones: i32,  keep_count_of_2_stones: i32, hit_stones_1: i32, hit_stones_2: i32);
-//                                                     history_of_a_game.push(possible_moves[ran_num].clone());
-//                                                     // println!("-------");
-//                                                     // println!("{}, {}, {}", possible_moves[ran_num].0, possible_moves[ran_num].1, possible_moves[ran_num].2);
-//                                                     update_board(&mut board, &possible_moves[ran_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     possible_moves.clear();
-//                                                     // println!("WE SHOULD BE HERE");
-//                                                     // println!("{}, {}", last_roll.0, last_roll.1);
-//                                                     // read_input();
-//                                                 }
-//                                             }
-//                                             d1_used = true
-//                                         }
-//                                         if !d2_used {
-//                                             let mut can_player2_go_out = true;
-//                                             for i in 0..=17{
-//                                                 if(board[i].0 == 1){
-//                                                     can_player2_go_out = false;
-//                                                     break;
-//                                                 }
-//                                             }
-//                                             if can_player2_go_out {
-//                                                 for i in 18..=23{
-//                                                     if(board[i].0 == 2){
-//                                                         //going out
-//                                                         if (i + (last_roll.1 as usize)) > 23{
-//                                                             possible_moves.push((2, -2, i as i32));
-//                                                         }else{
-//                                                             if !(board[i + (last_roll.1 as usize)].0 == 1 && board[i + (last_roll.1 as usize)].1 >= 2) {
-//                                                                 possible_moves.push((2,  (i + (last_roll.1 as usize)) as i32, i as i32))
-//                                                             }
-//                                                         }
-                                                        
-//                                                     }
-//                                                 }
-//                                                 // going to choose a random possible move and play it
-//                                                 if possible_moves.len() > 0{
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     let ran_num = handle_game(game_mode, &possible_moves, &board, last_roll, 2, d1_used, d2_used, false, -1,  keep_count_of_1_stones: i32,  keep_count_of_2_stones: i32, hit_stones_1: i32, hit_stones_2: i32);
-//                                                     history_of_a_game.push(possible_moves[ran_num].clone());
-//                                                     update_board(&mut board, &possible_moves[ran_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     possible_moves.clear();
-//                                                 }
-//                                             } else{
-//                                                 for i in 0..=23{
-//                                                     if(board[i].0 == 2){
-//                                                         if ((i as i32) + (last_roll.1)) <= 23{
-//                                                             if !(board[i + (last_roll.1 as usize)].0 == 1 && board[i + (last_roll.1 as usize)].1 >= 2) {
-                                                                
-//                                                                 possible_moves.push((2,  (i + (last_roll.1 as usize)) as i32, i as i32))
-//                                                             }
-//                                                         }
-//                                                     }
-//                                                 }
-//                                                 if possible_moves.len() > 0{
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     let ran_num =  handle_game(game_mode, &possible_moves, &board, last_roll, 2, d1_used, d2_used, false, -1,  keep_count_of_1_stones: i32,  keep_count_of_2_stones: i32, hit_stones_1: i32, hit_stones_2: i32);
-//                                                     history_of_a_game.push(possible_moves[ran_num].clone());
-//                                                     update_board(&mut board, &possible_moves[ran_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                                     possible_moves.clear();
-//                                                 }
-//                                             }
-//                                             d2_used = true;
-//                                         }
-
-//                                     } else {
-//                                         // It's possible to be here 
-//                                     }
-//                                 }
-
-//                             },None =>{
-//                                 // There should be a roll definitely, we'll see if there is going to be anything here
-//                             }
-//                         }
-                        
-//                     }
-//                 }
-//                 // END: PLAYER 22222 TURN WITH DICES NOT ALIKE
-            
-//             } 
-//             // This else statement is for double dices like (1,1),(2,2),(4,4)...
-//             else {
-//                 // println!("DOUBLE DOUBLE DOUBLE DOUBLE");
-//                 if history_of_dice.len() % 2 == 1 {
-//                     // println!("PPPPPPPPP 11111111111111");
-//                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                     for i in 0..4{
-//                         match history_of_dice.last() {
-//                             Some(last_roll ) => {
-//                                 if hit_stones_1 > 0 {
-//                                     if !(board[24 - (last_roll.0 as usize) ].0 == 2 && board[24 - (last_roll.0 as usize) ].1 >= 2){
-                                        
-//                                         let game_move = (1,  (24 - (last_roll.0 as usize)) as i32, -1);
-//                                         history_of_a_game.push(game_move);
-//                                         update_board(&mut board, &game_move, &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                         display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones)
-//                                     }
-//                                 } else {
-//                                     let mut can_player_1_go_out = true;
-//                                     for i in 6..=23{
-//                                         if board[i].0 == 1{
-//                                             can_player_1_go_out = false;
-//                                             break;
-//                                         }
-//                                     }
-//                                     if can_player_1_go_out {
-//                                         for i in 0..=5{
-//                                             if(board[i].0 == 1){
-//                                                 // going out
-//                                                 if((i as i32) - last_roll.0 <= -1){
-//                                                     let game_move = (1, -2, i as i32);
-//                                                     possible_moves.push(game_move);
-                                                    
-//                                                 } else {
-//                                                     if !(board[i  - (last_roll.0 as usize)].0 == 2  && board[i - (last_roll.0 as usize)].1 >= 2) {
-//                                                         possible_moves.push((1, (i as i32) - last_roll.0, i as i32));
-//                                                     }
-//                                                 }
-//                                             }
-//                                         }
-//                                         if possible_moves.len() > 0{
-//                                             display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                             let ran_num = handle_game(game_mode, &possible_moves, &board, last_roll, 1, false, false, false, i + 1,  keep_count_of_1_stones: i32,  keep_count_of_2_stones: i32, hit_stones_1: i32, hit_stones_2: i32);
-//                                             history_of_a_game.push(possible_moves[ran_num].clone());
-//                                             update_board(&mut board, &possible_moves[ran_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                             display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                             possible_moves.clear();
-//                                         }
-//                                     } else {
-//                                         for i in 0..=23{
-//                                             if board[i].0 == 1 {
-//                                                 if ((i as i32)  - (last_roll.0)) > 0 {
-//                                                     if !(board[((i as i32)  - (last_roll.0)) as usize].0 == 2  && board[((i as i32)  - (last_roll.0)) as usize].1 >= 2) {
-//                                                         possible_moves.push((1, (i as i32) - last_roll.0, i as i32));
-//                                                     }
-//                                                 }
-//                                             }
-//                                         }
-//                                         if possible_moves.len() > 0{
-//                                             display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                             let ran_num = handle_game(game_mode, &possible_moves, &board, last_roll, 1, false, false, false, i + 1,  keep_count_of_1_stones: i32,  keep_count_of_2_stones: i32, hit_stones_1: i32, hit_stones_2: i32);
-//                                             history_of_a_game.push(possible_moves[ran_num].clone());
-//                                             update_board(&mut board, &possible_moves[ran_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                             display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                             possible_moves.clear();
-//                                         }
-//                                     }
-//                                 }
-//                             },None=>{
-
-//                             }
-//                         }
-//                     }
-//                 } else {
-//                     //println!("PPPPPPPPP 2222222222222222");
-//                     display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                     for i in 0..4{
-//                         match history_of_dice.last() {
-//                             Some(last_roll) => {
-//                                 if hit_stones_2 > 0 {
-//                                     if !(board[(last_roll.0 as usize) - 1 ].0 == 1 && board[(last_roll.0 as usize) - 1 ].1 >= 2){
-                                        
-//                                         let game_move = ( 2,   ((last_roll.0 as usize) - 1) as i32, -1);
-//                                         history_of_a_game.push(game_move);
-//                                         update_board(&mut board, &game_move, &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                         display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                     }
-//                                 } else {
-//                                     let mut can_player_2_go_out = true;
-//                                     for i in 0..=17{
-//                                         if board[i].0 == 2 {
-//                                             can_player_2_go_out = false;
-//                                             break;
-//                                         }
-//                                     }
-//                                     if can_player_2_go_out {
-//                                         for i in 18..=23{
-//                                             if board[i].0 == 2 {
-//                                                 // going out
-//                                                 if((i as i32) + last_roll.0 > 23){
-//                                                     let game_move = (2, -2, i as i32);
-//                                                     possible_moves.push(game_move);
-                                                    
-//                                                 } else {
-//                                                     if !(board[i  + (last_roll.0 as usize)].0 == 1  && board[i + (last_roll.0 as usize)].1 >= 2) {
-//                                                         possible_moves.push((2,  (i as i32) + last_roll.0, i as i32));
-//                                                     }
-//                                                 }
-//                                             }
-//                                         }
-//                                         if possible_moves.len() > 0{
-//                                             display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                             let ran_num = handle_game(game_mode, &possible_moves, &board, last_roll, 2, false, false, false, i + 1,  keep_count_of_1_stones: i32,  keep_count_of_2_stones: i32, hit_stones_1: i32, hit_stones_2: i32);
-//                                             history_of_a_game.push(possible_moves[ran_num].clone());
-//                                             update_board(&mut board, &possible_moves[ran_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                             display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                             possible_moves.clear();
-//                                         }
-//                                     } else {
-//                                         for i in 0..=23{
-//                                             if board[i].0 == 2 {
-//                                                 // println!("DDDDD: {}", (last_roll.0 as usize));
-//                                                 if i + (last_roll.0 as usize) <= 23{
-//                                                     if !(board[i  + (last_roll.0 as usize)].0 == 1  && board[i + (last_roll.0 as usize)].1 >= 2) {
-//                                                         possible_moves.push((2,  (i as i32) + last_roll.0, i as i32));
-//                                                     }                                                    
-//                                                 }
-
-//                                             }
-//                                         }
-//                                         if possible_moves.len() > 0{
-//                                             display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                             let ran_num = handle_game(game_mode, &possible_moves, &board, last_roll, 2, false, false, false, i + 1,  keep_count_of_1_stones: i32,  keep_count_of_2_stones: i32, hit_stones_1: i32, hit_stones_2: i32);
-//                                             history_of_a_game.push(possible_moves[ran_num].clone());
-//                                             update_board(&mut board, &possible_moves[ran_num], &mut hit_stones_1, &mut hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                             display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-//                                             possible_moves.clear();
-//                                         }
-//                                     }
-//                                 }
-//                             }, None => {
-//                             }
-//                         }
-//                     }
-//                 }
-//             }
-//             // println!("number of steps: {}", number_of_steps);      
-//             if keep_count_of_1_stones > 15 {
-//                 read_input();
-//             }
-//             if keep_count_of_2_stones > 15 {
-//                 read_input();
-//             }
-//             if keep_count_of_1_stones <= 0{
-//                 win_1 += 1;
-//             }
-//             if keep_count_of_2_stones <= 0{
-//                 win_2 += 1;
-//             }
-//         }
-
-//         //read_input();
-//         i += 1;
-//         write_to_file(&(0, 0, 0));
-//         write_to_file_dice(&(0, 0));
-//         // println!("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-        
-//     }
-//     println!("win rate: {}, {}", win_1, win_2);
-// }
-
-// pub fn mut_vec(v: &mut Vec<i32>){
-//     let mut i: i32 = 0;
-//     while(i < 32){
-//         v.push(i);
-//         i += 1;
-//     }
-// }
 
 // stats -> Vec<i32>: 
 // the distance of all stones to home
@@ -2344,6 +520,12 @@ struct board_state{
     parent_index: i32,
 }
 
+
+/*
+    Do I think dice_segment needs a parent index I really don't think so
+    But I need to deal with rewritig of the initiation of the already
+    dice_segmenets 
+*/
 #[derive(Hash, Eq, PartialEq, Clone, Debug)]
 struct dice_segment{
     board_state_vec: Vec<board_state>,
@@ -2352,19 +534,56 @@ struct dice_segment{
     //odds: NotNan<f64>,
 }
 
+
+/*
+    board possibilities should map to a choice from the above parent 
+    one index for finding the board in dice segment
+    another index for finding the right dice segment 
+    another index for finding the right level
+    these indexes mean who the parent node is 
+*/
 #[derive(Hash, Eq, PartialEq, Clone, Debug)]
 struct board_possibilities{
     dice_segment_vec: Vec<dice_segment>,
-    turn: i32,
     level: i32,
+    index_ds: i32,
+    index_bs: i32,
+
 }
 
 #[derive(Hash, Eq, PartialEq, Clone, Debug)]
 struct level{
-    dice_segment_vec: Vec<board_possibilities>,
+    board_possibilities: Vec<board_possibilities>,
     turn: i32,
     level: i32,
 }
+
+/*
+I think root should have a vector of levels,
+or maybe that's a tree that has levels
+*/
+
+#[derive(Hash, Eq, PartialEq, Clone, Debug)]
+struct root{
+    bs: board_state,
+    // this turn indicate who has the turn
+    // so if player 1 has the turn then
+    // player 1 moves
+    // I frankly don't remember 
+    // which represented what
+    // but I guess when playing, it will be obvious
+    turn: i32,
+    dice: (i32, i32),
+    choices: dice_segment
+}
+
+#[derive(Hash, Eq, PartialEq, Clone, Debug)]
+struct tree{
+    root: root,
+    levels: Vec<level>
+}
+
+
 
 
 use std::collections::HashSet;
@@ -2386,32 +605,15 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                );
     }
 
-    println!("All_set_board: {}", all_set_board.len());
-    println!("================================");
-    // read_input();
+
+     
     for dice in &possible_dices{
-        // read_input();
-        println!("Generate_boards dice: {}, {}", dice.0, dice.1);
-        if dice.0 != dice.1{ 
-            println!("2396");
-            println!("{}, {}", dice.0, dice.1);
-            println!("=========================");
-            println!("=========================");
-            println!("=========================");
-            println!("=========================");
-            println!("=========================");
-            println!("Turn: {}", turn);
-            println!("The returned boards len is {}", all_set_board.len());
-            //read_input();
-            for ds in &all_set_board {
-                println!("Segments {}, {} length {}", ds.0.0, ds.0.1, ds.1.board_state_vec.len());
-            }
-            //read_input();
-            
+         
+
+        if dice.0 != dice.1{             
             
             if turn == 1{
-                println!("I am here 2401");
-                //read_input();
+
                 if hit_stones_1 > 0{
                     // For hit stones we need to settle hit_stones first
                     // finding the spots we can land on
@@ -2465,12 +667,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                     );
 
                                     if let Some(segment) = all_set_board.get_mut(&dice) {
-                                        println!("Found a segment!");
-                                        println!("Dice values: {:?}", segment.dice);
-                                        println!("Parent index: {}", segment.parent_index);
-                                        println!("Full details: {:?}", segment);
-                                        println!("2472");
-                                        read_input();
+
                                         segment.board_state_vec.push(
                                             board_state {
                                                 board: board_clone_r.clone(),
@@ -2535,12 +732,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                         }
                                     );
                                     if let Some(segment) = all_set_board.get_mut(&dice) {
-                                        println!("Found a segment!");
-                                        println!("Dice values: {:?}", segment.dice);
-                                        println!("Parent index: {}", segment.parent_index);
-                                        println!("Full details: {:?}", segment);
-                                        println!("2542");
-                                        read_input();
+
                                         segment.board_state_vec.push(
                                             board_state { board: board_clone_r.clone(), 
                                                 keep_count_1: keep_count_of_1_stones, 
@@ -2600,7 +792,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                             println!("Parent index: {}", segment.parent_index);
                             println!("Full details: {:?}", segment);
                             println!("2602");
-                            read_input();
+                             
                             segment.board_state_vec.push(
                                 board_state { board: board_clone.clone(), 
                                     keep_count_1: keep_count_of_1_stones, 
@@ -2628,7 +820,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                     }
                 }else{
                     println!("2610");
-                    //read_input();
+                      
                     // Indices from the board
                     let mut set_board: HashSet<board_state> = HashSet::new();
                     let mut temporary_v: Vec<i32> = vec![];
@@ -2753,7 +945,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                                 println!("Parent index: {}", segment.parent_index);
                                                 println!("Full details: {:?}", segment);
                                                 println!("2755");
-                                                read_input();
+                                                 
                                                 segment.board_state_vec.push(
                                                     board_state{
                                                         board: board_clone_r.clone(),
@@ -2802,7 +994,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                                         println!("Parent index: {}", segment.parent_index);
                                                         println!("Full details: {:?}", segment);
                                                         println!("2804");
-                                                        read_input();
+                                                         
                                                         segment.board_state_vec.push(
                                                             board_state{
                                                                 board: board_clone_r.clone(),
@@ -2827,21 +1019,9 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                             }
                         }
                     }   
-                    // println!("2804");
-                    // println!("=========================");
-                    // println!("=========================");
-                    // println!("=========================");
-                    // println!("=========================");
-                    // println!("=========================");
-                    // println!("The returned boards len is {}", all_set_board.len());
-                    // read_input();
-                    // for ds in &all_set_board {
-                    //     println!("Segments {}, {} length {}", ds.0.0, ds.0.1, ds.1.board_state_vec.len());
-                    // }
-                    // read_input();
                 }
             
-            // Turn of 2
+            
             } else {
                 // There needs to be quite bit of work going on here
                 // Change the way things move
@@ -2908,7 +1088,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                             println!("Parent index: {}", segment.parent_index);
                                             println!("Full details: {:?}", segment);
                                             println!("2910");
-                                            read_input();
+                                             
                                             segment.board_state_vec.push(
                                                 board_state { board: board_clone_r.clone(), 
                                                     keep_count_1: keep_count_of_1_stones, 
@@ -2978,7 +1158,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                             println!("Parent index: {}", segment.parent_index);
                                             println!("Full details: {:?}", segment);
                                             println!("2980");
-                                            read_input();
+                                             
                                             segment.board_state_vec.push(
                                                 board_state { board: board_clone_r.clone(), 
                                                     keep_count_1: keep_count_of_1_stones, 
@@ -3037,7 +1217,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                             println!("Parent index: {}", segment.parent_index);
                             println!("Full details: {:?}", segment);
                             println!("3039");
-                            read_input();
+                             
                             segment.board_state_vec.push(
                                 board_state { board: board_clone.clone(), 
                                     keep_count_1: keep_count_of_1_stones, 
@@ -3070,7 +1250,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                 }else{
                     // Indices from the board
                     // println!("3056");
-                    // read_input();
+                     
                     let mut set_board: HashSet<board_state> = HashSet::new();
                     let mut temporary_v: Vec<i32> = vec![];
                     for i in 0..=23{
@@ -3183,7 +1363,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                                 println!("Parent index: {}", segment.parent_index);
                                                 println!("Full details: {:?}", segment);
                                                 println!("3185");
-                                                read_input();
+                                                  
                                                 segment.board_state_vec.push(
                                                     board_state{
                                                         board: board_clone_r.clone(),
@@ -3232,7 +1412,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                                         println!("Parent index: {}", segment.parent_index);
                                                         println!("Full details: {:?}", segment);
                                                         println!("3234");
-                                                        read_input();
+                                                         
                                                         segment.board_state_vec.push(
                                                             board_state{
                                                                 board: board_clone_r.clone(),
@@ -3257,7 +1437,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                             }
                         }
                     }
-                    // read_input();
+                     
                     println!("Size hashset: {}", set_board.len());
                     for mut s in set_board{
                         display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1, &mut s.keep_count_2);
@@ -3270,11 +1450,11 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                     println!("=========================");
                     println!("=========================");
                     println!("The returned boards len is {}", all_set_board.len());
-                    read_input();
+                     
                     for ds in &all_set_board {
                         println!("Segments {}, {} length {}", ds.0.0, ds.0.1, ds.1.board_state_vec.len());
                     }
-                    read_input();
+                     
                 }
             }
 
@@ -3293,7 +1473,6 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                         let mut remaining_dice = 0;
                         if(board_clone_1[(24 - dice.0) as usize].0 == 2 && board_clone_1[(24 - dice.0 ) as usize].1 == 1){
                             hit_stones_2_clone_1 = hit_stones_2_clone_1 + 1;
-
 
                         }
                         if(hit_stones_1_clone > 4){
@@ -3317,7 +1496,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                 println!("Parent index: {}", segment.parent_index);
                                 println!("Full details: {:?}", segment);
                                 println!("3319");
-                                read_input();
+                                 
                                 segment.board_state_vec.push(
                                     board_state { board: board_clone_1.clone(), 
                                         keep_count_1: keep_count_of_1_stones, 
@@ -3355,7 +1534,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                 println!("Parent index: {}", segment.parent_index);
                                 println!("Full details: {:?}", segment);
                                 println!("3357");
-                                read_input();
+                                 
                                 segment.board_state_vec.push(
                                     board_state { board: board_clone_1.clone(), 
                                         keep_count_1: keep_count_of_1_stones, 
@@ -3382,7 +1561,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                             let mut two_move_set: HashSet<board_state> = HashSet::new();
                             let mut three_move_set: HashSet<board_state> = HashSet::new();
                             println!("REMAINING DICE: {}", remaining_dice);
-                            // read_input();
+                             
                             for i in (0..=23).rev(){
                                 if(board[i as usize].0 == 1){
                                     let mut board_clone_i: Vec<(i32, i32)> = board_clone_1.clone();
@@ -3458,7 +1637,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                     // for mut s in &one_move_set{
                                     //     display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1.clone(), &mut s.keep_count_2.clone());
                                     // }
-                                    //read_input();
+                                      
                                     
                                     if did_move_in_i == 1 && remaining_dice > 1{
                                         for j in (0..=i).rev(){
@@ -3531,7 +1710,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                                             // for mut s in &two_move_set{
                                                             //     display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1.clone(), &mut s.keep_count_2.clone());
                                                             // }
-                                                            //read_input();
+                                                              
                                                         }
                                                     }
                                                 }
@@ -3600,11 +1779,8 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                                                                 parent_index: -1
                                                                             }
                                                                         );
-                                                                        // println!("k: {}", k);
-                                                                        // for mut s in &three_move_set{
-                                                                        //     display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1.clone(), &mut s.keep_count_2.clone());
-                                                                        // }
-                                                                        //read_input();
+
+                                                                          
                                                                     }
                                                                 }
                                                             }
@@ -3620,7 +1796,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                             println!("{}", three_move_set.len());
                             println!("{}", two_move_set.len());
                             println!("{}", one_move_set.len());
-                            // read_input();
+                             
                             if three_move_set.len() != 0{
                                 println!("Three");
                                 for mut s in set_board{
@@ -3694,7 +1870,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                     }
                 } else {
                     println!("Here in dice.0 == dice.1");
-                    // read_input();
+                     
                     let mut set_board: HashSet<board_state> = HashSet::new();
                     // Find an anchor 
                     // This is supposed to figure out the 4 possible moves
@@ -3781,11 +1957,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                     }
                                 }
                             }
-                            // println!("i: {}", i);
-                            // for mut s in &one_move_set{
-                            //     display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1.clone(), &mut s.keep_count_2.clone());
-                            // }
-                            //read_input();
+
                             if did_move_in_i == 1{
                                 for j in (0..=i).rev(){
                                     if(board_clone_i[j as usize].0 == 1){
@@ -3853,11 +2025,8 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                                             parent_index: -1
                                                         }
                                                     );
-                                                    // println!("j: {}", j);
-                                                    // for mut s in &two_move_set{
-                                                    //     display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1.clone(), &mut s.keep_count_2.clone());
-                                                    // }
-                                                    //read_input();
+
+                                                      
                                                 }
                                             }
                                         }
@@ -3929,30 +2098,15 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                                                         parent_index: -1
                                                                     }
                                                                 );
-                                                                // println!("k: {}", k);
-                                                                // for mut s in &three_move_set{
-                                                                //     display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1.clone(), &mut s.keep_count_2.clone());
-                                                                // }
-                                                                //read_input();
+
+                                                                  
                                                             }
                                                         }
                                                     }
                                                     if did_move_in_k == 1{
                                                         for l in (0..=k).rev(){
                                                             if(board_clone_k[l as usize].0 == 1){
-                                                                // println!("********************************");
-                                                                // println!("*************{}{}{}***************",i,i,i);
-                                                                // println!("********************************");
-                                                                // println!("********************************");
-                                                                // println!("*************{}{}{}***************",j,j,j);
-                                                                // println!("********************************");
-                                                                // println!("********************************");
-                                                                // println!("*************{}{}{}***************",k,k,k);
-                                                                // println!("********************************");
-                                                                // println!("********************************");
-                                                                // println!("*************{}{}{}***************",l,l,l);
-                                                                // println!("********************************");
-                                                                //println!("*************{}***************", bo);
+
                                                                 let mut board_clone_l = board_clone_k.clone();
                                                                 let mut hit_stones_2_clone_l = hit_stones_2_clone_k;    
                                                                 let mut keep_count_1_clone_l = keep_count_1_clone_k;
@@ -4022,13 +2176,8 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                                                         }
                                                                     }
                                                                 }
-                                                                println!("=============================");
-                                                                println!("l: {}", l);
-                                                                            for mut s in &four_move_set{
-                                                                                display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1.clone(), &mut s.keep_count_2.clone());
-                                                                            }
-                                                                            println!("LINE 3253");
-                                                                            // read_input();
+
+                                                                             
                                                             }
                                                         }
                                                     }
@@ -4040,31 +2189,21 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                             }
                         }
                     }
-                    println!("=======================");
-                    println!("{}", four_move_set.len());
-                    println!("{}", three_move_set.len());
-                    println!("{}", two_move_set.len());
-                    println!("{}", one_move_set.len());
-                    // read_input();
+
+                     
                     if four_move_set.len() != 0{
                         set_board = four_move_set.clone();
                         for mut s in &set_board{
-                            println!("Four");
-                            // display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1.clone(), &mut s.keep_count_2.clone());
+
                         }
                         if let Some(segment) = all_set_board.get_mut(&dice) {
-                            println!("Found a segment!");
-                            println!("Dice values: {:?}", segment.dice);
-                            println!("Parent index: {}", segment.parent_index);
-                            println!("Full details: {:?}", segment);
+
                             for b_s in set_board{
                                 segment.board_state_vec.push(b_s);
                             }
                             
                         } else {
-                            println!("Search completed.");
-                            println!("No segment found with dice {:?}", dice);
-                            println!("Try a different dice combination.");
+
                         }
                     }else {
                         if three_move_set.len() != 0{
@@ -4074,18 +2213,11 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                             }
                             set_board = three_move_set.clone();
                             if let Some(segment) = all_set_board.get_mut(&dice) {
-                                println!("Found a segment!");
-                                println!("Dice values: {:?}", segment.dice);
-                                println!("Parent index: {}", segment.parent_index);
-                                println!("Full details: {:?}", segment);
+
                                 for b_s in set_board{
                                     segment.board_state_vec.push(b_s);
-                                }
-                                
+                                }                                
                             } else {
-                                println!("Search completed.");
-                                println!("No segment found with dice {:?}", dice);
-                                println!("Try a different dice combination.");
                             }
                         }else{
                             if two_move_set.len() != 0{
@@ -4095,10 +2227,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                 }
                                 set_board = two_move_set.clone();
                                 if let Some(segment) = all_set_board.get_mut(&dice) {
-                                    println!("Found a segment!");
-                                    println!("Dice values: {:?}", segment.dice);
-                                    println!("Parent index: {}", segment.parent_index);
-                                    println!("Full details: {:?}", segment);
+
                                     for b_s in set_board{
                                         segment.board_state_vec.push(b_s);
                                     }
@@ -4116,10 +2245,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                     }
                                     set_board = one_move_set.clone();
                                     if let Some(segment) = all_set_board.get_mut(&dice) {
-                                        println!("Found a segment!");
-                                        println!("Dice values: {:?}", segment.dice);
-                                        println!("Parent index: {}", segment.parent_index);
-                                        println!("Full details: {:?}", segment);
+
                                         for b_s in set_board{
                                             segment.board_state_vec.push(b_s);
                                         }
@@ -4169,10 +2295,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
 
                             );
                             if let Some(segment) = all_set_board.get_mut(&dice) {
-                                println!("Found a segment!");
-                                println!("Dice values: {:?}", segment.dice);
-                                println!("Parent index: {}", segment.parent_index);
-                                println!("Full details: {:?}", segment);
+
                                 segment.board_state_vec.push(
                                     board_state { board: board_clone_2.clone(), 
                                         keep_count_1: keep_count_of_1_stones, 
@@ -4205,10 +2328,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                             }
                             );
                             if let Some(segment) = all_set_board.get_mut(&dice) {
-                                println!("Found a segment!");
-                                println!("Dice values: {:?}", segment.dice);
-                                println!("Parent index: {}", segment.parent_index);
-                                println!("Full details: {:?}", segment);
+
                                 segment.board_state_vec.push(
                                     board_state { board: board_clone_2.clone(), 
                                         keep_count_1: keep_count_of_1_stones, 
@@ -4235,7 +2355,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                             let mut two_move_set: HashSet<board_state> = HashSet::new();
                             let mut three_move_set: HashSet<board_state> = HashSet::new();
                             println!("REMAINING DICE: {}", remaining_dice);
-                            // read_input();
+                             
                             for i in (0..=23).rev(){
                                 if(board[i as usize].0 == 2){
                                     let mut board_clone_i: Vec<(i32, i32)> = board_clone_2.clone();
@@ -4278,7 +2398,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                     // for mut s in &one_move_set{
                                     //     display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1.clone(), &mut s.keep_count_2.clone());
                                     // }
-                                    //read_input();
+                                      
                                     if did_move_in_i == 1 && remaining_dice > 1{
                                         for j in i..=23{
                                             if(board_clone_i[j as usize].0 == 2){
@@ -4317,7 +2437,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                                         // for mut s in &two_move_set{
                                                         //     display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1.clone(), &mut s.keep_count_2.clone());
                                                         // }
-                                                        //read_input();
+                                                          
                                                     }
                                                 }
                                                 
@@ -4357,7 +2477,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                                                     // for mut s in &three_move_set{
                                                                     //     display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1.clone(), &mut s.keep_count_2.clone());
                                                                     // }
-                                                                    //read_input();
+                                                                      
                                                                 }
                                                             }
                                                             
@@ -4372,7 +2492,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                             println!("{}", three_move_set.len());
                             println!("{}", two_move_set.len());
                             println!("{}", one_move_set.len());
-                            // read_input();
+                             
                             if three_move_set.len() != 0{
                                 println!("Three");
                                 set_board = three_move_set.clone();
@@ -4380,10 +2500,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                     // display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1.clone(), &mut s.keep_count_2.clone());
                                 }
                                 if let Some(segment) = all_set_board.get_mut(&dice) {
-                                    println!("Found a segment!");
-                                    println!("Dice values: {:?}", segment.dice);
-                                    println!("Parent index: {}", segment.parent_index);
-                                    println!("Full details: {:?}", segment);
+
                                     for b_s in set_board{
                                         segment.board_state_vec.push(b_s);
                                     }
@@ -4395,7 +2512,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                 }
                                 
                             }else{
-                                println!("we should be here");
+                                
                                 if two_move_set.len() != 0{
                                     println!("Two");
                                     set_board = two_move_set.clone();
@@ -4403,10 +2520,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                         // display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1.clone(), &mut s.keep_count_2.clone());
                                     }
                                     if let Some(segment) = all_set_board.get_mut(&dice) {
-                                        println!("Found a segment!");
-                                        println!("Dice values: {:?}", segment.dice);
-                                        println!("Parent index: {}", segment.parent_index);
-                                        println!("Full details: {:?}", segment);
+
                                         for b_s in set_board{
                                             segment.board_state_vec.push(b_s);
                                         }
@@ -4425,10 +2539,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                             //display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1.clone(), &mut s.keep_count_2.clone());
                                         }
                                         if let Some(segment) = all_set_board.get_mut(&dice) {
-                                            println!("Found a segment!");
-                                            println!("Dice values: {:?}", segment.dice);
-                                            println!("Parent index: {}", segment.parent_index);
-                                            println!("Full details: {:?}", segment);
+
                                             for b_s in set_board{
                                                 segment.board_state_vec.push(b_s);
                                             }
@@ -4446,7 +2557,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                     }
                 } else {
                     println!("22222222 Here in dice.0 == dice.1");
-                    // read_input();
+                     
                     let mut set_board: HashSet<board_state> = HashSet::new();
                     // Find an anchor 
                     // This is supposed to figure out the 4 possible moves
@@ -4535,7 +2646,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                             // for mut s in &one_move_set{
                             //     display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1.clone(), &mut s.keep_count_2.clone());
                             // }
-                            //read_input();
+                              
 
                             if did_move_in_i == 1{
                                 for j in i..=23{
@@ -4604,11 +2715,6 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                                             parent_index: -1
                                                         }
                                                     );
-                                                    // println!("j: {}", j);
-                                                    // for mut s in &two_move_set{
-                                                    //     display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1.clone(), &mut s.keep_count_2.clone());
-                                                    // }
-                                                    //read_input();
                                                 }
                                             }
                                         }
@@ -4627,9 +2733,6 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                                             all_in_zone = 0;
                                                         }
                                                     }
-                                                    // ####################################################
-                                                    // ###################Going Out 222####################
-                                                    // ####################################################
                                                     let mut is_k_the_biggest = 1;
                                                     for b in 18..i{
                                                         if(board_clone_k[b as usize].0 == 2){
@@ -4679,11 +2782,7 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                                                         parent_index: -1
                                                                     }
                                                                 );
-                                                                // println!("k: {}", k);
-                                                                // for mut s in &three_move_set{
-                                                                //     display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1.clone(), &mut s.keep_count_2.clone());
-                                                                // }
-                                                                //read_input();
+                                                                  
                                                             }
                                                         }
                                                     }
@@ -4700,9 +2799,6 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                                                         all_in_zone = 0;
                                                                     }
                                                                 }
-                                                                // ####################################################
-                                                                // ###################Going Out 222####################
-                                                                // ####################################################
                                                                 let mut is_l_the_biggest = 1;
                                                                 for b in 18..l{
                                                                     if(board_clone_l[b as usize].0 == 2){
@@ -4750,13 +2846,8 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                                                                     parent_index: -1
                                                                                 }
                                                                             );
-                                                                            
-                                                                            // println!("l: {}", l);
-                                                                            // for mut s in &four_move_set{
-                                                                            //     display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1.clone(), &mut s.keep_count_2.clone());
-                                                                            // }
-                                                                            // println!("LINE 3253");
-                                                                            // read_input();
+
+                                                                             
                                                                         }
                                                                     }
                                                                 }
@@ -4771,23 +2862,12 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                             }
                         }
                     }
-                    println!("DICE ====== DICE TURN 2222222222222");
-                    println!("{}", four_move_set.len());
-                    println!("{}", three_move_set.len());
-                    println!("{}", two_move_set.len());
-                    println!("{}", one_move_set.len());
-                    // read_input();
+                     
                     if four_move_set.len() != 0{
                         set_board = four_move_set.clone();
-                        for mut s in &set_board{
-                            println!("Four");
-                            // display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1.clone(), &mut s.keep_count_2.clone());
-                        }
+ 
                         if let Some(segment) = all_set_board.get_mut(&dice) {
-                            println!("Found a segment!");
-                            println!("Dice values: {:?}", segment.dice);
-                            println!("Parent index: {}", segment.parent_index);
-                            println!("Full details: {:?}", segment);
+
                             for b_s in set_board{
                                 segment.board_state_vec.push(b_s);
                             }
@@ -4799,16 +2879,10 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                         }
                     }else {
                         if three_move_set.len() != 0{
-                            println!("Three");
-                            for mut s in set_board{
-                                // display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1, &mut s.keep_count_2);
-                            }
+ 
                             set_board = three_move_set.clone();
                             if let Some(segment) = all_set_board.get_mut(&dice) {
-                                println!("Found a segment!");
-                                println!("Dice values: {:?}", segment.dice);
-                                println!("Parent index: {}", segment.parent_index);
-                                println!("Full details: {:?}", segment);
+
                                 for b_s in set_board{
                                     segment.board_state_vec.push(b_s);
                                 }
@@ -4820,16 +2894,10 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                             }
                         }else{
                             if two_move_set.len() != 0{
-                                println!("Two");
-                                for mut s in set_board{
-                                    // display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1, &mut s.keep_count_2);
-                                }
+
                                 set_board = two_move_set.clone();
                                 if let Some(segment) = all_set_board.get_mut(&dice) {
-                                    println!("Found a segment!");
-                                    println!("Dice values: {:?}", segment.dice);
-                                    println!("Parent index: {}", segment.parent_index);
-                                    println!("Full details: {:?}", segment);
+
                                     for b_s in set_board{
                                         segment.board_state_vec.push(b_s);
                                     }
@@ -4841,16 +2909,13 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                                 }
                             }else{
                                 if one_move_set.len() != 0{
-                                    println!("One");
+
                                     for mut s in set_board{
-                                        // display_board(&s.board, &s.hit_stones_1, &s.hit_stones_2, &mut s.keep_count_1, &mut s.keep_count_2);
+                                        
                                     }
                                     set_board = one_move_set.clone();
                                     if let Some(segment) = all_set_board.get_mut(&dice) {
-                                        println!("Found a segment!");
-                                        println!("Dice values: {:?}", segment.dice);
-                                        println!("Parent index: {}", segment.parent_index);
-                                        println!("Full details: {:?}", segment);
+
                                         for b_s in set_board{
                                             segment.board_state_vec.push(b_s);
                                         }
@@ -4872,22 +2937,9 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
     for (dice, seg) in &all_set_board{
         sum_state_board = sum_state_board + seg.board_state_vec.len();
     }
-    println!("sum_state_board: {}", sum_state_board);
-    // read_input();
     
-    println!("4786");
-    println!("=========================");
-    println!("=========================");
-    println!("=========================");
-    println!("=========================");
-    println!("=========================");
-    println!("The returned boards len is {}", all_set_board.len());
-    read_input();
-    for ds in &all_set_board {
-        println!("Segments {}, {} length {}", ds.0.0, ds.0.1, ds.1.board_state_vec.len());
-    }
-    read_input();
-    
+
+     
     for dice in &possible_dices {
         let mut bs_vec: Vec<board_state> = vec![];
         if let Some(ds) = all_set_board.get(dice) {
@@ -4895,9 +2947,6 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
                 if let Some(segment) = all_set_board.get(&(dice.1, dice.0)) { // Changed to get
                     for bs in &segment.board_state_vec { // No need for extra parentheses
                         if !ds.board_state_vec.contains(bs) {
-                            // let mut b = ds.clone();
-                            // b.board_state_vec.push(bs.clone());
-                            // all_set_board.insert((dice.0, dice.1), b);
                             bs_vec.push(bs.clone());
                         }
                     }
@@ -4906,37 +2955,149 @@ fn generate_boards(board: &Vec<(i32, i32)>, turn: i32, keep_count_of_1_stones:i3
         } else {
             println!("Error");
         }
+        
         if let Some(ds) = all_set_board.get_mut(dice) {
             for bs in &bs_vec {
-                ds.board_state_vec.push(bs.clone());
+                let mut contains = false;                
+                for j in 0..ds.board_state_vec.len(){
+                    if ds.board_state_vec[j].board == bs.board && ds.board_state_vec[j].hit_stones_1 == bs.hit_stones_1 && ds.board_state_vec[j].hit_stones_2 == bs.hit_stones_2{
+                        contains = true;
+                    }
+                }
+                if !contains{
+                    ds.board_state_vec.push(bs.clone());
+                }
             }
         }
     }
     return all_set_board;
 }
 
-// We need to link the levels between each other
-// We need to generate a whole segement and then take of r
 
-fn  generate_level(level: level){
-    
+
+/*
+    Generate root can create the parent children nodes
+    I think I need a node that has just a board_state
+    and then it has the possiblities containing
+
+
+    root is root struct
+    root struct has the possible choices
+
+
+    board state had a difference to what I am intending it to do, 
+    the dice in board state represents what got us into that state 
+    at least in the generate_boards function
+
+    I think I just care about the most and best move in each possiblity 
+*/
+fn generate_root(bs: board_state, turn: i32, dice: &(i32, i32)) {
+    // getting the possible boards
+    let mut possible_boards = generate_boards(&bs.board, turn, bs.keep_count_1, bs.keep_count_2, bs.hit_stones_1, bs.hit_stones_2);
+    let mut root;
+    if let Some(ds) = possible_boards.get(dice){
+        root = root{
+        bs: bs.clone(),
+        turn: turn,
+        dice: *dice,
+        choices: dice_segment { board_state_vec: ds.board_state_vec.clone(), dice: *dice, parent_index: -1 }
+        }
+
+
+    } else {
+        // it's possible that the key doesn't exist
+    }
+
 }
 
-// in this root is initiated and calls to levels
-fn generate_root(possible_boards: &Vec<(i32, i32)>) {
-    // generate root has the vector of stats
-    // do I need a way to hold the stats like a struct
+/*
+    I understand that I don't have a struct yet that can point to itself like over and over
+
+    like a node that has a next node situation
+
+    so probably I need a node that has a list of board possibilities?
+    I think I decided not to do this way
+    and use a level 
+
+    root has choices, choices have choices, choices have choices, choices have choices,
+
+    we are putting 
+
+    for whatever depth is, we are going to have two levels
+    one for the 
+*/
+
+fn generate_tree(root: &root, depth: i32) -> tree{
+    let mut tree = tree {
+        root: root.clone(),
+        levels: vec![]
+    };
+    tree.levels.push(
+        level { board_possibilities: vec![], turn: (root.turn % 2) + 1, level: 0 }
+    );
+    // first just handling the root of the tree
+    //
+    let possible_board_states = root.choices.board_state_vec.len();
+    for j in 0..(possible_board_states as i32){
+        // What am I doing here?
+        // I want to pass the boards in choices to generate_boards, 
+        // convert from the hash function
+        let mut bp_ret = generate_boards(&root.choices.board_state_vec[j as usize].board, (root.turn % 2) + 1, root.choices.board_state_vec[j as usize].keep_count_1, root.choices.board_state_vec[j as usize].keep_count_2, root.choices.board_state_vec[j as usize].hit_stones_1, root.choices.board_state_vec[j as usize].hit_stones_2);
+        // making a copy of the dice segments to create the board possibilities
+        let mut bp = board_possibilities{
+            dice_segment_vec: vec![],
+            level: 0,
+            index_ds: 0,
+            index_bs: j,
+        };
+        for k in 1..=6{
+            for l in k..=6{
+                if let Some(ds) = bp_ret.get(&(k, l)){
+                    bp.dice_segment_vec.push(ds.clone());
+                } else {
+                    println!("DS does not exist")
+                }
+                
+            }
+        }
+        tree.levels[0].board_possibilities.push(bp);          
+    }
+
+    // so the thing is here that the first level created should have been the opponent
+    // if i is iterating through the depth
+    // then j is iterating through the level board possibilities
+    // then k is iterating through the board possibilities dice segment
+    // then l is iterating through the dice segment boards
+    // Does each depth mean two level? I very much think so, because without the exploring of the opponent choice 
+    // The depth of the tree is an even tree depending what the depth is
+    // I am not sure about the - 1 in here
+    // so we will have (2 x depth )- 1 number of levels with odd index being the opp
+    // and the even being the player himself
+    for i in 0..(depth * 2){
+        // I think I am adding a level here, 
+        for j in 0..tree.levels[i as usize].board_possibilities.len(){
+            // I need to make sure that the not alike dices are not getting fucked in here
+            // so I had the nested loop with k and l making sure of that that the 
+            // right now we are going to find the board that we try to generate for
+            for k in 0..tree.levels[i as usize].board_possibilities[j].dice_segment_vec.len(){
+                // I think I need another level going down from here
+
+                for l in 0..tree.levels[i as usize].board_possibilities[j].dice_segment_vec[k].len(){
+                    let tmp_bp = generate_boards(tree.levels[i as usize].board_possibilities[j].dice_segment_vec[k], turn, keep_count_of_1_stones, keep_count_of_2_stones, hit_stones_1, hit_stones_2)
+                }
+                
+            }
+        }
+    }
+    // Do I need two loops? Why
     
+    return tree;
 }
 
 // In this function, the choice of ai is given 
 fn generate_ai(board: &Vec<(i32, i32)>, turn: i32, dice: &(i32, i32), keep_count_of_1_stones: i32, keep_count_of_2_stones: i32, hit_stones_1: i32, hit_stones_2: i32) {
-    // Generate the possible choices
-    // go to generate root
-    // generate root has an array of stats maybe for that possible choices
-    // the one with the highest is given back
-    let possible_boards = generate_boards(board, turn, keep_count_of_1_stones, keep_count_of_2_stones, hit_stones_1, hit_stones_2);
 
+    let possible_boards = generate_boards(board, turn, keep_count_of_1_stones, keep_count_of_2_stones, hit_stones_1, hit_stones_2);
     if let Some(ds) = possible_boards.get(dice) {
         if ds.board_state_vec.len() > 0 {
             for boards in &ds.board_state_vec{
@@ -4952,28 +3113,10 @@ fn generate_ai(board: &Vec<(i32, i32)>, turn: i32, dice: &(i32, i32), keep_count
 }
 
 mod test;
-// use tch::{Tensor, Device};
-// todo: figure out how to make the program in parallel with a mutex that keeps count of the file numbers
 
 fn main() {
-    // Test 1: Create a basic tensor on CPU
-    // let tensor = Tensor::from_slice(&[1.0, 2.0, 3.0, 4.0]);
-    // println!("Tensor on CPU: {:?}", tensor);
 
-    // // Test 2: Check tensor properties
-    // println!("Tensor size: {:?}", tensor.size());
-    // println!("Tensor dtype: {:?}", tensor.kind());
-
-    // // Test 3: Check if CUDA is available (for GPU support)
-    // if tch::Cuda::is_available() {
-    //     println!("CUDA is available!");
-    //     let gpu_tensor = tensor.to_device(Device::Cuda(0));
-    //     println!("Tensor on GPU: {:?}", gpu_tensor);
-    // } else {
-    //     println!("CUDA is not available.");
-    // }
-    
-    // read_input();
+     
     // user::clear_terminal();
     // let mut game_mode: i32 = 0;
     // game_mode = user::user_menu();
@@ -5010,7 +3153,6 @@ fn main() {
     // =============================================================
     // =========================TEST================================
     // =============================================================
-
     let mut board: Vec<(i32, i32)> = vec![(2,2), (0,0), (0,0), (0,0), (0,0), (1,5), 
                                         (0,0), (1,3), (0,0), (0,0), (0,0), (2,5), 
                                         (1,5), (0,0), (0,0), (0,0), (2,3), (0,0), 
@@ -5023,20 +3165,9 @@ fn main() {
     let mut hit_stones_2 : i32 = 0;
     let mut keep_count_of_1_stones: i32 = 15;
     let mut keep_count_of_2_stones: i32 = 15;
-    let returned_boards = generate_boards(&board, 2, keep_count_of_1_stones, keep_count_of_2_stones, hit_stones_1, hit_stones_2);
-    println!("4967");
-    println!("=========================");
-    println!("=========================");
-    println!("=========================");
-    println!("=========================");
-    println!("=========================");
-    println!("The returned boards len is {}", returned_boards.len());
-    read_input();
-    display_board(&board, &hit_stones_1, &hit_stones_2, &mut keep_count_of_1_stones, &mut keep_count_of_2_stones);
-    for ds in &returned_boards {
-        println!("Segments {}, {} length {}", ds.0.0, ds.0.1, ds.1.board_state_vec.len());
-    }
-    read_input();
+    let returned_boards = generate_boards(&board, 1, keep_count_of_1_stones, keep_count_of_2_stones, hit_stones_1, hit_stones_2);
+    
+
 
     // hit_stones test
     // let mut board_t: Vec<(i32, i32)> = vec![(2,2), (0,0), (0,0), (0,0), (0,0), (1,5), 
@@ -5099,15 +3230,15 @@ fn main() {
     // generate_boards(&board_going_out, 1, keep_count_of_1_stones_t, keep_count_of_2_stones_t, hit_stones_1_t, hit_stones_2_t);
 
     // Turn 2
-    let mut board_going_out: Vec<(i32, i32)> = vec![(1,2), (1,4), (0,0), (1,1), (1,5), (1,3), 
-    (0,0), (0,0), (0,0), (0,0), (0,0), (0,0), 
-    (0,0), (0,0), (0,0), (0,0), (0,0), (0,0), 
-    (2,5), (0,0), (0,0), (0,0), (0,0), (2,4)];
-    let mut hit_stones_1_t : i32 = 0;
-    let mut hit_stones_2_t : i32 = 0;
-    let mut keep_count_of_1_stones_t: i32 = 15;
-    let mut keep_count_of_2_stones_t: i32 = 9;
-    let returned_set_of_boards = generate_boards(&board_going_out, 1, keep_count_of_1_stones_t, keep_count_of_2_stones_t, hit_stones_1_t, hit_stones_2_t);
+    // let mut board_going_out: Vec<(i32, i32)> = vec![(1,2), (1,4), (0,0), (1,1), (1,5), (1,3), 
+    // (0,0), (0,0), (0,0), (0,0), (0,0), (0,0), 
+    // (0,0), (0,0), (0,0), (0,0), (0,0), (0,0), 
+    // (2,5), (0,0), (0,0), (0,0), (0,0), (2,4)];
+    // let mut hit_stones_1_t : i32 = 0;
+    // let mut hit_stones_2_t : i32 = 0;
+    // let mut keep_count_of_1_stones_t: i32 = 15;
+    // let mut keep_count_of_2_stones_t: i32 = 9;
+    // let returned_set_of_boards = generate_boards(&board_going_out, 1, keep_count_of_1_stones_t, keep_count_of_2_stones_t, hit_stones_1_t, hit_stones_2_t);
 
 
 
@@ -5257,8 +3388,3 @@ fn main() {
     //     (2,5), (0,0), (0,0), (0,0), (0,0), (1,2)];
     // }
 }
-// The things that need a hyperparameter to start with
-// how offensive you suold be, how defencive, how forwarding
-// learn how to parallalize this shit
-// we have to make a decision function (A mixed of data science and in depth computation)
-
